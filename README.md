@@ -2,4 +2,4 @@
 
 A mobile application to help students learn German.
 
-## App Name :
+## App Name
