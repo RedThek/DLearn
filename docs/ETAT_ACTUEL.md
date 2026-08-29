@@ -38,8 +38,9 @@ Ces fiches sont pré-instanciées pour anticiper les prochains sprints, mais auc
 
 ## 5. Décisions et risques à garder en tête
 
-- Toutes les décisions d'architecture sont tranchées — voir le registre complet dans `06-architecture-technique.md` (ADR-001 à ADR-010)
-- **Risque prioritaire à surveiller** : R-07 (contenu MVP, ADR-008) — portée resserrée au collège complet (6e, 5e, 4e, 3e, bande A1→A2) ; seuil de 6 unités validées par niveau (24 au total), **aucune unité encore validée** (4 brouillons rédigés, 1 par niveau, en attente de relecture humaine, voir Mission A0)
+- Toutes les décisions d'architecture sont tranchées — voir le registre complet dans `06-architecture-technique.md` (ADR-001 à ADR-013)
+- **Risque prioritaire à surveiller** : R-07 (contenu MVP, ADR-008) — portée resserrée au collège complet (6e, 5e, 4e, 3e, bande A1→A2) ; seuil de 5 unités validées par niveau (20 au total), **aucune unité encore validée** (4 brouillons rédigés, 1 par niveau avec personnages diversifiés, en attente de relecture humaine, voir Mission A0)
+- **Nouveau risque** : R-17 (dépôt GitHub public, ADR-013) — vigilance permanente pour ne jamais committer de données réelles sensibles
 - **Risque prioritaire suivant** : R-11 (délai d'approbation éthique/consentement) — la démarche décrite dans `10-protocole-ethique-consentement.md` doit être engagée dès que possible, en parallèle du développement
 
 ## 6. Checklist de reprise rapide

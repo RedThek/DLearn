@@ -68,6 +68,7 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 | FR-16 | L'élève peut consulter des exemples de production écrite modèles par niveau GeR | S | Contenu pré-chargé, consultable hors ligne |
 | FR-17 | L'élève peut s'auto-évaluer via une grille critériée simplifiée (longueur, cohérence, vocabulaire) — sans correction automatique IA en Phase 1 | S | Grille d'auto-évaluation manuelle, résultat enregistré |
 | FR-18 | L'élève peut exporter/partager sa production écrite (fichier texte local, impression, ou transfert vers l'enseignant lors de la synchronisation) | C | Export réussi sans connexion internet |
+| FR-34 *(ADR-011)* | L'éditeur d'écriture propose un clavier virtuel dédié affichant les caractères spéciaux allemands (ä, ö, ü, ß, Ä, Ö, Ü), insérables en un tap, en complément du clavier système | M | Les caractères s'insèrent correctement à la position du curseur, indépendamment du clavier système installé |
 | FR-19 *(Phase 3 — différé)* | Correction automatique assistée par IA (Automated Writing Evaluation) | W | Hors périmètre tant que le socle pédagogique n'est pas validé |
 
 ## 9. Module — Suivi (progression)

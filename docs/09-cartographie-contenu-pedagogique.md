@@ -29,7 +29,7 @@ La population cible finale couvre l'intégralité du secondaire francophone came
 | 1ère | Lycée (2nd cycle) | 6e année | B1 (consolidation) | 5 à 7 | Développement ultérieur |
 | Terminale | Lycée (2nd cycle) — Baccalauréat | 7e année | B1+ / B2 (selon filière et intensité) | 5 à 7 | Développement ultérieur |
 
-**Avantage de ce resserrement** : le MVP couvre une bande CECR homogène (A1 à A2), ce qui réduit la variance de niveau par rapport à une couverture étalée jusqu'à B2 — cohérent avec une réduction (partielle) du risque R-07, même si le volume total (24 unités visées) reste conséquent.
+**Avantage de ce resserrement** : le MVP couvre une bande CECR homogène (A1 à A2), ce qui réduit la variance de niveau par rapport à une couverture étalée jusqu'à B2 — cohérent avec une réduction (partielle) du risque R-07, même si le volume total (20 unités visées) reste conséquent.
 
 **Hypothèses à confirmer avec toi** :
 - Que l'allemand est bien étudié en continu de la 6e à la 3e par la population cible du MVP.
@@ -95,18 +95,18 @@ keine Hausaufgaben mache.
 
 **Exercice d'écriture guidée** : « Beschreibe deine Woche: Was machst du montags, donnerstags und am Wochenende? » *(4 à 6 phrases attendues, niveau A1/A1+, subordonnée « weil » encouragée mais non exigée)*
 
-> Note de conception : Paul est un camarade de classe d'Aïcha (U-6E-01) — introduire plusieurs personnages récurrents au fil des unités (plutôt qu'un seul narrateur) permet de représenter une diversité d'élèves et de préparer des dialogues entre personnages dans les niveaux suivants.
+> Note de conception : chaque unité du MVP introduit un personnage différent (Aïcha, Paul, Divine, Serge — voir 3.2), pour représenter la diversité des élèves camerounais plutôt qu'un narrateur unique récurrent.
 
 #### U-4E-01 — « Ein Tag in Yaoundé » (4ème, A2)
 
 ```
-Jeden Morgen stehe ich um sechs Uhr auf. Ich wasche mich und ziehe
-meine Schuluniform an. Um sieben Uhr esse ich Frühstück mit meiner
-Familie: Brot, Ei und Tee. Dann gehe ich zu Fuß zur Schule, das
-dauert zwanzig Minuten. Der Unterricht beginnt um acht Uhr und
-endet um vierzehn Uhr. Nach der Schule spiele ich mit meinen
-Freunden auf dem Marktplatz Fußball. Am Abend habe ich meiner
-Großmutter beim Kochen geholfen. Wir haben zusammen zu Abend
+Ich heiße Divine. Jeden Morgen stehe ich um sechs Uhr auf. Ich
+wasche mich und ziehe meine Schuluniform an. Um sieben Uhr esse ich
+Frühstück mit meiner Familie: Brot, Ei und Tee. Dann gehe ich zu
+Fuß zur Schule, das dauert zwanzig Minuten. Der Unterricht beginnt
+um acht Uhr und endet um vierzehn Uhr. Nach der Schule spiele ich
+mit meinen Freunden auf dem Marktplatz Fußball. Am Abend habe ich
+meiner Großmutter beim Kochen geholfen. Wir haben zusammen zu Abend
 gegessen und über den Tag gesprochen. Danach habe ich meine
 Hausaufgaben gemacht und bin früh ins Bett gegangen.
 ```
@@ -120,11 +120,11 @@ Hausaufgaben gemacht und bin früh ins Bett gegangen.
 #### U-3E-01 — « Meine Sommerferien in Kribi » (3ème, A2 consolidation — niveau BEPC)
 
 ```
-Ich heiße Aïcha und ich bin jetzt vierzehn Jahre alt. Letzten
-Sommer bin ich mit meiner Familie nach Kribi gefahren. Das war
-meine erste große Reise ans Meer. Wir sind mit dem Auto gefahren,
-und die Fahrt hat ungefähr vier Stunden gedauert. In Kribi haben
-wir ein kleines Haus am Strand gemietet.
+Ich heiße Serge und ich bin vierzehn Jahre alt. Letzten Sommer bin
+ich mit meiner Familie nach Kribi gefahren. Das war meine erste
+große Reise ans Meer. Wir sind mit dem Auto gefahren, und die
+Fahrt hat ungefähr vier Stunden gedauert. In Kribi haben wir ein
+kleines Haus am Strand gemietet.
 
 Jeden Tag sind wir früh aufgestanden und haben im Meer gebadet.
 Nachmittags haben wir frischen Fisch gegessen, und meine Mutter hat
@@ -133,20 +133,20 @@ von Kribi besucht – das Wasser fällt direkt ins Meer, das war
 wirklich beeindruckend!
 
 Am Abend haben wir oft am Strand gesessen und über unsere Zukunft
-gesprochen. Ich möchte später Ärztin werden, weil ich anderen
+gesprochen. Ich möchte später Arzt werden, weil ich anderen
 Menschen helfen möchte. Diese Ferien waren unvergesslich, und ich
 hoffe, dass wir nächstes Jahr wieder dorthin fahren.
 ```
 
 **Glossaire** : die Reise (le voyage) · das Meer (la mer) · mieten (louer) · der Strand (la plage) · aufstehen (se lever) · baden (se baigner) · der Fischer (le pêcheur) · der Wasserfall (la chute d'eau) · beeindruckend (impressionnant) · die Zukunft (l'avenir) · unvergesslich (inoubliable)
 
-**Exercice QCM** : « Wohin ist Aïcha im Sommer gefahren? » → a) Douala ☐ b) Kribi ☑ c) Limbé ☐
+**Exercice QCM** : « Wohin ist Serge im Sommer gefahren? » → a) Douala ☐ b) Kribi ☑ c) Limbé ☐
 
-**Exercice texte à trous** : « Aïcha und ihre Familie ___ (fahren) letzten Sommer nach Kribi. » *(réponse : sind ... gefahren)*
+**Exercice texte à trous** : « Serge und seine Familie ___ (fahren) letzten Sommer nach Kribi. » *(réponse : sind ... gefahren)*
 
 **Exercice de production écrite** : « Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? » *(niveau A2/BEPC, Perfekt étendu attendu, 8 à 10 phrases)*
 
-> Note de conception : Aïcha revient comme narratrice, deux ans après U-6E-01 (6e → 3e) — ce fil narratif reliant les niveaux peut être exploité comme fil rouge pédagogique sur l'ensemble du collège, et mentionné dans le mémoire comme choix de conception favorisant l'engagement (cohérent avec la littérature MALL sur les personnages récurrents).
+> Note de conception : Serge est un personnage distinct des trois autres unités du MVP (Aïcha en 6e, Paul en 5e, Divine en 4e) — quatre personnages différents pour les quatre niveaux du collège, afin de représenter une diversité de prénoms et de profils d'élèves plutôt qu'un fil narratif unique.
 
 ### 3.3 Unités réservées (développement ultérieur — lycée)
 
@@ -242,17 +242,17 @@ unser eigenes Verhalten nachzudenken.
 |---|---|
 | Niveaux scolaires couverts au MVP | 6ème, 5ème, 4ème, 3ème (collège complet) |
 | Niveaux GeR couverts au MVP | A1 (6e, 5e), A2 (4e, 3e) |
-| Seuil minimal d'unités **validées** par niveau retenu | 6 unités par niveau (soit 24 unités au total) |
+| Seuil minimal d'unités **validées** par niveau retenu | 5 unités par niveau (soit 20 unités au total) |
 | Niveaux/unités reportés après le pilote | 2nde, 1ère, Terminale (lycée complet — développement ultérieur, 2 unités brouillon déjà réservées en section 3.3) |
 
 ### Suivi du seuil minimal (à tenir à jour à chaque sprint de contenu)
 
 | Niveau scolaire | Niveau GeR | Unités `Validé` actuelles | Unités `Rédigé (brouillon)` actuelles | Seuil cible | Écart |
 |---|---|---|---|---|---|
-| 6ème | A1 | 0 | 1 (U-6E-01) | 6 | 5 |
-| 5ème | A1 (consolidation) | 0 | 1 (U-5E-01) | 6 | 5 |
-| 4ème | A2 | 0 | 1 (U-4E-01) | 6 | 5 |
-| 3ème | A2 (consolidation) | 0 | 1 (U-3E-01) | 6 | 5 |
+| 6ème | A1 | 0 | 1 (U-6E-01) | 5 | 4 |
+| 5ème | A1 (consolidation) | 0 | 1 (U-5E-01) | 5 | 4 |
+| 4ème | A2 | 0 | 1 (U-4E-01) | 5 | 4 |
+| 3ème | A2 (consolidation) | 0 | 1 (U-3E-01) | 5 | 4 |
 
 > Ce tableau doit être revu à chaque checklist hebdomadaire (`05-checklist-quotidienne.md`) tant que le seuil n'est pas atteint sur les 4 niveaux du MVP — c'est le principal levier de mitigation du risque R-07.
 

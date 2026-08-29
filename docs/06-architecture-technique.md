@@ -57,6 +57,8 @@ com.liteschreib.ikii/
 
 ## 3. Git workflow
 
+> Le suivi opérationnel de sprint (tableau Kanban) est assuré par **GitHub Projects**, lié à ce dépôt — voir **ADR-013**. Le dépôt étant public, aucune donnée réelle sensible n'y est jamais committée (voir risque R-17).
+
 ### Branches
 - `main` : version stable, toujours déployable/démontrable (soutenance, revue académique)
 - `develop` : intégration continue des sprints
@@ -111,6 +113,9 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-008 | Portée du contenu MVP (niveaux GeR) | **Accepted** — couverture large, plusieurs niveaux |
 | ADR-009 | Application unique avec sélecteur de profil | **Accepted** |
 | ADR-010 | Distribution de l'application | **Accepted** — APK partagé localement |
+| ADR-011 | Clavier allemand dans l'éditeur d'écriture | **Accepted** — clavier virtuel dédié |
+| ADR-012 | Devices de référence pour les tests de performance | **Accepted** — Tecno et Itel (et sous-marques) |
+| ADR-013 | Outil de suivi de sprint | **Accepted** — GitHub Projects (dépôt public) |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -203,6 +208,37 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 - Cohérence totale avec l'offline-first ; aucune dépendance à un compte développeur Play Store ni à une connexion pour l'installation.
 - Nécessite d'accompagner les utilisateurs pour l'activation des « sources inconnues » sur leur appareil (voir `15-guide-enseignant-onboarding.md` et notice d'information mise à jour dans `10-protocole-ethique-consentement.md`).
 - Absence de mécanisme de mise à jour automatique : les mises à jour d'application et de contenu sont distribuées manuellement, selon un schéma de version défini dans `14-charte-versionnage-contenu.md`.
+
+### ADR-011 : Clavier allemand dans l'éditeur d'écriture
+**Statut :** Accepted
+**Date :** tranché lors de l'arbitrage des décisions en attente
+**Contexte :** FR-15 (production écrite en allemand) nécessite un accès fiable aux caractères spéciaux allemands (ä, ö, ü, ß, majuscules associées). Le clavier système par défaut varie selon l'appareil et n'offre pas toujours un accès simple à ces caractères, en particulier sur les claviers OEM allégés fréquents sur les appareils d'entrée de gamme (voir ADR-012).
+**Options considérées :** clavier système standard (pari sur la disponibilité des diacritiques par appui long), clavier virtuel dédié intégré à l'éditeur d'écriture.
+**Décision :** Un clavier virtuel dédié est ajouté dans l'éditeur d'écriture, affichant ä, ö, ü, ß, Ä, Ö, Ü, insérables en un tap, en complément du clavier système standard.
+**Conséquences :**
+- Garantit un accès fiable à l'orthographe allemande correcte, indépendamment du clavier système installé sur l'appareil de l'élève — particulièrement pertinent compte tenu des devices de référence retenus (ADR-012).
+- Effort de développement supplémentaire dans l'écran Écriture (Mission B3) : une rangée ou barre d'outils de caractères spéciaux au-dessus du clavier système.
+- Nouvelle exigence fonctionnelle FR-34 ajoutée en conséquence (`01-exigences-fonctionnelles.md`).
+
+### ADR-012 : Devices de référence pour les tests de performance
+**Statut :** Accepted
+**Date :** tranché lors de l'arbitrage des décisions en attente
+**Contexte :** NFR-04 nécessitait un modèle d'appareil précis pour des mesures de performance fiables, faute de quoi les tests restaient génériques (« ≤ 2 Go RAM »).
+**Décision :** Les tests de performance et de compatibilité sont réalisés en priorité sur les appareils **Tecno** et **Itel**, ainsi que leurs sous-marques et gammes associées (Infinix, Camon, séries A2, A8, etc.), identifiées comme les plus répandues dans la zone pilote.
+**Conséquences :**
+- Les mesures de performance (démarrage, fluidité `LazyColumn`, consommation batterie) doivent être effectuées sur au moins un appareil de chacune de ces familles avant chaque jalon de sprint impliquant une nouvelle fonctionnalité UI lourde.
+- Le clavier système et les fonctionnalités TTS de ces appareils (souvent des surcouches Android allégées) doivent être vérifiés spécifiquement — renforce la pertinence d'ADR-011 (clavier virtuel dédié) et d'ADR-007 (vérification explicite de la voix TTS plutôt qu'un pari sur sa présence).
+- À défaut de disposer physiquement de tous les modèles, privilégier des émulateurs configurés avec des spécifications proches (RAM, résolution, version Android) de ces familles d'appareils.
+
+### ADR-013 : Outil de suivi de sprint
+**Statut :** Accepted
+**Date :** tranché lors de l'arbitrage des décisions en attente
+**Contexte :** Le suivi de sprint n'était pas formellement outillé (options envisagées : GitHub Projects, Trello, Notion).
+**Décision :** **GitHub Projects**, lié au dépôt GitHub du projet, est retenu comme outil de suivi de sprint. Le dépôt est **public**.
+**Conséquences :**
+- Intégration native avec les Issues, Pull Requests et GitHub Actions déjà utilisés (cohérent avec l'outillage existant, pas de nouvel outil externe à maintenir).
+- **Point de vigilance majeur lié au caractère public du dépôt** : aucune donnée réelle sensible (nom d'élève, formulaire de consentement signé, export de données de recherche, capture d'écran contenant des informations personnelles) ne doit jamais être committée dans le dépôt — seuls les gabarits et modèles vides le sont. Voir le risque **R-17** ajouté au registre des risques et la checklist avant merge (`05-checklist-quotidienne.md`) mise à jour en conséquence.
+- Le backlog (`04-missions-et-sprints.md`) et les fiches vivantes (`docs/missions/`) restent la source de vérité documentaire ; GitHub Projects sert de vue opérationnelle (tableau Kanban) synchronisée manuellement avec ces documents.
 
 ## 7. Gabarit ADR (pour toute nouvelle décision)
 
