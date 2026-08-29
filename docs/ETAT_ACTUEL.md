@@ -2,18 +2,18 @@
 
 > ⭐ **Ce fichier est le point d'entrée unique pour reprendre le travail**, que ce soit après une interruption brève ou une longue pause (académique, personnelle, imprévue). Il doit être mis à jour à la fin de chaque session ayant fait évoluer une mission. Voir la procédure complète de reprise dans `processus/guide-orchestration.md`, section 5.
 
-**Dernière mise à jour :** 2026-08-28
+**Dernière mise à jour :** 2026-08-29
 
 ---
 
 ## 1. Où en est le projet, en une phrase
 
-Le socle documentaire est complet et toutes les décisions d'architecture initialement en attente sont tranchées (ADR-001 à ADR-010). Le développement Android en est au **Sprint 0** : le design system (Material 3) est scaffoldé mais contient encore des valeurs provisoires à remplacer par les tokens Figma définitifs.
+Le socle documentaire est complet et le build a été rétabli (correctif d'imports dans la couche présentation). Le développement Android en est toujours au **Sprint 0** : finalisation du design system et scaffolding Clean Architecture.
 
 ## 2. Missions actives
 
-- **Front technique** : [`missions/A1-finaliser-design-system.md`](missions/A1-finaliser-design-system.md) — Phase Implémentation — prochaine sous-tâche : exporter les tokens Figma Dev Mode
-- **Front contenu (parallèle, non bloquant sur A1)** : [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) — Phase Implémentation — portée MVP confirmée (collège complet 6e-3e), 4 unités brouillon rédigées (une par niveau), **en attente de relecture humaine** avant validation
+- **Front technique** : [`missions/A1-finaliser-design-system.md`](missions/A1-finaliser-design-system.md) — Phase Implémentation — build rétabli, TODO tokens Figma à traiter.
+- **Front contenu (parallèle, non bloquant sur A1)** : [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) — Phase Implémentation — portée MVP confirmée (collège complet 6e-3e).
 
 ## 2bis. Missions préparées (fiches créées, non démarrées)
 
@@ -28,7 +28,7 @@ Ces fiches sont pré-instanciées pour anticiper les prochains sprints, mais auc
 
 ## 3. Dernier rapport de session
 
-- [`journal/2026-08-28.md`](journal/2026-08-28.md) — resserrement de la portée MVP (collège 6e-3e) et rédaction des unités 5e/3e
+- [`journal/2026-08-29.md`](journal/2026-08-29.md) — Rétablissement du build (correctif d'imports Compose).
 
 ## 4. Sprint et cycle en cours
 

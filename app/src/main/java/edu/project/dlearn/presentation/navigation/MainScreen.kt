@@ -1,0 +1,74 @@
+package edu.project.dlearn.presentation.navigation
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import edu.project.dlearn.presentation.accueil.AccueilScreen
+import edu.project.dlearn.presentation.apprentissage.ApprentissageScreen
+import edu.project.dlearn.presentation.ecriture.EcritureScreen
+import edu.project.dlearn.presentation.profil.ProfilScreen
+import edu.project.dlearn.presentation.suivi.SuiviScreen
+
+/**
+ * App principale (post-connexion / post-positionnement) : Scaffold + navigation par onglets,
+ * inchangée depuis la première livraison. Nichée sous la route "main" du [RootNavGraph].
+ */
+@Composable
+fun MainScreen(onDeconnexion: () -> Unit) {
+    val navController = rememberNavController()
+
+    Scaffold(
+        bottomBar = { LiteschreibBottomBar(navController) }
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = BottomNavItem.Accueil.route,
+            modifier = Modifier.padding(innerPadding)
+        ) {
+            composable(BottomNavItem.Accueil.route) { AccueilScreen() }
+            composable(BottomNavItem.Apprentissage.route) { ApprentissageScreen() }
+            composable(BottomNavItem.Ecriture.route) { EcritureScreen() }
+            composable(BottomNavItem.Suivi.route) { SuiviScreen() }
+            composable(BottomNavItem.Profil.route) { ProfilScreen(onDeconnexion = onDeconnexion) }
+        }
+    }
+}
+
+@Composable
+private fun LiteschreibBottomBar(navController: NavHostController) {
+    NavigationBar {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+
+        BottomNavItem.items.forEach { item ->
+            val selected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+            NavigationBarItem(
+                selected = selected,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                icon = { Icon(item.icon, contentDescription = item.label) },
+                label = { Text(item.label) }
+            )
+        }
+    }
+}

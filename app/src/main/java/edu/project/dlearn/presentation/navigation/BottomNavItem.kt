@@ -1,6 +1,5 @@
 package edu.project.dlearn.presentation.navigation
 
-/*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Edit
@@ -25,4 +24,4 @@ sealed class BottomNavItem(
     companion object {
         val items = listOf(Accueil, Apprentissage, Ecriture, Suivi, Profil)
     }
-} */
+}

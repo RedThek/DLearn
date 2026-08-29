@@ -11,12 +11,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import edu.project.dlearn.ui.theme.DLearnTheme
-
 import dagger.hilt.android.AndroidEntryPoint
-import edu.project.dlearn.presentation.navigation.DLearnNavGraph
-import edu.project.dlearn.ui.theme.DLearnTheme
+import edu.project.dlearn.presentation.navigation.LiteschreibApp
+import edu.project.dlearn.presentation.theme.LiteschreibTheme
 
+/*
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,5 +48,18 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     DLearnTheme {
         Greeting("Android")
+    }
+} */
+
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContent {
+            LiteschreibTheme {
+                LiteschreibApp()
+            }
+        }
     }
 }

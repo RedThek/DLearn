@@ -51,7 +51,9 @@ Le design system suit Material Design 3, couleur dynamique désactivée pour pr�
 - [ ] Fidélité au design system — **en cours de vérification**, TODO restants à résoudre
 
 ### Notes d'implémentation
-Le scaffolding de base est en place avec des valeurs provisoires marquées `TODO`. Prochaine session : exporter les tokens exacts depuis Figma Dev Mode (Inspect panel) et les reporter fichier par fichier.
+Le scaffolding de base est en place avec des valeurs provisoires marquées `TODO`. 
+*Session 2026-08-29* : Rétablissement du build suite à des imports manquants dans `ApprentissageScreen.kt` et `EcritureScreen.kt` (placeholders UI).
+Prochaine session : exporter les tokens exacts depuis Figma Dev Mode (Inspect panel) et les reporter fichier par fichier.
 
 **Statut de la phase :** ☐ À faire ☒ En cours ☐ Terminée
 

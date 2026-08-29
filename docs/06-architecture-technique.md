@@ -32,8 +32,10 @@
 
 ## 2. Structure de packages indicative
 
+> ⚠️ Le nom de package racine réel du projet est `edu.project.dlearn` (voir `namespace` dans `app/build.gradle.kts`), pas `com.liteschreib.ikii` — corrigé ici après relecture du code. Certains fichiers de scaffolding déjà présents dans le dépôt référencent encore, dans des commentaires, un troisième nom (`com.ikii.liteschreib`) qui n'a jamais été le vrai namespace : voir `docs/planification/bloc-A-taches.md`, section 1, pour le détail et les tâches de nettoyage correspondantes.
+
 ```
-com.liteschreib.ikii/
+edu.project.dlearn/
 ├── domain/
 │   ├── model/            # Entités métier (UniteApprentissage, Progression, ...)
 │   ├── usecase/           # Ex: GetUniteRecommandeeUseCase, SaveProductionEcriteUseCase
@@ -51,8 +53,8 @@ com.liteschreib.ikii/
 │   ├── suivi/
 │   ├── profil/
 │   ├── enseignant/         # Dashboard
-│   └── designsystem/       # Color.kt, Type.kt, Shape.kt, Theme.kt
-└── di/                      # Modules Hilt (AppModule, DataModule, DomainModule)
+│   └── theme/               # Color.kt, Type.kt, Shape.kt, Theme.kt (design system)
+└── core/di/                 # Modules Hilt (AppModule, DataModule, DomainModule)
 ```
 
 ## 3. Git workflow

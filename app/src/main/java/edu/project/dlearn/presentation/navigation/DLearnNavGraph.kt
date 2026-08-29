@@ -19,8 +19,8 @@ fun DLearnNavGraph(navController: NavHostController = rememberNavController()) {
     NavHost(navController = navController, startDestination = Routes.ACCUEIL) {
         composable(Routes.ACCUEIL) {
             AccueilScreen(
-                onEleveClick = { /* navController.navigate(...) — Mission A2 */ },
-                onEnseignantClick = { /* idem */ }
+                //onEleveClick = { /* navController.navigate(...) — Mission A2 */ },
+                //onEnseignantClick = { /* idem */ }
             )
         }
     }

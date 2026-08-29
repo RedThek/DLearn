@@ -12,18 +12,57 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import edu.project.dlearn.ui.theme.Typography
 
+private val LightColors = lightColorScheme(
+    primary = Primary40,
+    onPrimary = OnPrimary,
+    primaryContainer = PrimaryContainer,
+    onPrimaryContainer = OnPrimaryContainer,
+    secondary = Secondary40,
+    onSecondary = OnSecondary,
+    secondaryContainer = SecondaryContainer,
+    onSecondaryContainer = OnSecondaryContainer,
+    tertiary = Tertiary40,
+    onTertiary = OnTertiary,
+    error = Error40,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer,
+    surface = Surface,
+    onSurface = OnSurface,
+    surfaceVariant = SurfaceVariant,
+    onSurfaceVariant = OnSurfaceVariant,
+    outline = Outline
+)
 
-
-// TODO Mission A1 : remplacer par les tokens exacts extraits du Figma Dev Mode
-private val LightColors = lightColorScheme()
-private val DarkColors = darkColorScheme()
+private val DarkColors = darkColorScheme(
+    primary = Primary80,
+    onPrimary = OnPrimaryContainer,
+    secondary = Secondary80,
+    surface = SurfaceDark,
+    onSurface = OnSurfaceDark
+)
 
 @Composable
-fun LiteschreibIkiiTheme(
+fun LiteschreibTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = false,   // toujours false — cf. principe design system
+    // Désactivé par défaut pour garder une identité visuelle fidèle aux maquettes Figma
+    // plutôt que la palette dynamique Material You d'Android 12+.
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColors else LightColors
-    MaterialTheme(colorScheme = colorScheme, typography = Typography, content = content)
+    val colorScheme = when {
+        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+            val context = LocalContext.current
+            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+        }
+        darkTheme -> DarkColors
+        else -> LightColors
+    }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = LiteschreibTypography,
+        shapes = LiteschreibShapes,
+        content = content
+    )
 }
