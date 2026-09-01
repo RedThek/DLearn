@@ -35,9 +35,10 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Sprint** : Sprint 0
 - **Description** : Créer l'arborescence `domain/`, `data/`, `presentation/` (voir `06-architecture-technique.md`) avec modules Gradle ou packages selon la granularité retenue.
 - **Definition of Done** :
-  - [ ] Arborescence créée et documentée dans `06-architecture-technique.md`
-  - [ ] Règle de dépendance vérifiée (aucun import `presentation` dans `domain`)
-  - [ ] Build Gradle propre (`./gradlew build` sans erreur)
+  - [x] Arborescence créée et documentée dans `06-architecture-technique.md`
+  - [x] Règle de dépendance vérifiée (aucun import `presentation` dans `domain`)
+  - [x] Build Gradle propre (`./gradlew build` sans erreur)
+- **Statut** : `Validé`
 
 ### Mission A3 — Navigation Compose
 - **Sprint** : Sprint 1

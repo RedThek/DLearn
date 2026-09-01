@@ -1,9 +1,9 @@
-package edu.project.dlearn.data.local
+package edu.project.dlearn.data.local.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// Mot de passe stocke en hash (voir AuthRepositoryImpl) : jamais en clair, meme en local.
+// Mot de passe stocké en hash (voir AuthRepositoryImpl) : jamais en clair, même en local.
 @Entity(tableName = "utilisateur")
 data class UtilisateurEntity(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,

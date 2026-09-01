@@ -100,8 +100,8 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 | A1-T09 | Vérifier `Shape.kt` (déjà rempli : 4/8/12/16/28dp) contre les valeurs réelles de Figma | — | ☐ À faire *(fichier non vide mais non confirmé)* |
 | A1-T10 | Écrire le contenu de `LiteschreibIkiiTheme.kt` (vide) ou fusionner sa responsabilité dans `Theme.kt` — clarifier quel fichier est la source de vérité | T05, T08 | ☐ À faire |
 | A1-T11 | **[BLOQUANT]** Mettre à jour `MainActivity.kt` : utiliser `LiteschreibIkiiTheme` au lieu de `DLearnTheme` | T10 | ☐ À faire |
-| A1-T12 | Supprimer les fichiers du template par défaut `ui/theme/{Color,Type,Theme}.kt` une fois la bascule confirmée sans régression visuelle | T11 | ☐ À faire |
-| A1-T13 | Nettoyer `MainActivity.kt` : retirer l'import dupliqué de `DLearnTheme` et le bloc `Greeting`/`GreetingPreview` de démonstration | T12 | ☐ À faire |
+| A1-T12 | Supprimer les fichiers du template par défaut `ui/theme/{Color,Type,Theme}.kt` une fois la bascule confirmée sans régression visuelle | T11 | ✅ Fait |
+| A1-T13 | Nettoyer `MainActivity.kt` : retirer l'import dupliqué de `DLearnTheme` et le bloc `Greeting`/`GreetingPreview` de démonstration | T12 | ✅ Fait |
 | A1-T14 | Comparer `AccueilScreen` (Compose Preview) à la maquette Figma correspondante | T11 | ☐ À faire |
 | A1-T15 | Vérifier le contraste de chaque token de couleur avec Stark (NFR-13) | T04 | ☐ À faire |
 | A1-T16 | Corriger les écarts de contraste identifiés | T15 | ☐ À faire |
@@ -117,19 +117,19 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 | ID | Tâche | Dépend de | Statut |
 |---|---|---|---|
 | A2-T00 | **[Décision]** Aligner la convention de nommage sur l'existant : garder `presentation.theme` (plutôt que `presentation.designsystem`) et `core.di` (plutôt que `di`) — mettre à jour `06-architecture-technique.md` en conséquence | — | ✅ Fait *(pris en compte dans ce plan)* |
-| A2-T01 | Créer `domain/model/` | — | ☐ À faire |
-| A2-T02 | Créer `domain/usecase/` | — | ☐ À faire |
-| A2-T03 | Créer `domain/repository/` | — | ☐ À faire |
-| A2-T04 | Organiser `data/local/room/` (actuellement `data/local/` contient directement `AppDatabase.kt` commenté) | — | ☐ À faire |
-| A2-T05 | Créer `data/local/datasource/` | — | ☐ À faire |
-| A2-T06 | Créer `data/repository/` | — | ☐ À faire |
-| A2-T07 | Créer `data/ai/` (vide, réservé Cycle 2 — ADR-003) | — | ☐ À faire |
-| A2-T08 | Créer `presentation/apprentissage/`, `presentation/ecriture/`, `presentation/suivi/`, `presentation/profil/`, `presentation/enseignant/` (`presentation/accueil/` existe déjà) | — | ☐ À faire |
-| A2-T09 | Vérifier qu'aucune classe placeholder ne viole la règle de dépendance | T01-T08 | ☐ À faire |
-| A2-T10 | `./gradlew build` pour confirmer que l'arborescence vide compile | T09 | ☐ À faire |
-| A2-T11 | Mettre à jour `06-architecture-technique.md` section 2 avec l'arborescence réelle (`edu.project.dlearn.*`) | T10 | ☐ À faire |
-| A2-T12 | Commit : `feat(architecture): scaffolding structure Clean Architecture` | T10 | ☐ À faire |
-| A2-T13 | Mettre à jour `../missions/A2-...md` et `04-missions-et-sprints.md` (Mission A2 → `Validé`) | T12 | ☐ À faire |
+| A2-T01 | Créer `domain/model/` | — | ✅ Fait |
+| A2-T02 | Créer `domain/usecase/` | — | ✅ Fait |
+| A2-T03 | Créer `domain/repository/` | — | ✅ Fait |
+| A2-T04 | Organiser `data/local/room/` (actuellement `data/local/` contient directement `AppDatabase.kt` commenté) | — | ✅ Fait |
+| A2-T05 | Créer `data/local/datasource/` | — | ✅ Fait |
+| A2-T06 | Créer `data/repository/` | — | ✅ Fait |
+| A2-T07 | Créer `data/ai/` (vide, réservé Cycle 2 — ADR-003) | — | ✅ Fait |
+| A2-T08 | Créer `presentation/apprentissage/`, `presentation/ecriture/`, `presentation/suivi/`, `presentation/profil/`, `presentation/enseignant/` (`presentation/accueil/` existe déjà) | — | ✅ Fait |
+| A2-T09 | Vérifier qu'aucune classe placeholder ne viole la règle de dépendance | T01-T08 | ✅ Fait |
+| A2-T10 | `./gradlew build` pour confirmer que l'arborescence vide compile | T09 | ✅ Fait |
+| A2-T11 | Mettre à jour `06-architecture-technique.md` section 2 avec l'arborescence réelle (`edu.project.dlearn.*`) | T10 | ✅ Fait |
+| A2-T12 | Commit : `feat(architecture): scaffolding structure Clean Architecture` | T10 | ✅ Fait |
+| A2-T13 | Mettre à jour `../missions/A2-...md` et `04-missions-et-sprints.md` (Mission A2 → `Validé`) | T12 | ✅ Fait |
 
 ---
 
@@ -139,7 +139,7 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 
 | ID | Tâche | Dépend de | Statut |
 |---|---|---|---|
-| A3-T01 | **[Constat #2, Décision]** Choisir entre `NavGraph.kt` (commenté, package `com.ikii.liteschreib.*` obsolète) et `DLearnNavGraph.kt` (actif, `edu.project.dlearn.*`) comme fichier unique — supprimer l'autre | A2 | ☐ À faire |
+| A3-T01 | **[Constat #2, Décision]** Choisir entre `NavGraph.kt` (commenté, package `com.ikii.liteschreib.*` obsolète) et `DLearnNavGraph.kt` (actif, `edu.project.dlearn.*`) comme fichier unique — supprimer l'autre | A2 | ✅ Fait |
 | A3-T02 | Clarifier si `AccueilScreen` actuel (boutons Élève/Enseignant déjà présents) joue le rôle de l'écran de sélection de profil (`Routes.CONNEXION`), ou si c'est un doublon à réorganiser | T01 | ☐ À faire |
 | A3-T03 | Décommenter et adapter `BottomNavItem.kt` (déjà rédigé en commentaire) | A2-T08 | ☐ À faire |
 | A3-T04 | Créer les écrans placeholder restants du sous-graphe élève (`ApprentissageScreen`, `EcritureScreen`, `SuiviScreen`, `ProfilScreen`) | A2-T08 | ☐ À faire |

@@ -1,8 +1,8 @@
 package edu.project.dlearn.data.repository
 
-import edu.project.dlearn.data.local.ApprentissageDao
-import edu.project.dlearn.data.local.ExerciceEntity
-import edu.project.dlearn.data.local.VocabEntity
+import edu.project.dlearn.data.local.room.ApprentissageDao
+import edu.project.dlearn.data.local.room.ExerciceEntity
+import edu.project.dlearn.data.local.room.VocabEntity
 import edu.project.dlearn.domain.model.ExerciceTexteATrous
 import edu.project.dlearn.domain.model.Vocabulaire
 import edu.project.dlearn.domain.repository.ApprentissageRepository

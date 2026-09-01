@@ -1,6 +1,6 @@
 package edu.project.dlearn.data.repository
 
-import edu.project.dlearn.data.local.UtilisateurDao
+import edu.project.dlearn.data.local.room.UtilisateurDao
 import edu.project.dlearn.domain.model.Role
 import edu.project.dlearn.domain.model.Utilisateur
 import edu.project.dlearn.domain.repository.AuthRepository
