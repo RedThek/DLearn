@@ -1,10 +1,9 @@
-package edu.project.dlearn.data.local
+package edu.project.dlearn.data.local.room
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import edu.project.dlearn.data.local.UtilisateurEntity
 
 @Dao
 interface UtilisateurDao {
