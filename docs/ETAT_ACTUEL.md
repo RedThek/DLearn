@@ -2,18 +2,18 @@
 
 > ⭐ **Ce fichier est le point d'entrée unique pour reprendre le travail**, que ce soit après une interruption brève ou une longue pause (académique, personnelle, imprévue). Il doit être mis à jour à la fin de chaque session ayant fait évoluer une mission. Voir la procédure complète de reprise dans `processus/guide-orchestration.md`, section 5.
 
-**Dernière mise à jour :** 2026-08-29
+**Dernière mise à jour :** 2026-09-01
 
 ---
 
 ## 1. Où en est le projet, en une phrase
 
-Le socle documentaire est complet et le build a été rétabli (correctif d'imports dans la couche présentation). Le développement Android en est toujours au **Sprint 0** : finalisation du design system et scaffolding Clean Architecture.
+Le build est propre. La structure de packages Clean Architecture est en place (Mission A2 ✅). Le développement Android en est toujours au **Sprint 0**.
 
 ## 2. Missions actives
 
-- **Front technique** : [`missions/A1-finaliser-design-system.md`](missions/A1-finaliser-design-system.md) — Phase Implémentation — build rétabli, TODO tokens Figma à traiter.
-- **Front contenu (parallèle, non bloquant sur A1)** : [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) — Phase Implémentation — portée MVP confirmée (collège complet 6e-3e).
+- **Front technique** : [`missions/A3-navigation-compose.md`](missions/A3-navigation-compose.md) — Phase Conception — prête à démarrer.
+- **Front contenu (parallèle)** : [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) — Phase Implémentation — en cours.
 
 ## 2bis. Missions préparées (fiches créées, non démarrées)
 

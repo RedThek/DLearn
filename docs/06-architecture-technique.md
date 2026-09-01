@@ -30,32 +30,42 @@
 - `data` implémente les interfaces définies dans `domain` (principe d'inversion de dépendance).
 - Toute violation de cette règle est un motif de refus en revue de code (voir NFR-16).
 
-## 2. Structure de packages indicative
+## 2. Structure de packages — état réel (mise à jour Mission A2)
 
-> ⚠️ Le nom de package racine réel du projet est `edu.project.dlearn` (voir `namespace` dans `app/build.gradle.kts`), pas `com.liteschreib.ikii` — corrigé ici après relecture du code. Certains fichiers de scaffolding déjà présents dans le dépôt référencent encore, dans des commentaires, un troisième nom (`com.ikii.liteschreib`) qui n'a jamais été le vrai namespace : voir `docs/planification/bloc-A-taches.md`, section 1, pour le détail et les tâches de nettoyage correspondantes.
+> Nom de package racine canonique : `edu.project.dlearn`
+> Toute référence à `com.liteschreib.ikii` ou `com.ikii.liteschreib` dans le code est un artefact
+> à supprimer (voir tâche A4-T02 dans docs/planification/bloc-A-taches.md).
 
 ```
 edu.project.dlearn/
 ├── domain/
-│   ├── model/            # Entités métier (UniteApprentissage, Progression, ...)
-│   ├── usecase/           # Ex: GetUniteRecommandeeUseCase, SaveProductionEcriteUseCase
-│   └── repository/        # Interfaces (ProfilRepository, ContenuRepository, ...)
+│   ├── model/            # Entités métier pures (Vocabulaire, Utilisateur, ProgressionStats...)
+│   ├── usecase/          # Cas d'usage (GetFlashcardsUseCase, ValiderReponseExerciceUseCase...)
+│   └── repository/       # Interfaces (ApprentissageRepository, AuthRepository...)
+│                         # → RÈGLE : aucun import android.*, androidx.*, compose.* autorisé ici
 ├── data/
-│   ├── local/room/         # Entities, DAO, Database, migrations
-│   ├── local/datasource/   # Pré-population depuis assets
-│   ├── repository/         # Implémentations des interfaces domain
-│   └── ai/                 # (Cycle 2) TFLite / Gemini Nano — isolé du reste
+│   ├── local/
+│   │   ├── room/         # Entités Room, DAO, AppDatabase — [migré Mission A2]
+│   │   └── datasource/   # Pré-population assets → Room (placeholder Mission A4)
+│   ├── repository/       # Implémentations des interfaces domain
+│   └── ai/               # RÉSERVÉ Cycle DBR 2 — TFLite/Gemini Nano (ADR-003, Mission E2)
+│                         # → RÈGLE : aucun import depuis ce package avant fin Cycle 1
 ├── presentation/
-│   ├── navigation/         # NavHost, routes
-│   ├── accueil/
-│   ├── apprentissage/
-│   ├── ecriture/
-│   ├── suivi/
-│   ├── profil/
-│   ├── enseignant/         # Dashboard
-│   └── theme/               # Color.kt, Type.kt, Shape.kt, Theme.kt (design system)
-└── core/di/                 # Modules Hilt (AppModule, DataModule, DomainModule)
+│   ├── navigation/       # NavGraph.kt, MainScreen.kt, BottomNavItem.kt
+│   ├── accueil/          # AccueilScreen, AccueilViewModel, AccueilUiState
+│   ├── apprentissage/    # ApprentissageScreen, ApprentissageViewModel, ApprentissageUiState
+│   ├── connexion/        # ConnexionScreen, ConnexionViewModel, ConnexionUiState
+│   ├── ecriture/         # EcritureScreen (placeholder Mission B3)
+│   ├── enseignant/       # RÉSERVÉ Mission C2 — Dashboard enseignant
+│   ├── positionnement/   # PositionnementScreen, PositionnementViewModel, PositionnementUiState
+│   ├── profil/           # ProfilScreen, ProfilViewModel, ProfilUiState
+│   ├── suivi/            # SuiviScreen, SuiviViewModel
+│   └── theme/            # Color.kt, Type.kt, Shape.kt, Theme.kt (LiteschreibTheme)
+└── core/
+    ├── di/               # AppModule.kt (DatabaseModule + RepositoryModule)
+    └── components/       # Composables partagés (InitialsAvatar)
 ```
+
 
 ## 3. Git workflow
 

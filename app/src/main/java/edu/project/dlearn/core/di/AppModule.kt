@@ -4,11 +4,11 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import edu.project.dlearn.data.local.AppDatabase
-import edu.project.dlearn.data.local.ApprentissageDao
+import edu.project.dlearn.data.local.room.AppDatabase
+import edu.project.dlearn.data.local.room.ApprentissageDao
+import edu.project.dlearn.data.local.room.UtilisateurDao
 import edu.project.dlearn.data.repository.ApprentissageRepositoryImpl
 import edu.project.dlearn.domain.repository.ApprentissageRepository
-import edu.project.dlearn.data.local.UtilisateurDao
 import edu.project.dlearn.data.repository.AuthRepositoryImpl
 import edu.project.dlearn.domain.repository.AuthRepository
 import edu.project.dlearn.data.repository.PositionnementRepositoryImpl
@@ -29,8 +29,8 @@ object DatabaseModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "liteschreib.db")
-            // Aucune migration definie pour l'instant : a remplacer par de vraies
-            // migrations (Migration(1, 2) { ... }) des la V2 du schema en production.
+            // TODO(dette-technique): fallbackToDestructiveMigration() à remplacer par des
+            // migrations explicites avant la Mission D0 (distribution pilote).
             .fallbackToDestructiveMigration()
             .addCallback(SeedCallback)
             .build()
@@ -86,6 +86,6 @@ abstract class RepositoryModule {
         impl: PositionnementRepositoryImpl
     ): PositionnementRepository
 
-    // TODO au fur et a mesure : bindSuiviRepository, bindProfilRepository, bindEcritureRepository
-    // des que leurs interfaces domain + implementations data seront ecrites (meme patron que ci-dessus).
+    // TODO au fur et à mesure : bindSuiviRepository, bindProfilRepository, bindEcritureRepository
+    // dès que leurs interfaces domain + implementations data seront écrites (même patron que ci-dessus).
 }

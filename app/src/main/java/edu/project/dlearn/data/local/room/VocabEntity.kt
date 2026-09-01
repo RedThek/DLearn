@@ -1,4 +1,4 @@
-package edu.project.dlearn.data.local
+package edu.project.dlearn.data.local.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

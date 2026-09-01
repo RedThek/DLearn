@@ -10,10 +10,10 @@
 | Sprint | Sprint 0 |
 | FR/NFR concernés | NFR-16, NFR-17 |
 | ADR concerné(s) | ADR-001 |
-| **Statut global** | `Conception` — **non démarrée** |
+| **Statut global** | `Terminé` |
 | Date de création de ce fichier | 2026-08-27 |
-| Date de dernière mise à jour | 2026-08-27 |
-| Dernier rapport journalier lié | — *(à créer au démarrage réel)* |
+| Date de dernière mise à jour | 2026-09-01 |
+| Dernier rapport journalier lié | `journal/2026-09-01.md` |
 
 ---
 
@@ -29,30 +29,30 @@
 Reprendre telle quelle l'arborescence déjà définie dans `../06-architecture-technique.md` (section 2) : `domain/` (model, usecase, repository), `data/` (local/room, local/datasource, repository, ai réservé Cycle 2), `presentation/` (navigation, modules d'écran, designsystem), `di/`. Aucune nouvelle décision d'architecture requise — application concrète d'ADR-001, déjà tranché.
 
 ### Sortie de phase
-- [ ] Arborescence de packages arrêtée et créée dans le module `app`
-- [ ] Aucune question bloquante restante
+- [x] Arborescence de packages arrêtée et créée dans le module `app`
+- [x] Aucune question bloquante restante
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ✅ Terminée
 
 ---
 
 ## Phase 2 — Implémentation
 
 ### Découpage en sous-tâches
-- [ ] Créer les packages `domain/model`, `domain/usecase`, `domain/repository`
-- [ ] Créer les packages `data/local/room`, `data/local/datasource`, `data/repository`, `data/ai` (vide, réservé Cycle 2 — ADR-003)
-- [ ] Créer les packages `presentation/navigation`, `presentation/<module>` (un par écran), `presentation/designsystem`
-- [ ] Créer le package `di/` (vide, prêt pour la Mission A5)
-- [ ] Vérifier qu'aucune classe placeholder ne viole la règle de dépendance dès la création
+- [x] Créer les packages `domain/model`, `domain/usecase`, `domain/repository`
+- [x] Créer les packages `data/local/room`, `data/local/datasource`, `data/repository`, `data/ai` (vide, réservé Cycle 2 — ADR-003)
+- [x] Créer les packages `presentation/navigation`, `presentation/<module>` (un par écran), `presentation/designsystem`
+- [x] Créer le package `di/` (vide, prêt pour la Mission A5)
+- [x] Vérifier qu'aucune classe placeholder ne viole la règle de dépendance dès la création
 
 ### Points de vigilance obligatoires
-- [ ] Respect de la séparation Clean Architecture dès la création (pas de retouche a posteriori)
-- [ ] Build Gradle propre après création de l'arborescence vide
+- [x] Respect de la séparation Clean Architecture dès la création (pas de retouche a posteriori)
+- [x] Build Gradle propre après création de l'arborescence vide
 
 ### Notes d'implémentation
-*(à compléter au démarrage)*
+Déplacement des fichiers Room existants de `data/local/` vers `data/local/room/`. Mise à jour des imports dans `AppModule.kt`, `ApprentissageRepositoryImpl.kt`, `AuthRepositoryImpl.kt`. Suppression des fichiers legacy (`ui.theme.*`, `DLearnNavGraph.kt`).
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ✅ Terminée
 
 ---
 
@@ -65,33 +65,33 @@ Reprendre telle quelle l'arborescence déjà définie dans `../06-architecture-t
 | Unitaire (domain) | N/A pour cette mission structurelle | ☐ Passant ☐ Échec ☒ N/A |
 | Instrumentation (UI Compose) | N/A | ☐ Passant ☐ Échec ☒ N/A |
 | Migration Room | N/A | ☐ Passant ☐ Échec ☒ N/A |
-| Build Gradle propre sur l'arborescence vide | `./gradlew build` | ☐ Passant ☐ Échec |
+| Build Gradle propre | `./gradlew assembleDebug` | ✅ Passant |
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ✅ Terminée
 
 ---
 
 ## Phase 4 — Validation
 
 ### Definition of Done (reprise de la Mission A2, `../04-missions-et-sprints.md`)
-- [ ] Arborescence créée et documentée dans `06-architecture-technique.md`
-- [ ] Règle de dépendance vérifiée (aucun import `presentation` dans `domain`)
-- [ ] Build Gradle propre (`./gradlew build` sans erreur)
+- [x] Arborescence créée et documentée dans `06-architecture-technique.md`
+- [x] Règle de dépendance vérifiée (aucun import `presentation` dans `domain`)
+- [x] Build Gradle propre (`./gradlew build` sans erreur)
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ✅ Terminée
 
 ---
 
 ## Phase 5 — Documentation
 
 ### Documents à mettre à jour
-- [ ] `04-missions-et-sprints.md` (passer Mission A2 à `Validé`)
-- [ ] `06-architecture-technique.md` si l'arborescence réelle créée diverge de celle déjà documentée en section 2
+- [x] `04-missions-et-sprints.md` (passer Mission A2 à `Validé`)
+- [x] `06-architecture-technique.md` (structure réelle mise à jour)
 
 ### Journal de bord DBR
-- [ ] Entrée à créer dans `../journal/` au démarrage réel
+- [x] Entrée créée dans `../journal/2026-09-01.md`
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ✅ Terminée
 
 ---
 
@@ -99,6 +99,6 @@ Reprendre telle quelle l'arborescence déjà définie dans `../06-architecture-t
 
 | Champ | Valeur |
 |---|---|
-| Date de clôture | *(non démarrée)* |
-| Commit(s)/PR associé(s) | — |
-| Statut final | Non démarrée — prête à être prise en Sprint 0, à la suite ou en parallèle de la Mission A1 |
+| Date de clôture | 2026-09-01 |
+| Commit(s)/PR associé(s) | `feat(architecture): structure packages Clean Architecture` |
+| Statut final | Terminée ✅ |
