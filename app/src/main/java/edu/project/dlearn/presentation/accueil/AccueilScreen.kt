@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.InitialsAvatar
-import edu.project.dlearn.ui.theme.DLearnTheme
+import edu.project.dlearn.presentation.theme.LiteschreibTheme
 
 /*
 @Composable
