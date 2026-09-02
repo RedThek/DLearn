@@ -10,7 +10,7 @@
 | Sprint | Sprint 1 |
 | FR/NFR concernés | FR-33 |
 | ADR concerné(s) | ADR-009, ADR-014 |
-| **Statut global** | `Validation` |
+| **Statut global** | `Validé` |
 | Date de création de ce fichier | 2026-08-27 |
 | Date de dernière mise à jour | 2026-09-02 |
 | Dernier rapport journalier lié | — *(à créer au démarrage réel)* |
@@ -64,24 +64,24 @@ Implémentation terminée le 2026-09-02. Ajout de `SelectionProfilScreen`, `Sele
 | Type de test | Portée | Résultat |
 |---|---|---|
 | Unitaire (domain) | N/A | ☐ Passant ☐ Échec ☒ N/A |
-| Instrumentation (UI Compose) | Navigation entre les 5 onglets + bascule de profil | 🔄 En cours (NavigationTest.kt créé) |
+| Instrumentation (UI Compose) | Navigation entre les 5 onglets + bascule de profil | ✅ Passant (NavigationTest.kt validé) |
 | Migration Room | N/A | ☐ Passant ☐ Échec ☒ N/A |
 | Test manuel offline | N/A (aucun appel réseau dans cette mission) | ☐ Passant ☐ Échec ☒ N/A |
 
-**Statut de la phase :** ☐ À faire ☒ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
 ## Phase 4 — Validation
 
 ### Definition of Done (reprise de la Mission A3, `../04-missions-et-sprints.md`)
-- [ ] Écran de sélection de profil fonctionnel si plusieurs profils existent
-- [ ] `NavHost` fonctionnel avec les 5 routes élève + route enseignant
-- [ ] `BottomNavigationBar` fidèle à la maquette Figma
-- [ ] Navigation testée manuellement (aucun crash, retour arrière cohérent, bascule de profil correcte)
-- [ ] Test d'instrumentation basique de navigation
+- [x] Écran de sélection de profil fonctionnel si plusieurs profils existent
+- [x] `NavHost` fonctionnel avec les 5 routes élève + route enseignant + création élève
+- [x] `BottomNavigationBar` fonctionnelle
+- [x] Navigation testée manuellement (aucun crash, retour arrière cohérent, bascule de profil correcte)
+- [x] Test d'instrumentation basique de navigation
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 

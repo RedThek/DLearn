@@ -8,7 +8,7 @@
 
 ## 1. Où en est le projet, en une phrase
 
-Build propre. A2 ✅, A1 ✅ (ADR-014), A3 ✅. Sprint 1 terminé. Sprint 2 en attente de A0 (contenu pédagogique validé).
+Build propre. A2 ✅, A1 ✅ (ADR-014 + Upgrade UI/UX), A3 ✅. Sprint 1 terminé avec succès. Sprint 2 en attente de A0 (contenu pédagogique validé).
 
 ## 2. Missions actives
 

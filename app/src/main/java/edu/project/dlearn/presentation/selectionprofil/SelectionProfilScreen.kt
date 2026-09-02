@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,14 +15,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
-import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -40,15 +43,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import edu.project.dlearn.core.components.AppLogo
 import edu.project.dlearn.core.components.InitialsAvatar
 import edu.project.dlearn.domain.model.Role
 
-/**
- * Écran de sélection d'un profil local existant (FR-04, FR-33, ADR-009).
- * Affiché au démarrage si au moins un compte est enregistré sur l'appareil.
- *
- * UX : liste verticale de cartes de profil + bouton "Autre compte" en bas.
- */
 @Composable
 fun SelectionProfilScreen(
     onProfilSelectionne: (Role) -> Unit,
@@ -66,73 +64,80 @@ fun SelectionProfilScreen(
         }
     }
 
-    when (val etat = uiState) {
-        is SelectionProfilUiState.Chargement -> BoiteChargement()
-
-        is SelectionProfilUiState.SansProfil -> {
-            // Ne devrait pas se produire — rediriger vers l'autre compte.
-            LaunchedEffect(Unit) { onAutreCompte() }
-        }
-
-        is SelectionProfilUiState.AvecProfils -> ContenuSelection(
-            profils    = etat.profils,
-            onSelectionner = viewModel::onSelectionnerProfil,
-            onAutreCompte  = onAutreCompte
-        )
-    }
-}
-
-@Composable
-private fun ContenuSelection(
-    profils: List<ProfilResume>,
-    onSelectionner: (ProfilResume) -> Unit,
-    onAutreCompte: () -> Unit
-) {
-    Column(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(MaterialTheme.colorScheme.background)
     ) {
-        Spacer(Modifier.height(32.dp))
+        val contentWidth = if (maxWidth > 600.dp) 560.dp else maxWidth
 
-        Text(
-            text  = "Qui utilise cet appareil ?",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold,
-            textAlign  = TextAlign.Center
-        )
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text  = "Sélectionnez votre profil pour continuer.",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-            textAlign = TextAlign.Center
-        )
+        when (val etat = uiState) {
+            is SelectionProfilUiState.Chargement -> BoiteChargement()
 
-        Spacer(Modifier.height(32.dp))
+            is SelectionProfilUiState.SansProfil -> {
+                LaunchedEffect(Unit) { onAutreCompte() }
+            }
 
-        LazyColumn(
-            modifier            = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            items(profils, key = { it.id }) { profil ->
-                CarteProfil(profil = profil, onClick = { onSelectionner(profil) })
+            is SelectionProfilUiState.AvecProfils -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 24.dp, vertical = 32.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .widthIn(max = contentWidth)
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Spacer(Modifier.height(16.dp))
+                        AppLogo()
+                        Spacer(Modifier.height(24.dp))
+
+                        Text(
+                            text = "Qui utilise cet appareil ?",
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(Modifier.height(8.dp))
+                        Text(
+                            text = "Sélectionnez votre profil pour continuer.",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center
+                        )
+
+                        Spacer(Modifier.height(32.dp))
+
+                        LazyColumn(
+                            modifier = Modifier.weight(1f),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(etat.profils, key = { it.id }) { profil ->
+                                CarteProfil(profil = profil, onClick = { viewModel.onSelectionnerProfil(profil) })
+                            }
+                        }
+
+                        Spacer(Modifier.height(24.dp))
+
+                        OutlinedButton(
+                            onClick = onAutreCompte,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(52.dp)
+                        ) {
+                            Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text("Se connecter avec un autre compte")
+                        }
+
+                        Spacer(Modifier.height(16.dp))
+                    }
+                }
             }
         }
-
-        Spacer(Modifier.height(24.dp))
-
-        OutlinedButton(
-            onClick  = onAutreCompte,
-            modifier = Modifier.fillMaxWidth().height(48.dp)
-        ) {
-            Icon(Icons.Filled.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-            Spacer(Modifier.width(8.dp))
-            Text("Se connecter avec un autre compte")
-        }
-
-        Spacer(Modifier.height(16.dp))
     }
 }
 
@@ -161,13 +166,13 @@ private fun CarteProfil(profil: ProfilResume, onClick: () -> Unit) {
 
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text  = profil.nomAffiche,
+                text = profil.nomAffiche,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
             profil.classe?.let {
                 Text(
-                    text  = it,
+                    text = it,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -182,21 +187,21 @@ private fun CarteProfil(profil: ProfilResume, onClick: () -> Unit) {
                 MaterialTheme.colorScheme.primaryContainer
         ) {
             Row(
-                modifier            = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
-                verticalAlignment   = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Icon(
-                    imageVector        = iconeRole,
+                    imageVector = iconeRole,
                     contentDescription = null,
-                    modifier           = Modifier.size(14.dp),
-                    tint               = if (profil.role == Role.ENSEIGNANT)
+                    modifier = Modifier.size(14.dp),
+                    tint = if (profil.role == Role.ENSEIGNANT)
                         MaterialTheme.colorScheme.onSecondaryContainer
                     else
                         MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text  = libelleBadge,
+                    text = libelleBadge,
                     style = MaterialTheme.typography.labelLarge,
                     color = if (profil.role == Role.ENSEIGNANT)
                         MaterialTheme.colorScheme.onSecondaryContainer

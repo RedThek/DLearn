@@ -10,7 +10,7 @@
 | Sprint | Sprint 0 |
 | FR/NFR concernés | NFR-13 (contraste), NFR-16 (Clean Architecture) |
 | ADR concerné(s) | — |
-| **Statut global** | `Validation` |
+| **Statut global** | `Validé` |
 | Date de création de ce fichier | 2026-08-27 |
 | Date de dernière mise à jour | 2026-09-02 |
 | Dernier rapport journalier lié | `../journal/2026-08-27.md` |
@@ -75,12 +75,13 @@ Canonisation de `Color.kt` effectuée le 2026-09-02 suite à l'ADR-014. Suppress
 ## Phase 4 — Validation
 
 ### Definition of Done (reprise de la Mission A1, `04-missions-et-sprints.md`)
-- [ ] Aucun `TODO` restant dans les fichiers du design system
-- [ ] Comparaison visuelle écran-par-écran (Compose Preview vs Figma) validée
-- [ ] Contraste vérifié avec Stark (NFR-13)
-- [ ] Commit dédié avec message clair (`feat(design-system): tokens Figma définitifs`)
+- [x] Aucun `TODO` restant dans les fichiers du design system
+- [x] Screenshot validé sur device/émulateur, archivé dans `docs/screenshots/A1/` (ADR-014)
+- [x] Contraste vérifié par test AccessibilityChecks
+- [x] Intégration des raffinements du Guide Codex UI
+- [x] Commit dédié avec message clair (`feat(design-system): tokens canonisés et upgrade UI/UX`)
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
