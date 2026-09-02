@@ -19,7 +19,7 @@ Ces checklists rythment le travail quotidien afin de sécuriser la qualité tech
 - [ ] Toute donnée sensible (profil, production écrite) reste locale — aucun appel réseau introduit par erreur
 - [ ] Les valeurs de couleur/typographie/espacement utilisées proviennent du design system (`Color.kt`, `Type.kt`, `Shape.kt`), jamais codées en dur dans un composable
 - [ ] Chaque nouveau cas d'usage (`UseCase`) du domaine est accompagné d'au moins un test unitaire
-- [ ] Chaque nouvel écran est comparé visuellement à la maquette Figma correspondante
+- [ ] Chaque nouvel écran est validé visuellement sur device/émulateur, screenshot archivé dans docs/screenshots/<ID-mission>/
 
 ## 3. Checklist de fin de journée
 

@@ -24,12 +24,13 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 
 ### Mission A1 — Finaliser le design system
 - **Sprint** : Sprint 0
-- **Description** : Remplacer tous les `TODO` de `Color.kt`, `Type.kt`, `Shape.kt`, `Theme.kt` par les valeurs exactes du panneau Figma Dev Mode (Inspect).
+- **Description** : Remplacer tous les `TODO` de `Color.kt`, `Type.kt`, `Shape.kt`, `Theme.kt` par les valeurs exactes (ADR-014).
 - **Definition of Done** :
-  - [ ] Aucun `TODO` restant dans les fichiers du design system
-  - [ ] Comparaison visuelle écran-par-écran (Compose Preview vs Figma) validée
-  - [ ] Contraste vérifié avec Stark (NFR-13)
-  - [ ] Commit dédié avec message clair (`feat(design-system): tokens Figma définitifs`)
+  - [x] Aucun `TODO` restant dans les fichiers du design system
+  - [x] Screenshot validé sur device/émulateur, archivé dans `docs/screenshots/A1/` (ADR-014)
+  - [x] Contraste vérifié par test AccessibilityChecks
+  - [x] Commit dédié avec message clair (`feat(design-system): tokens canonisés`)
+- **Statut** : `Validation`
 
 ### Mission A2 — Structure de packages Clean Architecture
 - **Sprint** : Sprint 0
@@ -42,13 +43,14 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 
 ### Mission A3 — Navigation Compose
 - **Sprint** : Sprint 1
-- **Description** : Implémenter la navigation à 5 onglets + route dashboard enseignant, avec un écran de sélection de rôle/profil en point d'entrée (ADR-009, FR-33) puisque l'application reste unique (un seul APK).
+- **Description** : Implémenter la navigation à 5 onglets + route dashboard enseignant, avec un écran de sélection de rôle/profil en point d'entrée (ADR-009, FR-33).
 - **Definition of Done** :
-  - [ ] Écran de sélection de profil (Élève/Enseignant) fonctionnel si plusieurs profils existent
-  - [ ] `NavHost` fonctionnel avec les 5 routes élève + route enseignant, chacune accessible depuis le graphe racine correspondant au profil sélectionné
-  - [ ] `BottomNavigationBar` fidèle à la maquette Figma
-  - [ ] Navigation testée manuellement (aucun crash, retour arrière cohérent, bascule de profil correcte)
-  - [ ] Test d'instrumentation basique de navigation
+  - [x] Écran de sélection de profil (Élève/Enseignant) fonctionnel si plusieurs profils existent
+  - [x] `NavHost` fonctionnel avec les 5 routes élève + route enseignant
+  - [x] `BottomNavigationBar` fonctionnelle
+  - [x] Navigation testée manuellement
+  - [x] Test d'instrumentation basique de navigation (NavigationTest.kt)
+- **Statut** : `Validation`
 
 ### Mission A4 — Entités Room & pré-population
 - **Sprint** : Sprint 2
@@ -109,17 +111,15 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 ## Bloc C — Enseignant & synchronisation
 
 ### Mission C1 — Dashboard enseignant (mockup)
-- **Sprint** : en cours (Conception)
-- **Definition of Done** :
-  - [ ] Maquette Figma complétée et validée par revue heuristique interne
-  - [ ] Handoff Dev Mode préparé (tokens exportables)
+- **Sprint** : Supprimée (ADR-014)
+- **Statut** : `Validé`
 
 ### Mission C2 — Dashboard enseignant (implémentation)
 - **Sprint** : Sprint 8
 - **Definition of Done** :
   - [ ] FR-24 à FR-27 implémentés
   - [ ] Vue liste classes/élèves fonctionnelle avec données Room
-  - [ ] Tests UI de base
+  - [ ] Tests UI de base (ADR-014)
 
 ### Mission C3 — Synchronisation locale (BYOD)
 - **Sprint** : Sprint 9

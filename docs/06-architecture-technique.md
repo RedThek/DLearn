@@ -98,14 +98,14 @@ refactor(module): description courte
 
 - [ ] La mission est décrite dans `04-missions-et-sprints.md` avec sa Definition of Done
 - [ ] Les dépendances techniques (missions bloquantes) sont validées
-- [ ] La maquette Figma correspondante (si écran) est en état Dev Mode
+- [ ] La description UX structurée (ADR-014) est rédigée dans la fiche de mission (si écran)
 
 ## 5. Definition of Done (rappel général, voir aussi missions individuelles)
 
 - [ ] Code conforme à la règle de dépendance Clean Architecture
 - [ ] Tests unitaires/instrumentés associés passants
 - [ ] Build + lint sans erreur
-- [ ] Fidélité Figma vérifiée (le cas échéant)
+- [ ] Screenshot validé sur device/émulateur, archivé dans `docs/screenshots/<ID-mission>/`
 - [ ] Documentation technique mise à jour si nécessaire
 - [ ] Aucune régression offline-first introduite
 
@@ -128,6 +128,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-011 | Clavier allemand dans l'éditeur d'écriture | **Accepted** — clavier virtuel dédié |
 | ADR-012 | Devices de référence pour les tests de performance | **Accepted** — Tecno et Itel (et sous-marques) |
 | ADR-013 | Outil de suivi de sprint | **Accepted** — GitHub Projects (dépôt public) |
+| ADR-014 | Abandon du workflow Figma — génération UI par agent de codage | Accepted |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -251,6 +252,29 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 - Intégration native avec les Issues, Pull Requests et GitHub Actions déjà utilisés (cohérent avec l'outillage existant, pas de nouvel outil externe à maintenir).
 - **Point de vigilance majeur lié au caractère public du dépôt** : aucune donnée réelle sensible (nom d'élève, formulaire de consentement signé, export de données de recherche, capture d'écran contenant des informations personnelles) ne doit jamais être committée dans le dépôt — seuls les gabarits et modèles vides le sont. Voir le risque **R-17** ajouté au registre des risques et la checklist avant merge (`05-checklist-quotidienne.md`) mise à jour en conséquence.
 - Le backlog (`04-missions-et-sprints.md`) et les fiches vivantes (`docs/missions/`) restent la source de vérité documentaire ; GitHub Projects sert de vue opérationnelle (tableau Kanban) synchronisée manuellement avec ces documents.
+
+### ADR-014 : Abandon du workflow Figma — génération UI par agent de codage
+**Statut :** Accepted
+**Date :** 2026-09-02
+
+#### Contexte
+Le workflow Figma (maquettes → Dev Mode → export tokens → handoff) s'est avéré peu productif pour un développeur unique disposant d'un agent de codage. Le temps consacré à maintenir les maquettes synchronisées avec le code représente une charge sans valeur ajoutée pour la recherche DBR.
+
+#### Décision
+Le workflow Figma est abandonné dès ce sprint. L'UI de chaque écran est désormais générée par un agent de codage (Claude Code / Gemini Android Studio) à partir d'une **description UX structurée** rédigée dans la fiche de mission correspondante. La validation visuelle se fait sur device/émulateur, avec screenshot archivé dans `docs/screenshots/<ID-mission>/`.
+
+#### Options considérées
+- Continuer Figma (rejeté : trop chronophage, bloque les missions UI)
+- Figma IA (rejeté : coût et complexité supplémentaires)
+- Design system MD3 pur sans maquette (rejeté : trop peu de guidage pour l'agent)
+- **Description UX structurée + agent** (retenu : équilibre guidage/vitesse)
+
+#### Conséquences sur le processus
+- **DoR (toutes missions UI)** : "Maquette Figma en état Dev Mode" remplacé par "Description UX rédigée dans la fiche".
+- **DoD (toutes missions UI)** : "Comparaison visuelle Figma validée" remplacé par "Screenshot validé sur device/émulateur, archivé dans docs/screenshots/".
+- **Accessibilité (contraste)** : Validation via test instrumentation AccessibilityChecks (Android) au lieu du plugin Stark (Figma).
+- **Mission A1 (design tokens)** : Débloquée : valeurs actuelles de Color.kt canonisées.
+
 
 ## 7. Gabarit ADR (pour toute nouvelle décision)
 
