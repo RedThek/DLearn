@@ -7,5 +7,7 @@ data class Utilisateur(
     val identifiant: String,
     val nomAffiche: String,
     val role: Role,
-    val classe: String? = null // ex: "Classe de 3e", pertinent uniquement pour un Eleve
+    val classe: String? = null,
+    val niveau: String? = null,
+    val motDePasse: String? = null // Uniquement présent lors de la création ou en session locale sécurisée
 )

@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.project.dlearn.domain.model.Role
 import edu.project.dlearn.presentation.connexion.ConnexionScreen
+import edu.project.dlearn.presentation.enseignant.CreationEleveScreen
+import edu.project.dlearn.presentation.enseignant.ResultatCreationEleveScreen
 import edu.project.dlearn.presentation.positionnement.PositionnementScreen
 import edu.project.dlearn.presentation.selectionprofil.SelectionProfilScreen
 
@@ -31,6 +33,11 @@ fun LiteschreibApp() {
                 },
                 onNaviguerVersSelectionProfil = {
                     navController.navigate(Route.SELECTION_PROFIL)
+                },
+                onDemanderCompte = {
+                    // Pour la démo, on navigue vers la création d'élève
+                    // (Normalement réservé à l'enseignant, mais FR-33/FR-04 permettent d'y accéder)
+                    navController.navigate(Route.CREATION_ELEVE)
                 }
             )
         }
@@ -63,6 +70,37 @@ fun LiteschreibApp() {
                 onDeconnexion = {
                     navController.navigate(Route.CONNEXION) {
                         popUpTo(0) { inclusive = true }
+                    }
+                }
+            )
+        }
+
+        composable(Route.CREATION_ELEVE) {
+            CreationEleveScreen(
+                onBack = { navController.popBackStack() },
+                onCreateStudent = { fullName, className, level ->
+                    // Navigation simulée vers le résultat pour la démo UI
+                    navController.navigate(Route.RESULTAT_CREATION_ELEVE)
+                }
+            )
+        }
+
+        composable(Route.RESULTAT_CREATION_ELEVE) {
+            // Mock de l'utilisateur créé pour la démo UI
+            val mockUtilisateur = edu.project.dlearn.domain.model.Utilisateur(
+                id = 999L,
+                identifiant = "eleve.demo",
+                nomAffiche = "Divine K.",
+                role = Role.ELEVE,
+                classe = "6e A",
+                niveau = "A1",
+                motDePasse = "ikii.1234"
+            )
+            ResultatCreationEleveScreen(
+                utilisateur = mockUtilisateur,
+                onDone = {
+                    navController.navigate(Route.CONNEXION) {
+                        popUpTo(Route.CREATION_ELEVE) { inclusive = true }
                     }
                 }
             )

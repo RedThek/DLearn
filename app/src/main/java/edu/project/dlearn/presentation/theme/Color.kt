@@ -42,7 +42,12 @@ val OnSurfaceVariant = Color(0xFF45464F)
 val Outline = Color(0xFF767680)
 val OutlineVariant = Color(0xFFC5C6D0)
 
-// --- Thème sombre ---
-val SurfaceDark = Color(0xFF1B1B1F)
-val OnSurfaceDark = Color(0xFFE4E2E6)
-val SurfaceVariantDark = Color(0xFF45464F)
+// --- Raffinement Thème Sombre (ADR-014 + Guide Codex UI) ---
+val BackgroundDark = Color(0xFF0B0F14)
+val SurfaceDark = Color(0xFF121820)
+val SurfaceVariantDark = Color(0xFF18212B)
+val OnSurfaceDark = Color(0xFFF5F7FA)
+val OnSurfaceVariantDark = Color(0xFFAAB4C0)
+val BorderDark = Color(0xFF303A46)
+val SuccessGreen = Color(0xFF35C759)
+val ErrorRed = Color(0xFFFF5C5C)

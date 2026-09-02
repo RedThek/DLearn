@@ -10,4 +10,6 @@ internal object Route {
     const val SELECTION_PROFIL = "selection_profil"
     const val POSITIONNEMENT  = "positionnement"
     const val MAIN            = "main"
+    const val CREATION_ELEVE   = "creation_eleve"
+    const val RESULTAT_CREATION_ELEVE = "resultat_creation_eleve"
 }

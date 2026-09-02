@@ -1,7 +1,9 @@
 package edu.project.dlearn.presentation.connexion
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,24 +13,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDone
-import androidx.compose.material.icons.filled.School
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.SegmentedButton
-import androidx.compose.material3.SegmentedButtonDefaults
-import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,21 +33,23 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import edu.project.dlearn.core.components.AppLogo
+import edu.project.dlearn.core.components.AppTextField
 import edu.project.dlearn.core.components.InitialsAvatar
+import edu.project.dlearn.core.components.PasswordField
+import edu.project.dlearn.core.components.RoleSelector
 import edu.project.dlearn.domain.model.Role
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConnexionScreen(
     onConnexionReussie: (Role) -> Unit,
     onNaviguerVersSelectionProfil: () -> Unit,
+    onDemanderCompte: () -> Unit = {},
+    onMotDePasseOublie: () -> Unit = {},
     viewModel: ConnexionViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
@@ -65,168 +63,185 @@ fun ConnexionScreen(
         }
     }
 
-    Box(
+    BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
-        contentAlignment = Alignment.Center
+            .background(MaterialTheme.colorScheme.background)
     ) {
+        val contentWidth = if (maxWidth > 600.dp) 460.dp else maxWidth
+
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 24.dp, vertical = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Logo
-            Box(
+            Column(
                 modifier = Modifier
-                    .size(64.dp)
-                    .clip(RoundedCornerShape(16.dp))
-                    .background(MaterialTheme.colorScheme.primary),
-                contentAlignment = Alignment.Center
+                    .widthIn(max = contentWidth)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Icon(
-                    Icons.Filled.School,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-            }
+                Spacer(Modifier.height(16.dp))
 
-            Spacer(Modifier.height(16.dp))
-            Text("Liteschreib IKII", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text(
-                "Apprendre l'allemand par la littérature",
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
-            )
+                AppLogo()
 
-            Spacer(Modifier.height(12.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(
-                    Icons.Filled.CloudDone,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.size(16.dp)
-                )
-                Spacer(Modifier.width(4.dp))
+                Spacer(Modifier.height(20.dp))
+
                 Text(
-                    "Fonctionne 100% hors-ligne",
-                    color = MaterialTheme.colorScheme.secondary,
-                    style = MaterialTheme.typography.labelLarge
+                    text = "Liteschreib IKII",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold
                 )
-            }
 
-            Spacer(Modifier.height(24.dp))
+                Spacer(Modifier.height(6.dp))
 
-            // --- Section profils existants (visible si > 0 profils sur l'appareil) ---
-            if (etat.profilsExistants.isNotEmpty()) {
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(
-                    "Déjà sur cet appareil",
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.fillMaxWidth()
+                    text = "Apprendre l'allemand par la littérature",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
                 )
-                Spacer(Modifier.height(8.dp))
-                etat.profilsExistants.take(3).forEach { profil ->
-                    OutlinedButton(
-                        onClick = viewModel::onVoirProfilsExistants,
-                        modifier = Modifier.fillMaxWidth().height(48.dp)
-                    ) {
-                        InitialsAvatar(profil.nomAffiche, taille = 28.dp)
-                        Spacer(Modifier.width(8.dp))
-                        Text(profil.nomAffiche)
-                    }
-                    Spacer(Modifier.height(4.dp))
+
+                Spacer(Modifier.height(16.dp))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        Icons.Filled.CloudDone,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(Modifier.width(4.dp))
+                    Text(
+                        text = "Fonctionne 100% hors-ligne",
+                        color = MaterialTheme.colorScheme.primary,
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
-                if (etat.profilsExistants.size > 3) {
-                    TextButton(
-                        onClick = viewModel::onVoirProfilsExistants,
+
+                Spacer(Modifier.height(28.dp))
+
+                // --- Section profils existants (visible si > 0 profils sur l'appareil) ---
+                if (etat.profilsExistants.isNotEmpty()) {
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    Text(
+                        "Déjà sur cet appareil",
+                        style = MaterialTheme.typography.labelLarge,
                         modifier = Modifier.fillMaxWidth()
-                    ) { Text("Voir tous les profils (${etat.profilsExistants.size})") }
-                }
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            }
-
-            Spacer(Modifier.height(24.dp))
-
-            // Sélecteur de rôle Élève / Enseignant (segmented button M3).
-            SingleChoiceSegmentedButtonRow(modifier = Modifier.fillMaxWidth()) {
-                Role.entries.forEachIndexed { index, role ->
-                    SegmentedButton(
-                        selected = etat.roleSelectionne == role,
-                        onClick = { viewModel.onChangerRole(role) },
-                        shape = SegmentedButtonDefaults.itemShape(index, Role.entries.size)
-                    ) {
-                        Text(if (role == Role.ELEVE) "Élève" else "Enseignant")
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    etat.profilsExistants.take(3).forEach { profil ->
+                        OutlinedButton(
+                            onClick = viewModel::onVoirProfilsExistants,
+                            modifier = Modifier.fillMaxWidth().height(48.dp)
+                        ) {
+                            InitialsAvatar(profil.nomAffiche, taille = 28.dp)
+                            Spacer(Modifier.width(8.dp))
+                            Text(profil.nomAffiche)
+                        }
+                        Spacer(Modifier.height(4.dp))
                     }
+                    if (etat.profilsExistants.size > 3) {
+                        TextButton(
+                            onClick = viewModel::onVoirProfilsExistants,
+                            modifier = Modifier.fillMaxWidth()
+                        ) { Text("Voir tous les profils (${etat.profilsExistants.size})") }
+                    }
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
                 }
-            }
 
-            Spacer(Modifier.height(24.dp))
+                RoleSelector(
+                    selectedRole = etat.roleSelectionne,
+                    onRoleSelected = viewModel::onChangerRole
+                )
 
-            Text(
-                "Identifiant",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(Modifier.height(4.dp))
-            OutlinedTextField(
-                value = etat.identifiant,
-                onValueChange = viewModel::onChangerIdentifiant,
-                placeholder = { Text("ex : eleve.2451") },
-                singleLine = true,
-                modifier = Modifier.fillMaxWidth()
-            )
+                Spacer(Modifier.height(28.dp))
 
-            Spacer(Modifier.height(16.dp))
+                AppTextField(
+                    value = etat.identifiant,
+                    onValueChange = viewModel::onChangerIdentifiant,
+                    label = "Identifiant",
+                    placeholder = "ex : eleve.2451",
+                    leadingIcon = Icons.Default.Person,
+                    enabled = !etat.enChargement
+                )
 
-            Text(
-                "Mot de passe",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = Modifier.fillMaxWidth()
-            )
-            Spacer(Modifier.height(4.dp))
-            OutlinedTextField(
-                value = etat.motDePasse,
-                onValueChange = viewModel::onChangerMotDePasse,
-                singleLine = true,
-                visualTransformation = if (etat.motDePasseVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                trailingIcon = {
-                    IconButton(onClick = viewModel::onToggleVisibiliteMotDePasse) {
-                        Icon(
-                            if (etat.motDePasseVisible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
-                            contentDescription = null
+                Spacer(Modifier.height(16.dp))
+
+                PasswordField(
+                    value = etat.motDePasse,
+                    onValueChange = viewModel::onChangerMotDePasse,
+                    visible = etat.motDePasseVisible,
+                    onVisibilityChange = viewModel::onToggleVisibiliteMotDePasse,
+                    enabled = !etat.enChargement
+                )
+
+                TextButton(
+                    onClick = onMotDePasseOublie,
+                    modifier = Modifier.align(Alignment.End),
+                    enabled = !etat.enChargement
+                ) {
+                    Text("Mot de passe oublié ?")
+                }
+
+                if (etat.messageErreur != null) {
+                    Text(
+                        text = etat.messageErreur!!,
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+
+                Spacer(Modifier.height(8.dp))
+
+                Button(
+                    onClick = viewModel::onSeConnecter,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(52.dp),
+                    enabled = !etat.enChargement
+                ) {
+                    if (etat.enChargement) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(22.dp),
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                    } else {
+                        Text(
+                            text = "Se connecter",
+                            fontWeight = FontWeight.SemiBold
                         )
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            etat.messageErreur?.let {
-                Spacer(Modifier.height(8.dp))
-                Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium)
-            }
-
-            Spacer(Modifier.height(24.dp))
-
-            Button(
-                onClick = viewModel::onSeConnecter,
-                enabled = !etat.enChargement,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(48.dp)
-            ) {
-                if (etat.enChargement) {
-                    CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                } else {
-                    Text("Se connecter")
                 }
-            }
 
-            Spacer(Modifier.height(16.dp))
-            Text(
-                "Besoin d'aide ? Contactez votre enseignant.",
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Center
-            )
+                Spacer(Modifier.height(24.dp))
+
+                Text(
+                    text = "Pas encore de compte ?",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                TextButton(
+                    onClick = onDemanderCompte,
+                    enabled = !etat.enChargement
+                ) {
+                    Text("Demander un compte élève")
+                }
+
+                Spacer(Modifier.height(16.dp))
+
+                Text(
+                    text = "Besoin d'aide ? Contactez votre enseignant.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
