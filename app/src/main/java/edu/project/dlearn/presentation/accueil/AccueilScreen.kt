@@ -1,90 +1,26 @@
 package edu.project.dlearn.presentation.accueil
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.automirrored.filled.MenuBook
-import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Schedule
+import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import edu.project.dlearn.core.components.InitialsAvatar
-import edu.project.dlearn.presentation.theme.LiteschreibTheme
+import edu.project.dlearn.core.components.*
 
-/*
-@Composable
-fun AccueilScreen(
-    uiState: AccueilUiState = AccueilUiState(),
-    onEleveClick: () -> Unit = {},
-    onEnseignantClick: () -> Unit = {}
-) {
-    Scaffold { padding ->
-        Column(
-            modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Text(uiState.appName, style = MaterialTheme.typography.headlineMedium)
-            Spacer(Modifier.height(32.dp))
-            Button(onClick = onEleveClick, modifier = Modifier.fillMaxWidth()) { Text("Élève") }
-            Spacer(Modifier.height(12.dp))
-            OutlinedButton(onClick = onEnseignantClick, modifier = Modifier.fillMaxWidth()) { Text("Enseignant") }
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun AccueilScreenPreview() {
-    DLearnTheme { AccueilScreen() }
-} */
-
-/*
-@Composable
-fun AccueilScreen() {
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Text(
-            "Willkommen zurück !",
-            style = MaterialTheme.typography.headlineLarge,
-            fontWeight = FontWeight.Bold
-        )
-        Text("Prêt(e) à progresser en allemand aujourdhui ?", style = MaterialTheme.typography.bodyLarge)
-
-        Spacer(Modifier.height(24.dp))
-
-        CarteRaccourci("Continuer lapprentissage", "5 mots à réviser aujourdhui")
-        Spacer(Modifier.height(12.dp))
-        CarteRaccourci("Production écrite", "1 exercice en attente de soumission")
-        Spacer(Modifier.height(12.dp))
-        CarteRaccourci("Voir ma progression", "Série actuelle : 5 jours")
-    }
-}
-
-@Composable
-private fun CarteRaccourci(titre: String, sousTitre: String) {
-    Card(modifier = Modifier.fillMaxWidth()) {
-        Column(Modifier.padding(16.dp)) {
-            Text(titre, style = MaterialTheme.typography.titleMedium)
-            Text(sousTitre, style = MaterialTheme.typography.bodyMedium)
-        }
-    }
-} */
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccueilScreen(
     onOuvrirLecture: () -> Unit = {},
@@ -92,134 +28,205 @@ fun AccueilScreen(
 ) {
     val etat by viewModel.uiState.collectAsState()
 
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        EnTeteSalutation(etat.prenom, etat.niveau)
-
-        Spacer(Modifier.height(24.dp))
-        Text("Progression globale", style = MaterialTheme.typography.titleMedium)
-        Spacer(Modifier.height(4.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            LinearProgressIndicator(
-                progress = { etat.progressionGlobale },
-                modifier = Modifier
-                    .weight(1f)
-                    .height(8.dp)
-                    .clip(RoundedCornerShape(4.dp))
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = "Guten Tag,",
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            Text(
+                                text = etat.prenom,
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                        InitialsAvatar(etat.prenom, taille = 40.dp)
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                )
             )
-            Spacer(Modifier.width(8.dp))
-            Text("${(etat.progressionGlobale * 100).toInt()}%", style = MaterialTheme.typography.bodyMedium)
         }
-
-        etat.lectureEnCours?.let { lecture ->
-            Spacer(Modifier.height(24.dp))
-            Text("Reprendre la lecture", style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(8.dp))
-            CarteLectureEnCours(lecture, onClick = onOuvrirLecture)
-        }
-
-        if (etat.miniCours.isNotEmpty()) {
-            Spacer(Modifier.height(24.dp))
-            Text("Mini-cours", style = MaterialTheme.typography.titleMedium)
-            Spacer(Modifier.height(8.dp))
-            etat.miniCours.forEach { cours ->
-                LigneMiniCours(cours)
-                Spacer(Modifier.height(12.dp))
-            }
-        }
-    }
-}
-
-@Composable
-private fun EnTeteSalutation(prenom: String, niveau: String) {
-    Row(
-        Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Column {
-            Text("Bonjour, $prenom", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-            Text("Niveau $niveau", style = MaterialTheme.typography.bodyMedium)
-        }
-        InitialsAvatar(prenom, taille = 40.dp)
-    }
-}
-
-@Composable
-private fun CarteLectureEnCours(lecture: LectureEnCours, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
-    ) {
-        Row(
-            Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            Surface(
-                shape = CircleShape,
-                color = MaterialTheme.colorScheme.primaryContainer,
-                modifier = Modifier.size(40.dp)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    Icon(
-                        Icons.AutoMirrored.Filled.MenuBook,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+            // Hero Card
+            item {
+                HeroCard(
+                    prenom = etat.prenom,
+                    progression = etat.progressionGlobale,
+                    onContinuerClick = onOuvrirLecture
+                )
+            }
+
+            // Statistiques rapides
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    StatItem(
+                        value = "5", // Fake data based on spec if missing in state
+                        label = "Série",
+                        icon = Icons.Default.LocalFireDepartment,
+                        modifier = Modifier.weight(1f)
+                    )
+                    StatItem(
+                        value = "12",
+                        label = "Unités",
+                        icon = Icons.Default.TaskAlt,
+                        modifier = Modifier.weight(1f)
+                    )
+                    StatItem(
+                        value = "45m",
+                        label = "Temps",
+                        icon = Icons.Default.Schedule,
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
-            Spacer(Modifier.width(12.dp))
-            Column(Modifier.weight(1f)) {
-                Text(lecture.titre, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                Text(
-                    "Page ${lecture.pageActuelle} sur ${lecture.pageTotale}",
-                    style = MaterialTheme.typography.bodyMedium
+
+            // À faire aujourd'hui
+            item {
+                DlearnSectionHeader(
+                    title = "À faire aujourd'hui",
+                    subtitle = "Tes activités recommandées"
                 )
             }
-            Icon(
-                Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+
+            val lecture = etat.lectureEnCours
+            if (lecture != null) {
+                item {
+                    ActivityCard(
+                        title = lecture.titre,
+                        typeLabel = "LECTURE",
+                        icon = Icons.Default.MenuBook,
+                        metadata = "Page ${lecture.pageActuelle} sur ${lecture.pageTotale}",
+                        onClick = onOuvrirLecture
+                    )
+                }
+            } else {
+                item {
+                    EmptyStateCard(
+                        title = "Aucune activité",
+                        message = "Ton parcours commence ici. Lance ta première activité.",
+                        actionLabel = "Commencer",
+                        onActionClick = onOuvrirLecture
+                    )
+                }
+            }
+
+            // Ma progression
+            item {
+                DlearnSectionHeader(
+                    title = "Ma progression",
+                    subtitle = "Niveau ${etat.niveau}"
+                )
+            }
+
+            item {
+                ProgressCard(
+                    title = "Objectif global",
+                    progress = etat.progressionGlobale,
+                    supportingText = "Continue comme ça pour atteindre le niveau suivant !"
+                )
+            }
+
+            // Conseil du jour
+            item {
+                DlearnSectionHeader(title = "Conseil du jour")
+            }
+
+            item {
+                ActivityCard(
+                    title = "La répétition est la clé",
+                    typeLabel = "CONSEIL",
+                    icon = Icons.Default.AutoAwesome,
+                    metadata = "Réviser 10 minutes chaque jour est plus efficace qu'une heure par semaine."
+                )
+            }
+
+            // Bottom spacer for navigation bar
+            item { Spacer(modifier = Modifier.height(16.dp)) }
         }
     }
 }
 
 @Composable
-private fun LigneMiniCours(cours: MiniCours) {
-    Row(
-        Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+private fun HeroCard(
+    prenom: String,
+    progression: Float,
+    onContinuerClick: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        shape = MaterialTheme.shapes.extraLarge
     ) {
-        Icon(
-            Icons.Filled.Edit,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(20.dp)
-        )
-        Spacer(Modifier.width(8.dp))
-        Column(Modifier.weight(1f)) {
-            Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(cours.nom, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-                Text("${(cours.progression * 100).toInt()}%", style = MaterialTheme.typography.bodyMedium)
+        Column(
+            modifier = Modifier.padding(24.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Column {
+                Text(
+                    text = "Bonjour, $prenom !",
+                    style = MaterialTheme.typography.headlineSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+                Text(
+                    text = "Prêt pour 10 minutes d'allemand ?",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                )
             }
-            Spacer(Modifier.height(4.dp))
-            LinearProgressIndicator(
-                progress = { cours.progression },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(6.dp)
-                    .clip(RoundedCornerShape(3.dp)),
-                color = if (cours.progression >= 0.75f) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.primary
-            )
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                LinearProgressIndicator(
+                    progress = { progression },
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(8.dp),
+                    color = MaterialTheme.colorScheme.primary,
+                    trackColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.1f)
+                )
+                Text(
+                    text = "${(progression * 100).toInt()}%",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                )
+            }
+
+            Button(
+                onClick = onContinuerClick,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary
+                )
+            ) {
+                Text("Continuer")
+            }
         }
     }
 }

@@ -1,111 +1,20 @@
 package edu.project.dlearn.presentation.profil
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.Logout
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Sync
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Switch
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
-import edu.project.dlearn.core.components.InitialsAvatar
+import edu.project.dlearn.core.components.*
 
-/*
-@Composable
-fun ProfilScreen(viewModel: ProfilViewModel = hiltViewModel()) {
-    val etat by viewModel.uiState.collectAsState()
-
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Surface(
-            modifier = Modifier
-                .size(96.dp)
-                .clip(CircleShape),
-            color = MaterialTheme.colorScheme.primaryContainer
-        ) {
-            Icon(
-                Icons.Filled.Person,
-                contentDescription = null,
-                modifier = Modifier.padding(20.dp),
-                tint = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        }
-        Spacer(Modifier.height(16.dp))
-        Text(etat.nomEleve, style = MaterialTheme.typography.titleLarge)
-        Text("Niveau ${etat.niveauCECR}", style = MaterialTheme.typography.bodyMedium)
-
-        Spacer(Modifier.height(32.dp))
-        HorizontalDivider()
-
-        ListItem(
-            headlineContent = { Text("Synthese vocale (Allemand)") },
-            trailingContent = {
-                Switch(checked = etat.ttsActif, onCheckedChange = viewModel::onToggleTts)
-            }
-        )
-        ListItem(
-            headlineContent = { Text("Theme sombre") },
-            trailingContent = {
-                Switch(checked = etat.themeSombre, onCheckedChange = viewModel::onToggleThemeSombre)
-            }
-        )
-        ListItem(
-            headlineContent = { Text("Mode hors-ligne") },
-            supportingContent = { Text("Toujours actif (contrainte du projet)") },
-            trailingContent = { Switch(checked = true, onCheckedChange = {}, enabled = false) }
-        )
-    }
-} */
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfilScreen(
     onDeconnexion: () -> Unit,
@@ -121,188 +30,148 @@ fun ProfilScreen(
         }
     }
 
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValuesLocal
-    ) {
-        item { EnTeteProfil(etat) }
-        item { CarteNiveau(etat) }
-        item { TitreSection("Paramètres") }
-        item {
-            LigneParametre(
-                icone = Icons.Filled.Language,
-                libelle = "Langue de l'interface",
-                valeurAffichee = etat.langueInterface,
-                afficherChevron = true
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        "Mon profil",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { }) {
+                        Icon(Icons.Default.Settings, contentDescription = "Paramètres")
+                    }
+                }
             )
         }
-        item {
-            LigneParametre(
-                icone = Icons.Filled.CloudOff,
-                libelle = "Mode hors-ligne",
-                valeurAffichee = if (etat.modeHorsLigneActif) "Activé" else "Désactivé",
-                couleurValeur = if (etat.modeHorsLigneActif) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        item {
-            LigneParametre(
-                icone = Icons.Filled.Notifications,
-                libelle = "Notifications",
-                valeurAffichee = if (etat.notificationsActives) "Activé" else "Désactivé",
-                couleurValeur = if (etat.notificationsActives) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
-        item {
-            LigneParametre(
-                icone = Icons.Filled.Sync,
-                libelle = "Synchroniser maintenant",
-                valeurAffichee = if (etat.synchronisationEnCours) null else etat.derniereSynchro,
-                enChargement = etat.synchronisationEnCours,
-                onClick = viewModel::onSynchroniserMaintenant
-            )
-        }
-        item { TitreSection("Mes badges") }
-        item { RangeeBadges(etat.badges) }
-        item {
-            Spacer(Modifier.height(24.dp))
-            OutlinedButton(
-                onClick = viewModel::onDeconnexion,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .height(48.dp)
-            ) {
-                Icon(Icons.Filled.Logout, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(Modifier.width(8.dp))
-                Text("Se déconnecter")
-            }
-            Spacer(Modifier.height(16.dp))
-        }
-    }
-}
-
-private val PaddingValuesLocal = androidx.compose.foundation.layout.PaddingValues(bottom = 8.dp)
-
-@Composable
-private fun EnTeteProfil(etat: ProfilUiState) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text("Mon profil", style = MaterialTheme.typography.headlineLarge, fontWeight = FontWeight.Bold)
-        IconButton(onClick = { /* TODO: écran de réglages avancés */ }) {
-            Icon(Icons.Filled.Settings, contentDescription = "Réglages")
-        }
-    }
-}
-
-@Composable
-private fun CarteNiveau(etat: ProfilUiState) {
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        InitialsAvatar(etat.nomComplet, taille = 72.dp)
-        Spacer(Modifier.height(12.dp))
-        Text(etat.nomComplet, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-        Text(etat.classe, style = MaterialTheme.typography.bodyMedium)
-        Spacer(Modifier.height(8.dp))
-        Surface(
-            shape = RoundedCornerShape(50),
-            color = MaterialTheme.colorScheme.primaryContainer
+    ) { padding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+            contentPadding = PaddingValues(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            val texteNiveau = if (etat.progressionNiveauEnCours) {
-                "Niveau ${etat.niveauActuel} → ${etat.niveauCible} (en cours)"
-            } else {
-                "Niveau ${etat.niveauActuel}"
+            // Header
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    InitialsAvatar(etat.nomComplet, taille = 88.dp)
+                    Text(
+                        text = etat.nomComplet,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "Élève · ${etat.classe}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    SuggestionChip(
+                        onClick = { },
+                        label = { Text("Niveau ${etat.niveauActuel}") },
+                        colors = SuggestionChipDefaults.suggestionChipColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                            labelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    )
+                }
             }
-            Text(
-                texteNiveau,
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                style = MaterialTheme.typography.labelLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
-        }
-        Spacer(Modifier.height(24.dp))
-    }
-}
 
-@Composable
-private fun TitreSection(titre: String) {
-    Text(
-        titre,
-        style = MaterialTheme.typography.titleMedium,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
-    )
-}
-
-@Composable
-private fun LigneParametre(
-    icone: ImageVector,
-    libelle: String,
-    valeurAffichee: String?,
-    couleurValeur: androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurfaceVariant,
-    afficherChevron: Boolean = false,
-    enChargement: Boolean = false,
-    onClick: (() -> Unit)? = null
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .then(if (onClick != null) Modifier.clickable(onClick = onClick) else Modifier)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(icone, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
-            Spacer(Modifier.width(12.dp))
-            Text(libelle, style = MaterialTheme.typography.bodyLarge)
-        }
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            if (enChargement) {
-                CircularProgressIndicator(modifier = Modifier.size(16.dp))
-            } else if (valeurAffichee != null) {
-                Text(valeurAffichee, color = couleurValeur, style = MaterialTheme.typography.bodyMedium)
+            // Progression Niveau
+            item {
+                DlearnSectionHeader(title = "Objectif actuel")
             }
-            if (afficherChevron) {
-                Spacer(Modifier.width(4.dp))
-                Icon(
-                    Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+
+            item {
+                ProgressCard(
+                    title = "Vers le niveau ${etat.niveauCible}",
+                    progress = 0.72f, // Placeholder
+                    supportingText = "Plus que 5 unités pour atteindre le niveau ${etat.niveauCible} !"
                 )
             }
-        }
-    }
-}
 
-@Composable
-private fun RangeeBadges(badges: List<Badge>) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        badges.forEach { badge ->
-            val couleurFond = if (badge.deverrouille) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
-            val couleurIcone = if (badge.deverrouille) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
-
-            Box(
-                modifier = Modifier
-                    .size(48.dp)
-                    .clip(CircleShape)
-                    .background(couleurFond),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(badge.icone, contentDescription = null, tint = couleurIcone)
+            // Préférences
+            item {
+                DlearnSectionHeader(title = "Préférences")
             }
+
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = CardDefaults.outlinedCardBorder()
+                ) {
+                    Column {
+                        ListItem(
+                            headlineContent = { Text("Audio") },
+                            supportingContent = { Text("Lecture audio activée") },
+                            leadingContent = { Icon(Icons.Default.VolumeUp, contentDescription = null) },
+                            trailingContent = { Switch(checked = true, onCheckedChange = { }) }
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        ListItem(
+                            headlineContent = { Text("Taille du texte") },
+                            supportingContent = { Text("Standard") },
+                            leadingContent = { Icon(Icons.Default.FormatSize, contentDescription = null) },
+                            trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) }
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        ListItem(
+                            headlineContent = { Text("Accessibilité") },
+                            supportingContent = { Text("Options d'affichage") },
+                            leadingContent = { Icon(Icons.Default.Accessibility, contentDescription = null) },
+                            trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) }
+                        )
+                    }
+                }
+            }
+
+            // Compte Local
+            item {
+                DlearnSectionHeader(title = "Compte local")
+            }
+
+            item {
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+                    border = CardDefaults.outlinedCardBorder()
+                ) {
+                    Column {
+                        ListItem(
+                            headlineContent = { Text("Dernière synchronisation") },
+                            supportingContent = { Text(etat.derniereSynchro) },
+                            leadingContent = { Icon(Icons.Default.Sync, contentDescription = null) },
+                            trailingContent = {
+                                if (etat.synchronisationEnCours) {
+                                    CircularProgressIndicator(modifier = Modifier.size(24.dp))
+                                } else {
+                                    IconButton(onClick = viewModel::onSynchroniserMaintenant) {
+                                        Icon(Icons.Default.Refresh, contentDescription = "Synchroniser")
+                                    }
+                                }
+                            }
+                        )
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                        ListItem(
+                            headlineContent = { Text("Se déconnecter", color = MaterialTheme.colorScheme.error) },
+                            leadingContent = { Icon(Icons.Default.Logout, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                            modifier = Modifier.clickable(onClick = viewModel::onDeconnexion)
+                        )
+                    }
+                }
+            }
+
+            item { Spacer(modifier = Modifier.height(32.dp)) }
         }
     }
 }
