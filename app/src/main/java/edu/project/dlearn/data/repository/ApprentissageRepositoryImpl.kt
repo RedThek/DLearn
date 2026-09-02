@@ -2,6 +2,7 @@ package edu.project.dlearn.data.repository
 
 import edu.project.dlearn.data.local.room.ApprentissageDao
 import edu.project.dlearn.data.local.room.ExerciceEntity
+import edu.project.dlearn.data.local.room.ReponseEleveEntity
 import edu.project.dlearn.data.local.room.VocabEntity
 import edu.project.dlearn.domain.model.ExerciceTexteATrous
 import edu.project.dlearn.domain.model.Vocabulaire
@@ -18,7 +19,7 @@ class ApprentissageRepositoryImpl @Inject constructor(
         dao.getFlashcardsDues(niveau).map { list -> list.map { it.toDomain() } }
 
     override fun getExercicesTexteATrous(niveau: String): Flow<List<ExerciceTexteATrous>> =
-        dao.getExercices(niveau).map { list -> list.map { it.toDomain() } }
+        dao.getExercicesTexteATrous(niveau).map { list -> list.map { it.toDomain() } }
 
     override suspend fun enregistrerResultatFlashcard(vocabulaireId: Long, connu: Boolean) {
         val vocab = dao.getVocabById(vocabulaireId) ?: return
@@ -31,8 +32,21 @@ class ApprentissageRepositoryImpl @Inject constructor(
         dao.updateVocab(vocab.copy(facteurDifficulte = nouveauFacteur, prochainRappel = prochainRappel))
     }
 
-    override suspend fun enregistrerResultatExercice(exerciceId: Long, reponseDonnee: String, estCorrecte: Boolean) {
-        // TODO: persister l historique de reponses (table dediee) pour alimenter l ecran Suivi.
+    // Dans enregistrerResultatExercice, insérer dans reponse_eleve
+    override suspend fun enregistrerResultatExercice(
+        exerciceId: Long, reponseDonnee: String, estCorrecte: Boolean
+    ) {
+        // TODO: récupérer l'eleveId depuis la session (DataStore Sprint 3)
+        val eleveIdProvisoire = 1L
+        dao.insertReponse(
+            ReponseEleveEntity(
+                id            = java.util.UUID.randomUUID().toString(),
+                eleveId       = eleveIdProvisoire,
+                exerciceId    = exerciceId.toString(),
+                reponseDonnee = reponseDonnee,
+                estCorrecte   = estCorrecte
+            )
+        )
     }
 
     private fun VocabEntity.toDomain() = Vocabulaire(
@@ -45,11 +59,12 @@ class ApprentissageRepositoryImpl @Inject constructor(
         facteurDifficulte = facteurDifficulte
     )
 
+    // Adapter toDomain() pour ExerciceEntity (String id → Long id via hashCode pour compatibilité)
     private fun ExerciceEntity.toDomain() = ExerciceTexteATrous(
-        id = id,
-        phraseAvecTrou = phraseAvecTrou,
-        reponseCorrecte = reponseCorrecte,
-        niveauCECR = niveauCECR,
-        indice = indice
+        id               = id.hashCode().toLong(),
+        phraseAvecTrou   = enonce,
+        reponseCorrecte  = correctionAttendue?.split("|")?.firstOrNull() ?: "",
+        niveauCECR       = "A1", // TODO: résoudre depuis uniteId → niveauGer (Sprint 3)
+        indice           = null
     )
 }

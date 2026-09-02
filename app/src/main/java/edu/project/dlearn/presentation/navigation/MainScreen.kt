@@ -16,9 +16,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import edu.project.dlearn.domain.model.Role
 import edu.project.dlearn.presentation.accueil.AccueilScreen
 import edu.project.dlearn.presentation.apprentissage.ApprentissageScreen
 import edu.project.dlearn.presentation.ecriture.EcritureScreen
+import edu.project.dlearn.presentation.enseignant.EnseignantDashboardScreen
 import edu.project.dlearn.presentation.profil.ProfilScreen
 import edu.project.dlearn.presentation.suivi.SuiviScreen
 
@@ -27,7 +29,16 @@ import edu.project.dlearn.presentation.suivi.SuiviScreen
  * inchangée depuis la première livraison. Nichée sous la route "main" du [RootNavGraph].
  */
 @Composable
-fun MainScreen(onDeconnexion: () -> Unit) {
+fun MainScreen(
+    role: Role = Role.ELEVE,   // ← AJOUT
+    onDeconnexion: () -> Unit
+) {
+    if (role == Role.ENSEIGNANT) {
+        EnseignantDashboardScreen()
+        // TODO Sprint 3 : le dashboard enseignant aura sa propre BottomBar (Classe/Contenus/Corrections)
+        return
+    }
+
     val navController = rememberNavController()
 
     Scaffold(

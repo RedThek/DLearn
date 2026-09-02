@@ -67,6 +67,7 @@ fun LiteschreibApp() {
 
         composable(Route.MAIN) {
             MainScreen(
+                role          = Role.ELEVE,   // TODO: lire depuis session
                 onDeconnexion = {
                     navController.navigate(Route.CONNEXION) {
                         popUpTo(0) { inclusive = true }

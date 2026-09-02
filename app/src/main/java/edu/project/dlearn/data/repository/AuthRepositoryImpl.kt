@@ -54,7 +54,8 @@ class AuthRepositoryImpl @Inject constructor(
         identifiant = identifiant,
         nomAffiche  = nomAffiche,
         role     = Role.valueOf(role),
-        classe   = classe
+        classe   = classe,
+        niveau   = niveau
     )
 
     // TODO production : remplacer SHA-256 nu par PBKDF2/BCrypt avec sel.

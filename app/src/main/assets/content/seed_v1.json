@@ -1,0 +1,133 @@
+{
+  "version": "CONTENU-v1.0",
+  "unites": [
+    {
+      "id": "U-6E-01",
+      "niveauGer": "A1",
+      "chapitreCurriculum": "",
+      "titre": "Ich stelle mich vor",
+      "objectifsApprentissage": "Se présenter à l'écrit : nom, âge, ville, famille, matière préférée, loisirs. Vocabulaire de base A1.",
+      "ordreAffichage": 1
+    },
+    {
+      "id": "U-5E-01",
+      "niveauGer": "A1",
+      "chapitreCurriculum": "",
+      "titre": "Meine Woche",
+      "objectifsApprentissage": "Décrire sa semaine : jours, activités récurrentes, subordonnée 'weil' simple. Consolidation A1.",
+      "ordreAffichage": 2
+    },
+    {
+      "id": "U-4E-01",
+      "niveauGer": "A2",
+      "chapitreCurriculum": "",
+      "titre": "Ein Tag in Yaoundé",
+      "objectifsApprentissage": "Raconter sa journée au présent et au Perfekt. Vocabulaire du quotidien, verbes séparables (aufstehen, anziehen, aufmachen).",
+      "ordreAffichage": 3
+    },
+    {
+      "id": "U-3E-01",
+      "niveauGer": "A2",
+      "chapitreCurriculum": "",
+      "titre": "Meine Sommerferien in Kribi",
+      "objectifsApprentissage": "Raconter des vacances au Perfekt étendu. Exprimer un projet d'avenir avec 'möchten'. Niveau BEPC.",
+      "ordreAffichage": 4
+    }
+  ],
+  "extraits": [
+    {
+      "id": "EXT-6E-01-001",
+      "uniteId": "U-6E-01",
+      "texteAllemand": "Hallo! Ich heiße Aïcha. Ich bin zwölf Jahre alt. Ich wohne in Yaoundé, in Kamerun. Ich gehe in die sechste Klasse. Meine famille est groß: Ich habe einen Bruder und zwei Schwestern. Mein Lieblingsfach ist Deutsch. Ich spiele gern Fußball mit meinen Freunden. Am Wochenende helfe ich meiner Mutter zu Hause.",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-5E-01-001",
+      "uniteId": "U-5E-01",
+      "texteAllemand": "Ich heiße Paul und ich bin dreizehn Jahre alt. Ich gehe in die fünfte Klasse. Meine Woche ist immer interessant. Montags und mittwochs habe ich Deutschunterricht, das mag ich sehr. Donnerstags spiele ich Basketball mit meinem besten Freund. Am Wochenende gehe ich oft mit meiner Familie zur Kirche, und danach besuchen wir meine Großeltern. Mein Lieblingstag ist der Samstag, weil ich dann keine Hausaufgaben mache.",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-4E-01-001",
+      "uniteId": "U-4E-01",
+      "texteAllemand": "Ich heiße Divine. Jeden Morgen stehe ich um sechs Uhr auf. Ich wasche mich et ziehe meine Schuluniform an. Um sieben Uhr esse ich Frühstück mit meiner Familie: Brot, Ei und Tee. Dann gehe ich zu Fuß zur Schule, das dauert zwanzig Minuten. Der Unterricht beginnt um acht Uhr und endet um vierzehn Uhr. Nach der Schule spiele ich mit meinen Freunden auf dem Marktplatz Fußball. Am Abend habe ich meiner Großmutter beim Kochen geholfen. Wir haben zusammen zu Abend gegessen und über den Tag gesprochen. Danach habe ich meine Hausaufgaben gemacht und bin früh ins Bett gegangen.",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-3E-01-001",
+      "uniteId": "U-3E-01",
+      "texteAllemand": "Ich heiße Serge und ich bin vierzehn Jahre alt. Letzten Sommer bin ich mit meiner Familie nach Kribi gefahren. Das war meine erste große Reise ans Meer. Wir sind mit dem Auto gefahren, und die Fahrt hat ungefähr vier Stunden gedauert. In Kribi haben wir ein kleines Haus am Strand gemietet.\n\nJeden Tag sind wir früh aufgestanden und haben im Meer gebadet. Nachmittags haben wir frischen Fisch gegessen, und meine Mutter hat mit den Fischern gesprochen. Einmal haben wir auch die Wasserfälle von Kribi besucht – das Wasser fällt direkt ins Meer, das war wirklich beeindruckend!\n\nAm Abend haben wir oft am Strand gesessen und über unsere Zukunft gesprochen. Ich möchte später Arzt werden, weil ich anderen Menschen helfen möchte. Diese Ferien waren unvergesslich, und ich hoffe, dass wir nächstes Jahr wieder dorthin fahren.",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    }
+  ],
+  "glossaire": [
+    {"id": "GL-6E-01-001", "extraitId": "EXT-6E-01-001", "motAllemand": "heißen",          "traductionFr": "s'appeler"},
+    {"id": "GL-6E-01-002", "extraitId": "EXT-6E-01-001", "motAllemand": "wohnen",           "traductionFr": "habiter"},
+    {"id": "GL-6E-01-003", "extraitId": "EXT-6E-01-001", "motAllemand": "die Klasse",       "traductionFr": "la classe"},
+    {"id": "GL-6E-01-004", "extraitId": "EXT-6E-01-001", "motAllemand": "die Familie",      "traductionFr": "la famille"},
+    {"id": "GL-6E-01-005", "extraitId": "EXT-6E-01-001", "motAllemand": "der Bruder",       "traductionFr": "le frère"},
+    {"id": "GL-6E-01-006", "extraitId": "EXT-6E-01-001", "motAllemand": "die Schwester",    "traductionFr": "la sœur"},
+    {"id": "GL-6E-01-007", "extraitId": "EXT-6E-01-001", "motAllemand": "das Lieblingsfach","traductionFr": "la matière préférée"},
+    {"id": "GL-6E-01-008", "extraitId": "EXT-6E-01-001", "motAllemand": "spielen",          "traductionFr": "jouer"},
+    {"id": "GL-6E-01-009", "extraitId": "EXT-6E-01-001", "motAllemand": "helfen",           "traductionFr": "aider"},
+
+    {"id": "GL-5E-01-001", "extraitId": "EXT-5E-01-001", "motAllemand": "die Woche",        "traductionFr": "la semaine"},
+    {"id": "GL-5E-01-002", "extraitId": "EXT-5E-01-001", "motAllemand": "der Unterricht",   "traductionFr": "les cours"},
+    {"id": "GL-5E-01-003", "extraitId": "EXT-5E-01-001", "motAllemand": "die Kirche",       "traductionFr": "l'église"},
+    {"id": "GL-5E-01-004", "extraitId": "EXT-5E-01-001", "motAllemand": "die Großeltern",   "traductionFr": "les grands-parents"},
+    {"id": "GL-5E-01-005", "extraitId": "EXT-5E-01-001", "motAllemand": "der Lieblingstag", "traductionFr": "le jour préféré"},
+    {"id": "GL-5E-01-006", "extraitId": "EXT-5E-01-001", "motAllemand": "die Hausaufgaben", "traductionFr": "les devoirs"},
+
+    {"id": "GL-4E-01-001", "extraitId": "EXT-4E-01-001", "motAllemand": "aufstehen",        "traductionFr": "se lever"},
+    {"id": "GL-4E-01-002", "extraitId": "EXT-4E-01-001", "motAllemand": "die Schuluniform", "traductionFr": "l'uniforme scolaire"},
+    {"id": "GL-4E-01-003", "extraitId": "EXT-4E-01-001", "motAllemand": "der Marktplatz",   "traductionFr": "la place du marché"},
+    {"id": "GL-4E-01-004", "extraitId": "EXT-4E-01-001", "motAllemand": "helfen",           "traductionFr": "aider"},
+    {"id": "GL-4E-01-005", "extraitId": "EXT-4E-01-001", "motAllemand": "die Hausaufgaben", "traductionFr": "les devoirs"},
+
+    {"id": "GL-3E-01-001", "extraitId": "EXT-3E-01-001", "motAllemand": "die Reise",        "traductionFr": "le voyage"},
+    {"id": "GL-3E-01-002", "extraitId": "EXT-3E-01-001", "motAllemand": "das Meer",         "traductionFr": "la mer"},
+    {"id": "GL-3E-01-003", "extraitId": "EXT-3E-01-001", "motAllemand": "mieten",           "traductionFr": "louer"},
+    {"id": "GL-3E-01-004", "extraitId": "EXT-3E-01-001", "motAllemand": "der Strand",       "traductionFr": "la plage"},
+    {"id": "GL-3E-01-005", "extraitId": "EXT-3E-01-001", "motAllemand": "der Fischer",      "traductionFr": "le pêcheur"},
+    {"id": "GL-3E-01-006", "extraitId": "EXT-3E-01-001", "motAllemand": "der Wasserfall",   "traductionFr": "la chute d'eau"},
+    {"id": "GL-3E-01-007", "extraitId": "EXT-3E-01-001", "motAllemand": "beeindruckend",    "traductionFr": "impressionnant(e)"},
+    {"id": "GL-3E-01-008", "extraitId": "EXT-3E-01-001", "motAllemand": "die Zukunft",      "traductionFr": "l'avenir"},
+    {"id": "GL-3E-01-009", "extraitId": "EXT-3E-01-001", "motAllemand": "unvergesslich",    "traductionFr": "inoubliable"}
+  ],
+  "exercices": [
+    {"id": "EX-6E-01-001", "uniteId": "U-6E-01", "type": "QCM",             "enonce": "Wie alt ist Aïcha?",                                                                                                                              "correctionAttendue": null},
+    {"id": "EX-6E-01-002", "uniteId": "U-6E-01", "type": "PRODUCTION_GUIDEE","enonce": "Stelle dich vor: Wie heißt du? Wie alt bist du? Wo wohnst du? Was ist dein Lieblingsfach? (3 à 4 phrases, niveau A1)",                        "correctionAttendue": null},
+
+    {"id": "EX-5E-01-001", "uniteId": "U-5E-01", "type": "QCM",             "enonce": "Wann spielt Paul Basketball?",                                                                                                                    "correctionAttendue": null},
+    {"id": "EX-5E-01-002", "uniteId": "U-5E-01", "type": "VRAI_FAUX",       "enonce": "Paul geht am Samstag zur Schule.",                                                                                                               "correctionAttendue": "FAUX"},
+    {"id": "EX-5E-01-003", "uniteId": "U-5E-01", "type": "PRODUCTION_GUIDEE","enonce": "Beschreibe deine Woche: Was machst du montags, donnerstags und am Wochenende? (4 à 6 phrases, subordonnée weil encouragée)",                   "correctionAttendue": null},
+
+    {"id": "EX-4E-01-001", "uniteId": "U-4E-01", "type": "TEXTE_A_TROUS",   "enonce": "Jeden Morgen ___ ich um sechs Uhr ___. (aufstehen)",                                                                                            "correctionAttendue": "stehe|auf"},
+    {"id": "EX-4E-01-002", "uniteId": "U-4E-01", "type": "PRODUCTION_GUIDEE","enonce": "Beschreibe deinen Tag: Was machst du morgens, mittags und abends? (6 à 8 phrases, Perfekt requis pour au moins 2 actions)",                    "correctionAttendue": null},
+
+    {"id": "EX-3E-01-001", "uniteId": "U-3E-01", "type": "QCM",             "enonce": "Wohin ist Serge im Sommer gefahren?",                                                                                                            "correctionAttendue": null},
+    {"id": "EX-3E-01-002", "uniteId": "U-3E-01", "type": "TEXTE_A_TROUS",   "enonce": "Serge und seine famille ___ letzten Sommer nach Kribi ___. (fahren → Perfekt)",                                                                 "correctionAttendue": "sind|gefahren"},
+    {"id": "EX-3E-01-003", "uniteId": "U-3E-01", "type": "PRODUCTION_GUIDEE","enonce": "Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? (8 à 10 phrases, Perfekt étendu attendu)",                    "correctionAttendue": null}
+  ],
+  "options": [
+    {"id": "OPT-6E-01-001-A", "exerciceId": "EX-6E-01-001", "texteOption": "zehn Jahre alt",     "estCorrecte": false},
+    {"id": "OPT-6E-01-001-B", "exerciceId": "EX-6E-01-001", "texteOption": "zwölf Jahre alt",    "estCorrecte": true},
+    {"id": "OPT-6E-01-001-C", "exerciceId": "EX-6E-01-001", "texteOption": "vierzehn Jahre alt", "estCorrecte": false},
+
+    {"id": "OPT-5E-01-001-A", "exerciceId": "EX-5E-01-001", "texteOption": "montags",            "estCorrecte": false},
+    {"id": "OPT-5E-01-001-B", "exerciceId": "EX-5E-01-001", "texteOption": "donnerstags",        "estCorrecte": true},
+    {"id": "OPT-5E-01-001-C", "exerciceId": "EX-5E-01-001", "texteOption": "samstags",           "estCorrecte": false},
+
+    {"id": "OPT-3E-01-001-A", "exerciceId": "EX-3E-01-001", "texteOption": "Douala",             "estCorrecte": false},
+    {"id": "OPT-3E-01-001-B", "exerciceId": "EX-3E-01-001", "texteOption": "Kribi",              "estCorrecte": true},
+    {"id": "OPT-3E-01-001-C", "exerciceId": "EX-3E-01-001", "texteOption": "Limbé",              "estCorrecte": false}
+  ]
+}
