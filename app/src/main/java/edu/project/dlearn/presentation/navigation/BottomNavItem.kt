@@ -17,7 +17,7 @@ sealed class BottomNavItem(
 ) {
     data object Accueil : BottomNavItem("accueil", "Accueil", Icons.Filled.Home)
     data object Apprentissage : BottomNavItem("apprentissage", "Apprentissage", Icons.Filled.MenuBook)
-    data object Ecriture : BottomNavItem("ecriture", "Ecriture", Icons.Filled.Edit)
+    data object Ecriture : BottomNavItem("ecriture", "Écriture", Icons.Filled.Edit)
     data object Suivi : BottomNavItem("suivi", "Suivi", Icons.Filled.BarChart)
     data object Profil : BottomNavItem("profil", "Profil", Icons.Filled.Person)
 

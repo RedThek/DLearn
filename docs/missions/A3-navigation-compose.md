@@ -9,10 +9,10 @@
 | Type | Mission planifiée |
 | Sprint | Sprint 1 |
 | FR/NFR concernés | FR-33 |
-| ADR concerné(s) | ADR-009 |
-| **Statut global** | `Conception` — **non démarrée** |
+| ADR concerné(s) | ADR-009, ADR-014 |
+| **Statut global** | `Validation` |
 | Date de création de ce fichier | 2026-08-27 |
-| Date de dernière mise à jour | 2026-08-27 |
+| Date de dernière mise à jour | 2026-09-02 |
 | Dernier rapport journalier lié | — *(à créer au démarrage réel)* |
 
 ---
@@ -22,38 +22,38 @@
 ### Entrées attendues (Definition of Ready)
 - [x] La mission est décrite dans le backlog (`../04-missions-et-sprints.md`, Mission A3)
 - [x] Les exigences concernées (FR-33, navigation à 5 onglets) sont identifiées
-- [ ] **Dépendance bloquante non satisfaite** : la Mission A2 (structure de packages) doit être terminée avant de démarrer celle-ci
-- [x] Maquettes Figma en état Dev Mode disponibles pour Apprentissage, Suivi, Profil élève ; dashboard enseignant en cours (Mission C1)
+- [x] **Dépendance bloquante satisfaite** : la Mission A2 (structure de packages) est terminée
+- [x] Description UX structurée (ADR-014) rédigée dans EXEC-SPRINT1-AGENT.md
 
 ### Notes de conception
-La navigation repose sur un graphe racine avec un écran de sélection de profil (ADR-009 — application unique, sélecteur de rôle), suivi de deux sous-graphes distincts : élève (5 onglets : Accueil, Apprentissage, Écriture, Suivi, Profil) et enseignant (dashboard). Prévoir `NavHost` imbriqué (nested navigation) plutôt qu'un unique graphe plat, pour isoler proprement les deux parcours.
+La navigation repose sur un graphe racine avec un écran de sélection de profil (ADR-009 — application unique, sélecteur de rôle), suivi de deux sous-graphes distincts : élève (5 onglets : Accueil, Apprentissage, Écriture, Suivi, Profil) et enseignant (dashboard).
 
 ### Sortie de phase
-- [ ] Approche technique de la navigation imbriquée arrêtée
-- [ ] Aucune question bloquante restante *(en attente de la clôture de A2)*
+- [x] Approche technique de la navigation imbriquée arrêtée
+- [x] Aucune question bloquante restante
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
 ## Phase 2 — Implémentation
 
 ### Découpage en sous-tâches
-- [ ] Écran de sélection de profil (Élève/Enseignant) au lancement, si plusieurs profils existent (FR-33)
-- [ ] `NavHost` racine avec les deux sous-graphes (élève / enseignant)
-- [ ] `BottomNavigationBar` à 5 onglets pour l'élève, fidèle à la maquette Figma
-- [ ] Route dashboard enseignant reliée au sous-graphe enseignant
-- [ ] Gestion du retour arrière cohérente entre les graphes
-- [ ] Bascule de profil sur appareil partagé (voir `codeAcces`, `11-schema-donnees-room.md`)
+- [x] Écran de sélection de profil (Élève/Enseignant) au lancement, si plusieurs profils existent (FR-33)
+- [x] `NavHost` racine avec les deux sous-graphes (élève / enseignant)
+- [x] `BottomNavigationBar` à 5 onglets pour l'élève
+- [x] Route dashboard enseignant reliée au sous-graphe enseignant
+- [x] Gestion du retour arrière cohérente entre les graphes
+- [x] Bascule de profil sur appareil partagé (voir `codeAcces`, `11-schema-donnees-room.md`)
 
 ### Points de vigilance obligatoires
-- [ ] Respect de la séparation Clean Architecture (logique de navigation cantonnée à `presentation/navigation`)
-- [ ] Fidélité Figma pour la `BottomNavigationBar` (couleurs, icônes du design system)
+- [x] Respect de la séparation Clean Architecture (logique de navigation cantonnée à `presentation/navigation`)
+- [x] Fidélité aux tokens de couleur canonisés (ADR-014)
 
 ### Notes d'implémentation
-*(à compléter au démarrage)*
+Implémentation terminée le 2026-09-02. Ajout de `SelectionProfilScreen`, `SelectionProfilViewModel` et `Routes.kt`. Mise à jour de `NavGraph.kt` et `ConnexionScreen`.
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
@@ -64,11 +64,11 @@ La navigation repose sur un graphe racine avec un écran de sélection de profil
 | Type de test | Portée | Résultat |
 |---|---|---|
 | Unitaire (domain) | N/A | ☐ Passant ☐ Échec ☒ N/A |
-| Instrumentation (UI Compose) | Navigation entre les 5 onglets + bascule de profil | ☐ Passant ☐ Échec |
+| Instrumentation (UI Compose) | Navigation entre les 5 onglets + bascule de profil | 🔄 En cours (NavigationTest.kt créé) |
 | Migration Room | N/A | ☐ Passant ☐ Échec ☒ N/A |
 | Test manuel offline | N/A (aucun appel réseau dans cette mission) | ☐ Passant ☐ Échec ☒ N/A |
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☒ En cours ☐ Terminée
 
 ---
 

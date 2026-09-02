@@ -6,8 +6,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// TODO: si la maquette Figma utilise une police spécifique (ex: "Inter", "Noto Sans"),
-// l'ajouter dans res/font/ et remplacer FontFamily.Default ci-dessous.
+// Police système (ADR-014) : FontFamily.Default retenu pour le MVP.
+// Une police personnalisée (ex: "Noto Sans") peut être ajoutée dans res/font/
+// lors d'un sprint dédié si le retour terrain l'exige.
 val LiteschreibFontFamily = FontFamily.Default
 
 val LiteschreibTypography = Typography(

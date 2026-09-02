@@ -20,14 +20,17 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -41,14 +44,14 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import edu.project.dlearn.core.components.InitialsAvatar
 import edu.project.dlearn.domain.model.Role
-import edu.project.dlearn.presentation.connexion.ConnexionEvenement
-import edu.project.dlearn.presentation.connexion.ConnexionViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ConnexionScreen(
     onConnexionReussie: (Role) -> Unit,
+    onNaviguerVersSelectionProfil: () -> Unit,
     viewModel: ConnexionViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
@@ -57,6 +60,7 @@ fun ConnexionScreen(
         viewModel.evenements.collect { evenement ->
             when (evenement) {
                 is ConnexionEvenement.ConnexionReussie -> onConnexionReussie(evenement.role)
+                is ConnexionEvenement.NaviguerVersSelectionProfil -> onNaviguerVersSelectionProfil()
             }
         }
     }
@@ -71,7 +75,7 @@ fun ConnexionScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            // TODO: remplacer par le logo exporté depuis Figma (asset PNG/SVG dans res/drawable).
+            // Logo
             Box(
                 modifier = Modifier
                     .size(64.dp)
@@ -108,6 +112,37 @@ fun ConnexionScreen(
                     color = MaterialTheme.colorScheme.secondary,
                     style = MaterialTheme.typography.labelLarge
                 )
+            }
+
+            Spacer(Modifier.height(24.dp))
+
+            // --- Section profils existants (visible si > 0 profils sur l'appareil) ---
+            if (etat.profilsExistants.isNotEmpty()) {
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Text(
+                    "Déjà sur cet appareil",
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(Modifier.height(8.dp))
+                etat.profilsExistants.take(3).forEach { profil ->
+                    OutlinedButton(
+                        onClick = viewModel::onVoirProfilsExistants,
+                        modifier = Modifier.fillMaxWidth().height(48.dp)
+                    ) {
+                        InitialsAvatar(profil.nomAffiche, taille = 28.dp)
+                        Spacer(Modifier.width(8.dp))
+                        Text(profil.nomAffiche)
+                    }
+                    Spacer(Modifier.height(4.dp))
+                }
+                if (etat.profilsExistants.size > 3) {
+                    TextButton(
+                        onClick = viewModel::onVoirProfilsExistants,
+                        modifier = Modifier.fillMaxWidth()
+                    ) { Text("Voir tous les profils (${etat.profilsExistants.size})") }
+                }
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
             }
 
             Spacer(Modifier.height(24.dp))

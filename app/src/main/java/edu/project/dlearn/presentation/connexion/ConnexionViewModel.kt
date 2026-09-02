@@ -14,10 +14,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import edu.project.dlearn.presentation.selectionprofil.ProfilResume
 
 // Emis une seule fois vers lecran (pas garde dans le StateFlow) pour piloter la navigation.
 sealed interface ConnexionEvenement {
     data class ConnexionReussie(val role: Role) : ConnexionEvenement
+    data object NaviguerVersSelectionProfil : ConnexionEvenement
 }
 
 @HiltViewModel
@@ -31,10 +33,36 @@ class ConnexionViewModel @Inject constructor(
     private val _evenements = MutableSharedFlow<ConnexionEvenement>()
     val evenements: SharedFlow<ConnexionEvenement> = _evenements
 
+    init {
+        // Charger les profils existants pour affichage dans ConnexionScreen.
+        viewModelScope.launch {
+            authRepository.getAllProfils().collect { profils ->
+                _uiState.update {
+                    it.copy(
+                        profilsExistants = profils.map { u ->
+                            ProfilResume(
+                                id         = u.id,
+                                nomAffiche = u.nomAffiche,
+                                role       = u.role,
+                                classe     = u.classe
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     fun onChangerRole(role: Role) = _uiState.update { it.copy(roleSelectionne = role, messageErreur = null) }
     fun onChangerIdentifiant(valeur: String) = _uiState.update { it.copy(identifiant = valeur, messageErreur = null) }
     fun onChangerMotDePasse(valeur: String) = _uiState.update { it.copy(motDePasse = valeur, messageErreur = null) }
     fun onToggleVisibiliteMotDePasse() = _uiState.update { it.copy(motDePasseVisible = !it.motDePasseVisible) }
+
+    fun onVoirProfilsExistants() {
+        viewModelScope.launch {
+            _evenements.emit(ConnexionEvenement.NaviguerVersSelectionProfil)
+        }
+    }
 
     fun onSeConnecter() {
         val etat = _uiState.value

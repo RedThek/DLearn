@@ -90,16 +90,16 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 | ID | Tâche | Dépend de | Statut |
 |---|---|---|---|
 | A1-T01 | Scaffolding initial de `presentation/theme/{Color,Type,Shape,Theme,LiteschreibIkiiTheme}.kt` | — | ✅ Fait (certains fichiers encore vides) |
-| A1-T02 | **[Constat #1]** Nettoyer la confusion entre `ui.theme.*` (actif, template par défaut) et `presentation.theme.*` (nouveau, pas branché) — voir section 1 | — | ☐ À faire |
-| A1-T03 | **[BLOQUANT]** Exporter les couleurs exactes depuis Figma Dev Mode (primary/secondary/tertiary/error/background/surface, light + dark) | — | ☐ À faire |
-| A1-T04 | Écrire `presentation/theme/Color.kt` avec les valeurs exactes (fichier actuellement vide) | T03 | ☐ À faire |
-| A1-T05 | Construire `lightColorScheme(...)`/`darkColorScheme(...)` dans `Theme.kt` à partir de `Color.kt` (actuellement appelés sans paramètres) | T04 | ☐ À faire |
-| A1-T06 | **[BLOQUANT]** Exporter l'échelle typographique depuis Figma (tailles, graisses, line-height) | — | ☐ À faire |
-| A1-T07 | Écrire `presentation/theme/Type.kt` avec l'objet `Typography` réel (fichier actuellement vide) | T06 | ☐ À faire |
-| A1-T08 | Mettre à jour l'import dans `Theme.kt` : utiliser `presentation.theme.Type.Typography` au lieu de `ui.theme.Typography` | T07 | ☐ À faire |
-| A1-T09 | Vérifier `Shape.kt` (déjà rempli : 4/8/12/16/28dp) contre les valeurs réelles de Figma | — | ☐ À faire *(fichier non vide mais non confirmé)* |
-| A1-T10 | Écrire le contenu de `LiteschreibIkiiTheme.kt` (vide) ou fusionner sa responsabilité dans `Theme.kt` — clarifier quel fichier est la source de vérité | T05, T08 | ☐ À faire |
-| A1-T11 | **[BLOQUANT]** Mettre à jour `MainActivity.kt` : utiliser `LiteschreibIkiiTheme` au lieu de `DLearnTheme` | T10 | ☐ À faire |
+| A1-T02 | **[Constat #1]** Nettoyer la confusion entre `ui.theme.*` (actif, template par défaut) et `presentation.theme.*` (nouveau, pas branché) — voir section 1 | — | ✅ Fait |
+| A1-T03 | **[BLOQUANT]** Canoniser Color.kt (ADR-014 : abandon Figma) | — | ✅ Fait |
+| A1-T04 | Écrire `presentation/theme/Color.kt` avec les valeurs exactes | T03 | ✅ Fait |
+| A1-T05 | Construire `lightColorScheme(...)`/`darkColorScheme(...)` dans `Theme.kt` à partir de `Color.kt` | T04 | ✅ Fait |
+| A1-T06 | **[BLOQUANT]** Mettre à jour Type.kt (ADR-014) | — | ✅ Fait |
+| A1-T07 | Écrire `presentation/theme/Type.kt` avec l'objet `Typography` réel | T06 | ✅ Fait |
+| A1-T08 | Mettre à jour l'import dans `Theme.kt` : utiliser `presentation.theme.Type.Typography` au lieu de `ui.theme.Typography` | T07 | ✅ Fait |
+| A1-T09 | Vérifier `Shape.kt` | — | ✅ Fait |
+| A1-T10 | Écrire le contenu de `LiteschreibIkiiTheme.kt` (vide) ou fusionner sa responsabilité dans `Theme.kt` | T05, T08 | ✅ Fait |
+| A1-T11 | **[BLOQUANT]** Mettre à jour `MainActivity.kt` : utiliser `LiteschreibIkiiTheme` au lieu de `DLearnTheme` | T10 | ✅ Fait |
 | A1-T12 | Supprimer les fichiers du template par défaut `ui/theme/{Color,Type,Theme}.kt` une fois la bascule confirmée sans régression visuelle | T11 | ✅ Fait |
 | A1-T13 | Nettoyer `MainActivity.kt` : retirer l'import dupliqué de `DLearnTheme` et le bloc `Greeting`/`GreetingPreview` de démonstration | T12 | ✅ Fait |
 | A1-T14 | Comparer `AccueilScreen` (Compose Preview) à la maquette Figma correspondante | T11 | ☐ À faire |
@@ -140,15 +140,15 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 | ID | Tâche | Dépend de | Statut |
 |---|---|---|---|
 | A3-T01 | **[Constat #2, Décision]** Choisir entre `NavGraph.kt` (commenté, package `com.ikii.liteschreib.*` obsolète) et `DLearnNavGraph.kt` (actif, `edu.project.dlearn.*`) comme fichier unique — supprimer l'autre | A2 | ✅ Fait |
-| A3-T02 | Clarifier si `AccueilScreen` actuel (boutons Élève/Enseignant déjà présents) joue le rôle de l'écran de sélection de profil (`Routes.CONNEXION`), ou si c'est un doublon à réorganiser | T01 | ☐ À faire |
-| A3-T03 | Décommenter et adapter `BottomNavItem.kt` (déjà rédigé en commentaire) | A2-T08 | ☐ À faire |
-| A3-T04 | Créer les écrans placeholder restants du sous-graphe élève (`ApprentissageScreen`, `EcritureScreen`, `SuiviScreen`, `ProfilScreen`) | A2-T08 | ☐ À faire |
-| A3-T05 | Construire le `NavHost` racine avec sous-graphe élève (5 routes) et sous-graphe enseignant | T02, T04 | ☐ À faire |
-| A3-T06 | Implémenter la `BottomNavigationBar` en réutilisant `presentation.theme` | T03, T05 | ☐ À faire |
-| A3-T07 | Implémenter la route dashboard enseignant (placeholder en attendant Mission C2) | T05 | ☐ À faire |
-| A3-T08 | Implémenter la bascule de profil sur device partagé (`codeAcces` optionnel) | T05 | ☐ À faire |
-| A3-T09 | Test manuel : navigation entre les 5 onglets, retour arrière, bascule de profil | T06, T07, T08 | ☐ À faire |
-| A3-T10 | Écrire un test d'instrumentation basique de navigation | T09 | ☐ À faire |
+| A3-T02 | Clarifier si `AccueilScreen` actuel joue le rôle de l'écran de sélection de profil (`Routes.CONNEXION`), ou si c'est un doublon à réorganiser | T01 | ✅ Fait |
+| A3-T03 | Décommenter et adapter `BottomNavItem.kt` | A2-T08 | ✅ Fait |
+| A3-T04 | Créer les écrans placeholder restants du sous-graphe élève (`ApprentissageScreen`, `EcritureScreen`, `SuiviScreen`, `ProfilScreen`) | A2-T08 | ✅ Fait |
+| A3-T05 | Construire le `NavHost` racine avec sous-graphe élève (5 routes) et sous-graphe enseignant | T02, T04 | ✅ Fait |
+| A3-T06 | Implémenter la `BottomNavigationBar` en réutilisant `presentation.theme` | T03, T05 | ✅ Fait |
+| A3-T07 | Implémenter la route dashboard enseignant (placeholder en attendant Mission C2) | T05 | ✅ Fait |
+| A3-T08 | Implémenter la bascule de profil sur device partagé (`codeAcces` optionnel) | T05 | ✅ Fait |
+| A3-T09 | Test manuel : navigation entre les 5 onglets, retour arrière, bascule de profil | T06, T07, T08 | 🔄 En cours |
+| A3-T10 | Écrire un test d'instrumentation basique de navigation | T09 | ✅ Fait |
 | A3-T11 | Commit : `feat(navigation): graphe de navigation complet` | T10 | ☐ À faire |
 | A3-T12 | Mettre à jour `../missions/A3-navigation-compose.md` et `04-missions-et-sprints.md` (Mission A3 → `Validé`) | T11 | ☐ À faire |
 
