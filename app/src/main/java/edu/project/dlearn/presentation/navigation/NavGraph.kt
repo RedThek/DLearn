@@ -1,11 +1,22 @@
 package edu.project.dlearn.presentation.navigation
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import edu.project.dlearn.domain.model.Role
+import edu.project.dlearn.domain.model.Utilisateur
 import edu.project.dlearn.presentation.connexion.ConnexionScreen
 import edu.project.dlearn.presentation.enseignant.CreationEleveScreen
 import edu.project.dlearn.presentation.enseignant.ResultatCreationEleveScreen
@@ -14,18 +25,32 @@ import edu.project.dlearn.presentation.selectionprofil.SelectionProfilScreen
 
 /**
  * Graphe de navigation racine — Liteschreib IKII.
- *
- * Flux :
- *   CONNEXION ──────────────────────► POSITIONNEMENT (Élève) ──► MAIN
- *             └──(profils existants)► SELECTION_PROFIL ─────────► MAIN
- *   MAIN ──(déconnexion)──────────────────────────────────────► CONNEXION
+ * Détermine la route initiale via [NavViewModel]
+ * (session persistée → MAIN, multi-profil → SELECTION_PROFIL, vide → CONNEXION).
  */
 @Composable
 fun LiteschreibApp() {
+    val navViewModel: NavViewModel = hiltViewModel()
+    val destinationInitiale by navViewModel.destinationInitiale.collectAsState()
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = Route.CONNEXION) {
+    // Écran de démarrage pendant la résolution de la session
+    if (destinationInitiale == null) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        }
+        return
+    }
 
+    NavHost(
+        navController    = navController,
+        startDestination = destinationInitiale!!
+    ) {
         composable(Route.CONNEXION) {
             ConnexionScreen(
                 onConnexionReussie = { role ->
@@ -35,8 +60,6 @@ fun LiteschreibApp() {
                     navController.navigate(Route.SELECTION_PROFIL)
                 },
                 onDemanderCompte = {
-                    // Pour la démo, on navigue vers la création d'élève
-                    // (Normalement réservé à l'enseignant, mais FR-33/FR-04 permettent d'y accéder)
                     navController.navigate(Route.CREATION_ELEVE)
                 }
             )
@@ -61,7 +84,7 @@ fun LiteschreibApp() {
             PositionnementScreen(
                 onTermine = {
                     navController.navigate(Route.MAIN) { popUpTo(0) }
-                },
+                }
             )
         }
 
@@ -77,22 +100,20 @@ fun LiteschreibApp() {
             CreationEleveScreen(
                 onBack = { navController.popBackStack() },
                 onCreateStudent = { _, _, _ ->
-                    // Navigation simulée vers le résultat pour la démo UI
                     navController.navigate(Route.RESULTAT_CREATION_ELEVE)
                 }
             )
         }
 
         composable(Route.RESULTAT_CREATION_ELEVE) {
-            // Mock de l'utilisateur créé pour la démo UI
-            val mockUtilisateur = edu.project.dlearn.domain.model.Utilisateur(
-                id = 999L,
+            val mockUtilisateur = Utilisateur(
+                id          = 999L,
                 identifiant = "eleve.demo",
-                nomAffiche = "Divine K.",
-                role = Role.ELEVE,
-                classe = "6e A",
-                niveau = "A1",
-                motDePasse = "ikii.1234"
+                nomAffiche  = "Divine K.",
+                role        = Role.ELEVE,
+                classe      = "6e A",
+                niveau      = "A1",
+                motDePasse  = "ikii.1234"
             )
             ResultatCreationEleveScreen(
                 utilisateur = mockUtilisateur,

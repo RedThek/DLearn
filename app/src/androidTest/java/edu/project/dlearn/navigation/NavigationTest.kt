@@ -1,7 +1,9 @@
 package edu.project.dlearn.navigation
 
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
@@ -26,51 +28,74 @@ class NavigationTest {
         hiltRule.inject()
     }
 
+    /** Scénario 1 : démarrage → ConnexionScreen visible (aucune session persistée). */
     @Test
-    fun demarrage_affiche_ecran_connexion_ou_selection_profil() {
-        // L'app démarre sur ConnexionScreen OU SelectionProfilScreen (selon les profils en base).
-        // Le texte "Liteschreib IKII" est présent dans les deux cas.
+    fun demarrage_sans_session_affiche_ecran_connexion() {
+        // "Liteschreib IKII" apparaît dans ConnexionScreen ET SelectionProfilScreen
         composeRule.onNodeWithText("Liteschreib IKII").assertIsDisplayed()
     }
 
+    /** Scénario 2 : connexion élève de démo → PositionnementScreen. */
     @Test
     fun connexion_eleve_demo_navigue_vers_positionnement() {
-        // Utilise le compte de démonstration seedé dans AppModule.SeedCallback
+        // S'assurer qu'on est sur ConnexionScreen
+        composeRule.waitUntil(3_000) {
+            composeRule.onAllNodes(
+                hasText("Liteschreib IKII")
+            ).fetchSemanticsNodes().isNotEmpty()
+        }
+
+        // Sélectionner le rôle Élève
         composeRule.onNodeWithText("Élève").performClick()
-        composeRule.onNodeWithText("Identifiant").performClick()
-        composeRule.onNodeWithText("ex : eleve.2451").performTextInput("eleve.2451")
-        
-        // Saisie mot de passe (on suppose qu'il y a un champ mot de passe)
-        // En M3 OutlinedTextField n'a pas forcément de label "Mot de passe" simple si non configuré, 
-        // mais ici il est dans ConnexionScreen.
-        composeRule.onNodeWithText("Se connecter").performClick()
+
+        // Saisir l'identifiant via testTag
+        composeRule.onNodeWithTag("champ_identifiant").performTextInput("eleve.2451")
+
+        // Saisir le mot de passe via testTag
+        composeRule.onNodeWithTag("champ_mot_de_passe").performTextInput("eleve1234")
+
+        // Cliquer sur Se connecter
+        composeRule.onNodeWithTag("bouton_connexion").performClick()
         composeRule.waitForIdle()
-        
-        // Après connexion élève → PositionnementScreen
-        composeRule.onNodeWithText("Test de positionnement · Question 1/10").assertIsDisplayed()
+
+        // Après connexion Élève → PositionnementScreen
+        composeRule.waitUntil(5_000) {
+            composeRule.onAllNodes(
+                hasText("Test de positionnement")
+            ).fetchSemanticsNodes().isNotEmpty()
+        }
+        composeRule.onNodeWithText("Test de positionnement · Question 1/10")
+            .assertIsDisplayed()
     }
 
+    /** Scénario 3 : connexion enseignant → MainScreen sans positionnement. */
     @Test
-    fun connexion_enseignant_demo_navigue_vers_main_sans_positionnement() {
+    fun connexion_enseignant_demo_navigue_directement_vers_dashboard() {
+        composeRule.waitUntil(3_000) {
+            composeRule.onAllNodes(
+                hasText("Liteschreib IKII")
+            ).fetchSemanticsNodes().isNotEmpty()
+        }
+
         composeRule.onNodeWithText("Enseignant").performClick()
-        composeRule.onNodeWithText("ex : eleve.2451").performTextInput("enseignant.100")
-        composeRule.onNodeWithText("Se connecter").performClick()
+        composeRule.onNodeWithTag("champ_identifiant").performTextInput("enseignant.100")
+        composeRule.onNodeWithTag("champ_mot_de_passe").performTextInput("enseignant1234")
+        composeRule.onNodeWithTag("bouton_connexion").performClick()
         composeRule.waitForIdle()
-        // Vérifier que l'app principale (MainScreen) est affichée (onglets visibles)
-        composeRule.onNodeWithText("Accueil").assertIsDisplayed()
+
+        // Enseignant → EnseignantDashboardScreen directement
+        composeRule.waitUntil(5_000) {
+            composeRule.onAllNodes(
+                hasText("Classe")
+            ).fetchSemanticsNodes().isNotEmpty()
+        }
     }
 
+    /** Scénario 4 : navigation 5 onglets élève sans crash. */
     @Test
     fun navigation_cinq_onglets_eleve_sans_crash() {
-        // Simuler une navigation de base
-        val labels = listOf("Accueil", "Apprentissage", "Écriture", "Suivi", "Profil")
-        // Ce test nécessite d'être sur MainScreen
-    }
-
-    @Test
-    fun ecritureScreen_affiche_clavier_allemand() {
-        // Nécessite d'être sur MainScreen onglet Écriture
-        // TODO Sprint 3 : automatiser la connexion de démo avant ce test
-        // Pour l'instant : test manuel uniquement
+        // TODO Sprint 3 : automatiser la connexion puis vérifier les 5 onglets.
+        // Dépend de la session DataStore persistée entre les tests.
+        // Pour l'instant : vérifier que le test compile (aucune assertion).
     }
 }

@@ -1,5 +1,6 @@
 package edu.project.dlearn.presentation.ecriture
 
+import edu.project.dlearn.core.AppConstants
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.project.dlearn.domain.usecase.GetAllUnitesUseCase
@@ -17,7 +18,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
-private const val ELEVE_ID_DEMO = 1L
+private val ELEVE_ID_DEMO = AppConstants.ELEVE_DEMO_ID
 private const val DEBOUNCE_SAUVEGARDE_MS = 1500L
 
 @HiltViewModel

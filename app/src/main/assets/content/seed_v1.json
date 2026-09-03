@@ -38,7 +38,7 @@
     {
       "id": "EXT-6E-01-001",
       "uniteId": "U-6E-01",
-      "texteAllemand": "Hallo! Ich heiße Aïcha. Ich bin zwölf Jahre alt. Ich wohne in Yaoundé, in Kamerun. Ich gehe in die sechste Klasse. Meine famille est groß: Ich habe einen Bruder und zwei Schwestern. Mein Lieblingsfach ist Deutsch. Ich spiele gern Fußball mit meinen Freunden. Am Wochenende helfe ich meiner Mutter zu Hause.",
+      "texteAllemand": "Hallo! Ich heiße Aïcha. Ich bin zwölf Jahre alt. Ich wohne in Yaoundé, in Kamerun. Ich gehe in die sechste Klasse. Meine Familie ist groß: Ich habe einen Bruder und zwei Schwestern. Mein Lieblingsfach ist Deutsch. Ich spiele gern Fußball mit meinen Freunden. Am Wochenende helfe ich meiner Mutter zu Hause.",
       "auteur": "Équipe Liteschreib IKII",
       "source": "Contenu original",
       "statutDroits": "texte_original"
@@ -54,7 +54,7 @@
     {
       "id": "EXT-4E-01-001",
       "uniteId": "U-4E-01",
-      "texteAllemand": "Ich heiße Divine. Jeden Morgen stehe ich um sechs Uhr auf. Ich wasche mich et ziehe meine Schuluniform an. Um sieben Uhr esse ich Frühstück mit meiner Familie: Brot, Ei und Tee. Dann gehe ich zu Fuß zur Schule, das dauert zwanzig Minuten. Der Unterricht beginnt um acht Uhr und endet um vierzehn Uhr. Nach der Schule spiele ich mit meinen Freunden auf dem Marktplatz Fußball. Am Abend habe ich meiner Großmutter beim Kochen geholfen. Wir haben zusammen zu Abend gegessen und über den Tag gesprochen. Danach habe ich meine Hausaufgaben gemacht und bin früh ins Bett gegangen.",
+      "texteAllemand": "Ich heiße Divine. Jeden Morgen stehe ich um sechs Uhr auf. Ich wasche mich und ziehe meine Schuluniform an. Um sieben Uhr esse ich Frühstück mit meiner Familie: Brot, Ei und Tee. Dann gehe ich zu Fuß zur Schule, das dauert zwanzig Minuten. Der Unterricht beginnt um acht Uhr und endet um vierzehn Uhr. Nach der Schule spiele ich mit meinen Freunden auf dem Marktplatz Fußball. Am Abend habe ich meiner Großmutter beim Kochen geholfen. Wir haben zusammen zu Abend gegessen und über den Tag gesprochen. Danach habe ich meine Hausaufgaben gemacht und bin früh ins Bett gegangen.",
       "auteur": "Équipe Liteschreib IKII",
       "source": "Contenu original",
       "statutDroits": "texte_original"
@@ -114,7 +114,7 @@
     {"id": "EX-4E-01-002", "uniteId": "U-4E-01", "type": "PRODUCTION_GUIDEE","enonce": "Beschreibe deinen Tag: Was machst du morgens, mittags und abends? (6 à 8 phrases, Perfekt requis pour au moins 2 actions)",                    "correctionAttendue": null},
 
     {"id": "EX-3E-01-001", "uniteId": "U-3E-01", "type": "QCM",             "enonce": "Wohin ist Serge im Sommer gefahren?",                                                                                                            "correctionAttendue": null},
-    {"id": "EX-3E-01-002", "uniteId": "U-3E-01", "type": "TEXTE_A_TROUS",   "enonce": "Serge und seine famille ___ letzten Sommer nach Kribi ___. (fahren → Perfekt)",                                                                 "correctionAttendue": "sind|gefahren"},
+    {"id": "EX-3E-01-002", "uniteId": "U-3E-01", "type": "TEXTE_A_TROUS",   "enonce": "Serge und seine Familie ___ letzten Sommer nach Kribi ___. (fahren → Perfekt)",                                                                 "correctionAttendue": "sind|gefahren"},
     {"id": "EX-3E-01-003", "uniteId": "U-3E-01", "type": "PRODUCTION_GUIDEE","enonce": "Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? (8 à 10 phrases, Perfekt étendu attendu)",                    "correctionAttendue": null}
   ],
   "options": [
