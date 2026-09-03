@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import edu.project.dlearn.domain.usecase.GetAllUnitesUseCase
 import edu.project.dlearn.domain.usecase.GetOrCreateBrouillonUseCase
 import edu.project.dlearn.domain.usecase.SauvegarderBrouillonUseCase
+import edu.project.dlearn.domain.usecase.GetUtilisateurConnecteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -18,7 +19,6 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 
-private val ELEVE_ID_DEMO = AppConstants.ELEVE_DEMO_ID
 private const val DEBOUNCE_SAUVEGARDE_MS = 1500L
 
 @HiltViewModel
@@ -26,6 +26,7 @@ class EcritureViewModel @Inject constructor(
     private val getAllUnites: GetAllUnitesUseCase,
     private val getOrCreateBrouillon: GetOrCreateBrouillonUseCase,
     private val sauvegarderBrouillon: SauvegarderBrouillonUseCase,
+    private val getUtilisateurConnecte: GetUtilisateurConnecteUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EcritureUiState())
@@ -37,12 +38,13 @@ class EcritureViewModel @Inject constructor(
 
     private fun chargerPremierUnite() {
         viewModelScope.launch {
+            val eleveId = getUtilisateurConnecte()?.id ?: AppConstants.ELEVE_DEMO_ID
             val unites = getAllUnites().first()
             val premiere = unites.firstOrNull() ?: run {
                 _uiState.update { it.copy(enChargement = false) }
                 return@launch
             }
-            val production = getOrCreateBrouillon(ELEVE_ID_DEMO, premiere.id)
+            val production = getOrCreateBrouillon(eleveId, premiere.id)
             _uiState.update { it.copy(
                 unite       = premiere,
                 production  = production,

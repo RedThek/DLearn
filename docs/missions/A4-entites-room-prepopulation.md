@@ -10,9 +10,9 @@
 | Sprint | Sprint 2 |
 | FR/NFR concernés | NFR-03, NFR-22 |
 | ADR concerné(s) | ADR-006, ADR-008 |
-| **Statut global** | `Conception` — **non démarrée, bloquée en pratique** (voir note ci-dessous) |
+| **Statut global** | `Implémentation` — **débloquée par ADR-015** |
 | Date de création de ce fichier | 2026-08-27 |
-| Date de dernière mise à jour | 2026-08-27 |
+| Date de dernière mise à jour | 2026-09-03 |
 | Dernier rapport journalier lié | — *(à créer au démarrage réel)* |
 
 > ⚠️ **Blocage réel identifié** : cette mission ne peut pas démarrer sérieusement tant que `09-cartographie-contenu-pedagogique.md` ne contient que des exemples fictifs. Le seuil minimal d'unités validées par niveau GeR (section 4 de ce document) n'est pas encore chiffré — c'est le risque **R-07** du registre. Il pourrait être utile d'ajouter au backlog une mission dédiée « remplissage et validation de la cartographie de contenu » en amont de A4, si ce n'est pas déjà prévu ailleurs dans ton organisation du travail.
@@ -26,6 +26,8 @@
 - [x] Les exigences concernées (NFR-03, NFR-22) sont identifiées
 - [ ] **Dépendance bloquante non satisfaite** : la Mission A2 (structure de packages, notamment `data/local/room`) doit être terminée
 - [ ] **Prérequis non satisfait** : la cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) doit être renseignée avec du contenu réel et validée pour tous les niveaux GeR retenus au MVP
+- [x] **Dépendance partiellement levée** : ADR-015 autorise le démarrage avec le seed
+  de 4 brouillons (isValidated: false). La validation complète reste requise avant D0.
 - [ ] Statut des droits (ADR-006) documenté pour chaque unité prévue au MVP
 
 ### Notes de conception

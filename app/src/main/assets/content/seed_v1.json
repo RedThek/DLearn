@@ -7,7 +7,8 @@
       "chapitreCurriculum": "",
       "titre": "Ich stelle mich vor",
       "objectifsApprentissage": "Se présenter à l'écrit : nom, âge, ville, famille, matière préférée, loisirs. Vocabulaire de base A1.",
-      "ordreAffichage": 1
+      "ordreAffichage": 1,
+      "isValidated": false
     },
     {
       "id": "U-5E-01",
@@ -15,7 +16,8 @@
       "chapitreCurriculum": "",
       "titre": "Meine Woche",
       "objectifsApprentissage": "Décrire sa semaine : jours, activités récurrentes, subordonnée 'weil' simple. Consolidation A1.",
-      "ordreAffichage": 2
+      "ordreAffichage": 2,
+      "isValidated": false
     },
     {
       "id": "U-4E-01",
@@ -23,7 +25,8 @@
       "chapitreCurriculum": "",
       "titre": "Ein Tag in Yaoundé",
       "objectifsApprentissage": "Raconter sa journée au présent et au Perfekt. Vocabulaire du quotidien, verbes séparables (aufstehen, anziehen, aufmachen).",
-      "ordreAffichage": 3
+      "ordreAffichage": 3,
+      "isValidated": false
     },
     {
       "id": "U-3E-01",
@@ -31,7 +34,8 @@
       "chapitreCurriculum": "",
       "titre": "Meine Sommerferien in Kribi",
       "objectifsApprentissage": "Raconter des vacances au Perfekt étendu. Exprimer un projet d'avenir avec 'möchten'. Niveau BEPC.",
-      "ordreAffichage": 4
+      "ordreAffichage": 4,
+      "isValidated": false
     }
   ],
   "extraits": [
@@ -119,7 +123,7 @@
   ],
   "options": [
     {"id": "OPT-6E-01-001-A", "exerciceId": "EX-6E-01-001", "texteOption": "zehn Jahre alt",     "estCorrecte": false},
-    {"id": "OPT-6E-01-001-B", "exerciceId": "EX-6E-01-001", "texteOption": "zwölf Jahre alt",    "estCorrecte": true},
+    {"id": "OPT-6E-01-001-B", "exerciceId": "EX-6E-01-001", "texteOption": "zwol f Jahre alt",    "estCorrecte": true},
     {"id": "OPT-6E-01-001-C", "exerciceId": "EX-6E-01-001", "texteOption": "vierzehn Jahre alt", "estCorrecte": false},
 
     {"id": "OPT-5E-01-001-A", "exerciceId": "EX-5E-01-001", "texteOption": "montags",            "estCorrecte": false},
