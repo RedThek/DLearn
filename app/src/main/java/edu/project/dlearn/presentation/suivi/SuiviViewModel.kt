@@ -1,25 +1,27 @@
 package edu.project.dlearn.presentation.suivi
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import edu.project.dlearn.domain.model.ProgressionStats
+import edu.project.dlearn.domain.usecase.GetProgressionStatsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
-// TODO: remplacer par un repository dedie qui agrege les resultats
-// (table historique_reponses + vocabulaire) via une requete Room @Query avec agregation.
-@HiltViewModel
-class SuiviViewModel @Inject constructor() : ViewModel() {
+// TODO Sprint 3 : remplacer ELEVE_ID_DEMO par la session DataStore réelle
+private const val ELEVE_ID_DEMO = 1L
 
-    private val _stats = MutableStateFlow(
-        ProgressionStats(
-            motsAppris = 42,
-            streakJours = 5,
-            tauxReussite = 78,
-            competencesParNiveau = mapOf("A1" to 0.9f, "A2" to 0.6f, "B1" to 0.2f)
+@HiltViewModel
+class SuiviViewModel @Inject constructor(
+    getProgressionStats: GetProgressionStatsUseCase
+) : ViewModel() {
+
+    val stats: StateFlow<ProgressionStats> = getProgressionStats(ELEVE_ID_DEMO)
+        .stateIn(
+            scope          = viewModelScope,
+            started        = SharingStarted.WhileSubscribed(5_000),
+            initialValue   = ProgressionStats()
         )
-    )
-    val stats: StateFlow<ProgressionStats> = _stats.asStateFlow()
 }

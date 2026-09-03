@@ -11,5 +11,6 @@ data class UtilisateurEntity(
     val motDePasseHash: String,
     val nomAffiche: String,
     val role: String, // "ELEVE" ou "ENSEIGNANT"
-    val classe: String?
+    val classe: String?,
+    val niveau: String? = null // ← AJOUT : niveau GeR de départ (ex. "A1")
 )

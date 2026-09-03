@@ -13,12 +13,3 @@ data class VocabEntity(
     val prochainRappel: Long,
     val facteurDifficulte: Float
 )
-
-@Entity(tableName = "exercice_texte_a_trous")
-data class ExerciceEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    val phraseAvecTrou: String,
-    val reponseCorrecte: String,
-    val niveauCECR: String,
-    val indice: String?
-)

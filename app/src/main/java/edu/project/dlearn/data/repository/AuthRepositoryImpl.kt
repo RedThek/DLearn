@@ -12,7 +12,7 @@ import java.security.MessageDigest
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val dao: UtilisateurDao
+    private val dao: UtilisateurDao,
     // TODO: injecter SessionManager (DataStore) pour persister l'utilisateur connecté
     // entre deux lancements → utilisateurConnecte() retourne null en attendant.
 ) : AuthRepository {
@@ -54,7 +54,8 @@ class AuthRepositoryImpl @Inject constructor(
         identifiant = identifiant,
         nomAffiche  = nomAffiche,
         role     = Role.valueOf(role),
-        classe   = classe
+        classe   = classe,
+        niveau   = niveau
     )
 
     // TODO production : remplacer SHA-256 nu par PBKDF2/BCrypt avec sel.

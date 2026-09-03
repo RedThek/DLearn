@@ -16,8 +16,9 @@ data class AccueilUiState(
     val prenom: String = "",
     val niveau: String = "A1",
     val progressionGlobale: Float = 0f, // 0f..1f
+    val serieJours: String = "0",
+    val unitesTerminees: String = "0",
+    val tempsEtude: String = "0m",
     val lectureEnCours: LectureEnCours? = null,
     val miniCours: List<MiniCours> = emptyList()
-    //val isLoading: Boolean = false,
-    //val appName: String = "Liteschreib Ikii"
 )

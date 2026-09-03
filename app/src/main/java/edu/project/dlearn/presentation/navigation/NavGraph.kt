@@ -44,7 +44,7 @@ fun LiteschreibApp() {
 
         composable(Route.SELECTION_PROFIL) {
             SelectionProfilScreen(
-                onProfilSelectionne = { role ->
+                onProfilSelectionne = { _ ->
                     navController.navigate(Route.MAIN) {
                         popUpTo(0) { inclusive = true }
                     }
@@ -61,24 +61,22 @@ fun LiteschreibApp() {
             PositionnementScreen(
                 onTermine = {
                     navController.navigate(Route.MAIN) { popUpTo(0) }
-                }
+                },
             )
         }
 
         composable(Route.MAIN) {
-            MainScreen(
-                onDeconnexion = {
-                    navController.navigate(Route.CONNEXION) {
-                        popUpTo(0) { inclusive = true }
-                    }
+            MainScreen(role = Role.ELEVE) {
+                navController.navigate(Route.CONNEXION) {
+                    popUpTo(0) { inclusive = true }
                 }
-            )
+            }
         }
 
         composable(Route.CREATION_ELEVE) {
             CreationEleveScreen(
                 onBack = { navController.popBackStack() },
-                onCreateStudent = { fullName, className, level ->
+                onCreateStudent = { _, _, _ ->
                     // Navigation simulée vers le résultat pour la démo UI
                     navController.navigate(Route.RESULTAT_CREATION_ELEVE)
                 }

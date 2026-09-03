@@ -21,7 +21,10 @@ import edu.project.dlearn.core.components.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SuiviScreen(viewModel: SuiviViewModel = hiltViewModel()) {
+fun SuiviScreen(
+    onCommencerApprentissage: () -> Unit = {},
+    viewModel: SuiviViewModel = hiltViewModel()
+) {
     val stats by viewModel.stats.collectAsState()
 
     Scaffold(
@@ -44,120 +47,124 @@ fun SuiviScreen(viewModel: SuiviViewModel = hiltViewModel()) {
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            // Résumé Global
-            item {
-                ProgressCard(
-                    title = "Progression globale",
-                    progress = 0.65f, // Placeholder if not in ProgressionStats
-                    supportingText = "${stats.motsAppris} mots appris · Niveau A2 en cours"
-                )
-            }
-
-            // Statistiques
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    StatItem(
-                        value = "${stats.streakJours}j",
-                        label = "Série",
-                        icon = Icons.Default.LocalFireDepartment,
-                        modifier = Modifier.weight(1f)
-                    )
-                    StatItem(
-                        value = "${stats.tauxReussite}%",
-                        label = "Réussite",
-                        icon = Icons.Default.TrendingUp,
-                        modifier = Modifier.weight(1f)
-                    )
-                    StatItem(
-                        value = "8h",
-                        label = "Temps",
-                        icon = Icons.Default.Timeline,
-                        modifier = Modifier.weight(1f)
+            if (stats.motsAppris == 0 && stats.streakJours == 0 && stats.competencesParNiveau.isEmpty()) {
+                item {
+                    EmptyStateCard(
+                        title = "Ton parcours commence ici",
+                        message = "Ton historique apparaîtra ici après ta première activité.",
+                        actionLabel = "Commencer à apprendre",
+                        onActionClick = onCommencerApprentissage
                     )
                 }
-            }
-
-            // Filtre temporel (Visual placeholder as per spec)
-            item {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    FilterChip(
-                        selected = true,
-                        onClick = { },
-                        label = { Text("7 jours") }
-                    )
-                    FilterChip(
-                        selected = false,
-                        onClick = { },
-                        label = { Text("30 jours") }
-                    )
-                    FilterChip(
-                        selected = false,
-                        onClick = { },
-                        label = { Text("Tout") }
+            } else {
+                // Résumé Global
+                item {
+                    ProgressCard(
+                        title = "Progression globale",
+                        progress = 0.65f, // Placeholder if not in ProgressionStats
+                        supportingText = "${stats.motsAppris} mots appris · Niveau A2 en cours"
                     )
                 }
-            }
 
-            // Progression par niveau
-            item {
-                DlearnSectionHeader(
-                    title = "Compétences par niveau",
-                    subtitle = "Détail de ton parcours CECR"
-                )
-            }
+                // Statistiques
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        StatItem(
+                            value = "${stats.streakJours}j",
+                            label = "Série",
+                            icon = Icons.Default.LocalFireDepartment,
+                            modifier = Modifier.weight(1f)
+                        )
+                        StatItem(
+                            value = "${stats.tauxReussite}%",
+                            label = "Réussite",
+                            icon = Icons.Default.TrendingUp,
+                            modifier = Modifier.weight(1f)
+                        )
+                        StatItem(
+                            value = "8h",
+                            label = "Temps",
+                            icon = Icons.Default.Timeline,
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
 
-            items(stats.competencesParNiveau.toList()) { (niveau, progression) ->
-                ProgressCard(
-                    title = "Niveau $niveau",
-                    progress = progression,
-                    supportingText = "${(progression * 100).toInt()}% maîtrisé",
-                    modifier = Modifier.padding(vertical = 4.dp)
-                )
-            }
+                // Filtre temporel
+                item {
+                    val options = listOf("7 jours", "30 jours", "Tout")
+                    SingleChoiceSegmentedButtonRow(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        options.forEachIndexed { index, label ->
+                            SegmentedButton(
+                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
+                                onClick = { /* TODO: Filtrer dans le ViewModel */ },
+                                selected = index == 0,
+                                label = { Text(label, style = MaterialTheme.typography.labelMedium) }
+                            )
+                        }
+                    }
+                }
 
-            // Historique récent
-            item {
-                DlearnSectionHeader(
-                    title = "Historique récent",
-                    actionLabel = "Voir tout",
-                    onActionClick = { }
-                )
-            }
+                // Progression par niveau
+                item {
+                    DlearnSectionHeader(
+                        title = "Compétences par niveau",
+                        subtitle = "Détail de ton parcours CECR"
+                    )
+                }
 
-            item {
-                ActivityCard(
-                    title = "Vocabulaire : La ville",
-                    typeLabel = "EXERCICE",
-                    icon = Icons.Default.School,
-                    metadata = "Aujourd'hui · Score 85%",
-                    onClick = { }
-                )
-            }
+                items(stats.competencesParNiveau.toList()) { (niveau, progression) ->
+                    ProgressCard(
+                        title = "Niveau $niveau",
+                        progress = progression,
+                        supportingText = "${(progression * 100).toInt()}% maîtrisé",
+                        modifier = Modifier.padding(vertical = 4.dp)
+                    )
+                }
 
-            item {
-                ActivityCard(
-                    title = "Lecture : Berlin",
-                    typeLabel = "LECTURE",
-                    icon = Icons.Default.History,
-                    metadata = "Hier · 12 min",
-                    onClick = { }
-                )
-            }
+                // Historique récent
+                item {
+                    DlearnSectionHeader(
+                        title = "Historique récent",
+                        actionLabel = "Voir tout",
+                        onActionClick = { }
+                    )
+                }
 
-            // Message d'encouragement
-            item {
-                EmptyStateCard(
-                    title = "Bel effort !",
-                    message = "Tu as progressé de 15% cette semaine. Continue comme ça !",
-                    actionLabel = "Lancer un défi",
-                    onActionClick = { }
-                )
+                item {
+                    ActivityCard(
+                        title = "Vocabulaire : La ville",
+                        typeLabel = "EXERCICE",
+                        icon = Icons.Default.School,
+                        metadata = "Aujourd'hui · Score 85%",
+                        onClick = { }
+                    )
+                }
+
+                item {
+                    ActivityCard(
+                        title = "Lecture : Berlin",
+                        typeLabel = "LECTURE",
+                        icon = Icons.Default.History,
+                        metadata = "Hier · 12 min",
+                        onClick = { }
+                    )
+                }
+
+                // Message d'encouragement
+                item {
+                    EmptyStateCard(
+                        title = "Bel effort !",
+                        message = "Tu as progressé de 15% cette semaine. Continue comme ça !",
+                        actionLabel = "Lancer un défi",
+                        onActionClick = { }
+                    )
+                }
             }
 
             item { Spacer(modifier = Modifier.height(16.dp)) }

@@ -66,4 +66,11 @@ class NavigationTest {
         val labels = listOf("Accueil", "Apprentissage", "Écriture", "Suivi", "Profil")
         // Ce test nécessite d'être sur MainScreen
     }
+
+    @Test
+    fun ecritureScreen_affiche_clavier_allemand() {
+        // Nécessite d'être sur MainScreen onglet Écriture
+        // TODO Sprint 3 : automatiser la connexion de démo avant ce test
+        // Pour l'instant : test manuel uniquement
+    }
 }
