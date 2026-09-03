@@ -32,6 +32,7 @@ import edu.project.dlearn.presentation.selectionprofil.SelectionProfilScreen
 fun LiteschreibApp() {
     val navViewModel: NavViewModel = hiltViewModel()
     val destinationInitiale by navViewModel.destinationInitiale.collectAsState()
+    val utilisateurConnecte by navViewModel.utilisateurLogue.collectAsState()
     val navController = rememberNavController()
 
     // Écran de démarrage pendant la résolution de la session
@@ -54,6 +55,7 @@ fun LiteschreibApp() {
         composable(Route.CONNEXION) {
             ConnexionScreen(
                 onConnexionReussie = { role ->
+                    navViewModel.rafraichirSession()
                     naviguerApresConnexion(navController, role)
                 },
                 onNaviguerVersSelectionProfil = {
@@ -68,6 +70,7 @@ fun LiteschreibApp() {
         composable(Route.SELECTION_PROFIL) {
             SelectionProfilScreen(
                 onProfilSelectionne = { _ ->
+                    navViewModel.rafraichirSession()
                     navController.navigate(Route.MAIN) {
                         popUpTo(0) { inclusive = true }
                     }
@@ -89,7 +92,8 @@ fun LiteschreibApp() {
         }
 
         composable(Route.MAIN) {
-            MainScreen(role = Role.ELEVE) {
+            val role = utilisateurConnecte?.role ?: Role.ELEVE
+            MainScreen(role = role) {
                 navController.navigate(Route.CONNEXION) {
                     popUpTo(0) { inclusive = true }
                 }

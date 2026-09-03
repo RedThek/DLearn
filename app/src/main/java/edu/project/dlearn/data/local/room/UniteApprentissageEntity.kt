@@ -10,5 +10,6 @@ data class UniteApprentissageEntity(
     val chapitreCurriculum: String,
     val titre: String,
     val objectifsApprentissage: String,
-    val ordreAffichage: Int
+    val ordreAffichage: Int,
+    val isValidated: Boolean = false
 )

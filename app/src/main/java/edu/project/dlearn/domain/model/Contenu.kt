@@ -5,7 +5,8 @@ data class UniteApprentissage(
     val niveauGer: String,
     val titre: String,
     val objectifsApprentissage: String,
-    val ordreAffichage: Int
+    val ordreAffichage: Int,
+    val isValidated: Boolean
 )
 
 data class ExtraitAvecGlossaire(

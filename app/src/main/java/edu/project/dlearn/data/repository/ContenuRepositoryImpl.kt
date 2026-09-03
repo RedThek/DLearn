@@ -39,6 +39,7 @@ class ContenuRepositoryImpl @Inject constructor(
         niveauGer             = niveauGer,
         titre                 = titre,
         objectifsApprentissage= objectifsApprentissage,
-        ordreAffichage        = ordreAffichage
+        ordreAffichage        = ordreAffichage,
+        isValidated           = isValidated
     )
 }
