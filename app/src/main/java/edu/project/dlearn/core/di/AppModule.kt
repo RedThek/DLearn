@@ -41,6 +41,7 @@ object DatabaseModule {
             // TODO(dette-technique): fallbackToDestructiveMigration() à remplacer par des
             // migrations explicites avant la Mission D0 (distribution pilote).
             .fallbackToDestructiveMigration()
+            .addMigrations(AppDatabase.MIGRATION_3_4)
             .addCallback(SeedCallback)
             .build()
 

@@ -129,6 +129,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-012 | Devices de référence pour les tests de performance | **Accepted** — Tecno et Itel (et sous-marques) |
 | ADR-013 | Outil de suivi de sprint | **Accepted** — GitHub Projects (dépôt public) |
 | ADR-014 | Abandon du workflow Figma — génération UI par agent de codage | Accepted |
+| ADR-015 | Stratégie de seed de développement (déblocage A4) | **Accepted** |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -275,6 +276,33 @@ Le workflow Figma est abandonné dès ce sprint. L'UI de chaque écran est déso
 - **Accessibilité (contraste)** : Validation via test instrumentation AccessibilityChecks (Android) au lieu du plugin Stark (Figma).
 - **Mission A1 (design tokens)** : Débloquée : valeurs actuelles de Color.kt canonisées.
 
+### ADR-015 : Stratégie de seed de développement — déblocage Mission A4
+**Statut :** Accepted
+**Date :** 2026-09-03
+
+#### Contexte
+La Mission A4 (entités Room & pré-population) est bloquée par A0-T23 (5 unités validées
+par niveau requises). La validation humaine du contenu est hors de portée du développement
+technique et bloque toute la chaîne B1→B3, C1→C3.
+
+#### Décision
+Ajouter un champ `isValidated: Boolean = false` à `UniteApprentissageEntity`. Procéder
+à l'implémentation complète de A4 avec les 4 brouillons existants dans `seed_v1.json`,
+marqués `isValidated: false`. Le code n'applique aucun filtre sur ce champ en développement :
+toutes les unités sont visibles. La DoD de A0 (validation humaine) reste inchangée et doit
+être satisfaite avant Mission D0 (distribution pilote).
+
+#### Options considérées
+- Attendre A0-T23 (rejeté : bloque indéfiniment le développement)
+- Seed minimaliste factice (rejeté : perd la cohérence avec le vrai contenu)
+- **Option B — seed draft + flag `isValidated`** (retenu : débloque A4 sans mentir sur le statut)
+
+#### Conséquences
+- Schéma Room incrémenté : version 3 → 4 (migration `ALTER TABLE unite_apprentissage ADD COLUMN`)
+- `seed_v1.json` reçoit le champ `"isValidated": false` sur les 4 unités existantes
+- `ContentDataSource.kt` lit le nouveau champ lors du seed
+- Les unités validées après A0-T23 seront mises à jour via `UPDATE` ou rechargement du seed
+- Risque R-07 reste Ouvert — le champ `isValidated` permet de le mesurer précisément
 
 ## 7. Gabarit ADR (pour toute nouvelle décision)
 

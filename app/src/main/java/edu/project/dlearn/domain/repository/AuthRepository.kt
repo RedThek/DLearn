@@ -2,6 +2,7 @@ package edu.project.dlearn.domain.repository
 
 import edu.project.dlearn.domain.model.Role
 import edu.project.dlearn.domain.model.Utilisateur
+import kotlinx.coroutines.flow.Flow
 
 sealed interface ResultatConnexion {
     data class Succes(val utilisateur: Utilisateur) : ResultatConnexion
@@ -23,4 +24,22 @@ interface AuthRepository {
      * Utilisé par le sélecteur multi-profil (FR-04, FR-33, ADR-009).
      */
     fun getAllProfils(): kotlinx.coroutines.flow.Flow<List<edu.project.dlearn.domain.model.Utilisateur>>
+
+    /**
+     * Flow réactif de l'utilisateur actuellement en session.
+     * Émet null si aucune session n'est active.
+     * Réagit automatiquement à toute connexion / déconnexion via SessionManager.
+     * Utilisé par NavViewModel pour propager le rôle dans le graphe de navigation (D-01, ADR-015).
+     */
+    fun utilisateurConnecteFlow(): Flow<Utilisateur?>
+
+    /**
+     * Crée un nouveau compte élève local, génère son identifiant et son mot de passe.
+     * Retourne l'Utilisateur créé avec le mot de passe en clair (pour affichage enseignant).
+     * Le mot de passe est ensuite hashé en base — jamais stocké en clair (D-05).
+     */
+    suspend fun creerEleve(nomComplet: String, classe: String, niveau: String): Utilisateur
+
+    /** Flow de tous les comptes élève (rôle ELEVE), triés par nom. */
+    fun getAllEleves(): Flow<List<Utilisateur>>
 }

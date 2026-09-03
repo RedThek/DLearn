@@ -44,7 +44,8 @@ class ContentDataSource @Inject constructor(
                 chapitreCurriculum    = u.getString("chapitreCurriculum"),
                 titre                 = u.getString("titre"),
                 objectifsApprentissage= u.getString("objectifsApprentissage"),
-                ordreAffichage        = u.getInt("ordreAffichage")
+                ordreAffichage        = u.getInt("ordreAffichage"),
+                isValidated           = u.optBoolean("isValidated", false)
             )
         })
 

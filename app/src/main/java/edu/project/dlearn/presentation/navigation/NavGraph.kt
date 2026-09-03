@@ -32,6 +32,7 @@ import edu.project.dlearn.presentation.selectionprofil.SelectionProfilScreen
 fun LiteschreibApp() {
     val navViewModel: NavViewModel = hiltViewModel()
     val destinationInitiale by navViewModel.destinationInitiale.collectAsState()
+    val utilisateurConnecte by navViewModel.utilisateurConnecte.collectAsState()
     val navController = rememberNavController()
 
     // Écran de démarrage pendant la résolution de la session
@@ -89,7 +90,8 @@ fun LiteschreibApp() {
         }
 
         composable(Route.MAIN) {
-            MainScreen(role = Role.ELEVE) {
+            val role = utilisateurConnecte?.role ?: Role.ELEVE
+            MainScreen(role = role) {
                 navController.navigate(Route.CONNEXION) {
                     popUpTo(0) { inclusive = true }
                 }
