@@ -23,7 +23,7 @@ import androidx.room.RoomDatabase
         ProductionEcriteEntity::class,
         ReponseEleveEntity::class,
         // Technique
-        SyncLogEntity::class
+        SyncLogEntity::class,
     ],
     version = 3,
     exportSchema = true

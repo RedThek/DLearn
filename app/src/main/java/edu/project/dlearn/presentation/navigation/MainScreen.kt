@@ -49,10 +49,14 @@ fun MainScreen(
             startDestination = BottomNavItem.Accueil.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavItem.Accueil.route) { AccueilScreen() }
+            composable(BottomNavItem.Accueil.route) { 
+                AccueilScreen(onOuvrirLecture = { navController.navigate(BottomNavItem.Apprentissage.route) }) 
+            }
             composable(BottomNavItem.Apprentissage.route) { ApprentissageScreen() }
             composable(BottomNavItem.Ecriture.route) { EcritureScreen() }
-            composable(BottomNavItem.Suivi.route) { SuiviScreen() }
+            composable(BottomNavItem.Suivi.route) { 
+                SuiviScreen(onCommencerApprentissage = { navController.navigate(BottomNavItem.Apprentissage.route) }) 
+            }
             composable(BottomNavItem.Profil.route) { ProfilScreen(onDeconnexion = onDeconnexion) }
         }
     }

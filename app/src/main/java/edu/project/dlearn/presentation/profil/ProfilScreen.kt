@@ -1,8 +1,10 @@
 package edu.project.dlearn.presentation.profil
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -21,6 +23,7 @@ fun ProfilScreen(
     viewModel: ProfilViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel.evenements.collect { evenement ->
@@ -28,6 +31,29 @@ fun ProfilScreen(
                 ProfilEvenement.Deconnecte -> onDeconnexion()
             }
         }
+    }
+
+    if (showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            title = { Text("Se déconnecter ?") },
+            text = { Text("Tu devras te reconnecter pour accéder à ton parcours.") },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        showLogoutDialog = false
+                        viewModel.onDeconnexion()
+                    }
+                ) {
+                    Text("Se déconnecter", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showLogoutDialog = false }) {
+                    Text("Annuler")
+                }
+            }
+        )
     }
 
     Scaffold(
@@ -39,11 +65,6 @@ fun ProfilScreen(
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold
                     )
-                },
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.Settings, contentDescription = "Paramètres")
-                    }
                 }
             )
         }
@@ -86,6 +107,39 @@ fun ProfilScreen(
                 }
             }
 
+            // Badges
+            if (etat.badges.isNotEmpty()) {
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        etat.badges.forEach { badge ->
+                            Surface(
+                                modifier = Modifier
+                                    .padding(horizontal = 4.dp)
+                                    .size(40.dp),
+                                shape = CircleShape,
+                                color = if (badge.deverrouille) MaterialTheme.colorScheme.tertiaryContainer 
+                                        else MaterialTheme.colorScheme.surfaceVariant,
+                                border = if (!badge.deverrouille) BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant) else null
+                            ) {
+                                Box(contentAlignment = Alignment.Center) {
+                                    Icon(
+                                        imageVector = badge.icone,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(24.dp),
+                                        tint = if (badge.deverrouille) MaterialTheme.colorScheme.onTertiaryContainer 
+                                               else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f)
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             // Progression Niveau
             item {
                 DlearnSectionHeader(title = "Objectif actuel")
@@ -94,7 +148,7 @@ fun ProfilScreen(
             item {
                 ProgressCard(
                     title = "Vers le niveau ${etat.niveauCible}",
-                    progress = 0.72f, // Placeholder
+                    progress = etat.progressionVersCible,
                     supportingText = "Plus que 5 unités pour atteindre le niveau ${etat.niveauCible} !"
                 )
             }
@@ -113,22 +167,15 @@ fun ProfilScreen(
                     Column {
                         ListItem(
                             headlineContent = { Text("Audio") },
-                            supportingContent = { Text("Lecture audio activée") },
+                            supportingContent = { Text(if (etat.notificationsActives) "Lecture audio activée" else "Lecture audio désactivée") },
                             leadingContent = { Icon(Icons.Default.VolumeUp, contentDescription = null) },
-                            trailingContent = { Switch(checked = true, onCheckedChange = { }) }
+                            trailingContent = { Switch(checked = etat.notificationsActives, onCheckedChange = { }) }
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
                         ListItem(
-                            headlineContent = { Text("Taille du texte") },
-                            supportingContent = { Text("Standard") },
-                            leadingContent = { Icon(Icons.Default.FormatSize, contentDescription = null) },
-                            trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) }
-                        )
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
-                        ListItem(
-                            headlineContent = { Text("Accessibilité") },
-                            supportingContent = { Text("Options d'affichage") },
-                            leadingContent = { Icon(Icons.Default.Accessibility, contentDescription = null) },
+                            headlineContent = { Text("Langue de l'interface") },
+                            supportingContent = { Text(etat.langueInterface) },
+                            leadingContent = { Icon(Icons.Default.Language, contentDescription = null) },
                             trailingContent = { Icon(Icons.Default.ChevronRight, contentDescription = null) }
                         )
                     }
@@ -165,7 +212,7 @@ fun ProfilScreen(
                         ListItem(
                             headlineContent = { Text("Se déconnecter", color = MaterialTheme.colorScheme.error) },
                             leadingContent = { Icon(Icons.Default.Logout, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                            modifier = Modifier.clickable(onClick = viewModel::onDeconnexion)
+                            modifier = Modifier.clickable { showLogoutDialog = true }
                         )
                     }
                 }

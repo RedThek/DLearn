@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val ELEVE_ID_DEMO = 1L
 private const val DEBOUNCE_SAUVEGARDE_MS = 1500L
@@ -23,7 +24,7 @@ private const val DEBOUNCE_SAUVEGARDE_MS = 1500L
 class EcritureViewModel @Inject constructor(
     private val getAllUnites: GetAllUnitesUseCase,
     private val getOrCreateBrouillon: GetOrCreateBrouillonUseCase,
-    private val sauvegarderBrouillon: SauvegarderBrouillonUseCase
+    private val sauvegarderBrouillon: SauvegarderBrouillonUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(EcritureUiState())
@@ -55,7 +56,7 @@ class EcritureViewModel @Inject constructor(
         // Sauvegarde automatique avec debounce (FR-15)
         jobSauvegarde?.cancel()
         jobSauvegarde = viewModelScope.launch {
-            delay(DEBOUNCE_SAUVEGARDE_MS)
+            delay(DEBOUNCE_SAUVEGARDE_MS.milliseconds)
             sauvegarderBrouillon(
                 _uiState.value.production?.copy(contenuTexte = nouveau) ?: return@launch
             )

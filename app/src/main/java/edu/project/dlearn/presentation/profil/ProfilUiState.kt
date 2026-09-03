@@ -13,7 +13,7 @@ data class ProfilUiState(
     val classe: String = "",
     val niveauActuel: String = "A1",
     val niveauCible: String = "A2",
-    val progressionNiveauEnCours: Boolean = true,
+    val progressionVersCible: Float = 0f, // 0f..1f
     val langueInterface: String = "Français",
     val modeHorsLigneActif: Boolean = true,
     val notificationsActives: Boolean = true,

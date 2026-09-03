@@ -2,11 +2,10 @@ package edu.project.dlearn.presentation.accueil
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.AutoAwesome
 import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material.icons.filled.TaskAlt
 import androidx.compose.material3.*
@@ -17,14 +16,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccueilScreen(
     onOuvrirLecture: () -> Unit = {},
-    viewModel: AccueilViewModel = hiltViewModel()
+    viewModel: AccueilViewModel = hiltViewModel(),
 ) {
     val etat by viewModel.uiState.collectAsState()
 
@@ -52,7 +51,7 @@ fun AccueilScreen(
                         InitialsAvatar(etat.prenom, taille = 40.dp)
                     }
                 },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
                 )
             )
@@ -81,19 +80,19 @@ fun AccueilScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     StatItem(
-                        value = "5", // Fake data based on spec if missing in state
+                        value = etat.serieJours,
                         label = "Série",
                         icon = Icons.Default.LocalFireDepartment,
                         modifier = Modifier.weight(1f)
                     )
                     StatItem(
-                        value = "12",
+                        value = etat.unitesTerminees,
                         label = "Unités",
                         icon = Icons.Default.TaskAlt,
                         modifier = Modifier.weight(1f)
                     )
                     StatItem(
-                        value = "45m",
+                        value = etat.tempsEtude,
                         label = "Temps",
                         icon = Icons.Default.Schedule,
                         modifier = Modifier.weight(1f)
@@ -115,7 +114,7 @@ fun AccueilScreen(
                     ActivityCard(
                         title = lecture.titre,
                         typeLabel = "LECTURE",
-                        icon = Icons.Default.MenuBook,
+                        icon = Icons.AutoMirrored.Filled.MenuBook,
                         metadata = "Page ${lecture.pageActuelle} sur ${lecture.pageTotale}",
                         onClick = onOuvrirLecture
                     )
@@ -178,7 +177,7 @@ private fun HeroCard(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
-        shape = MaterialTheme.shapes.extraLarge
+        shape = MaterialTheme.shapes.large
     ) {
         Column(
             modifier = Modifier.padding(24.dp),

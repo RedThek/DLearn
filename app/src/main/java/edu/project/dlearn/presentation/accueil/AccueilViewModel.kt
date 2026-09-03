@@ -18,6 +18,9 @@ class AccueilViewModel @Inject constructor() : ViewModel() {
             prenom = "Lena",
             niveau = "A2",
             progressionGlobale = 0.62f,
+            serieJours = "5",
+            unitesTerminees = "12",
+            tempsEtude = "45m",
             lectureEnCours = LectureEnCours(
                 titre = "Der Zauberlehrling",
                 pageActuelle = 3,

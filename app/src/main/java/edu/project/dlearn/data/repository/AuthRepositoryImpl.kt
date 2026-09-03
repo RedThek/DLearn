@@ -12,7 +12,7 @@ import java.security.MessageDigest
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
-    private val dao: UtilisateurDao
+    private val dao: UtilisateurDao,
     // TODO: injecter SessionManager (DataStore) pour persister l'utilisateur connecté
     // entre deux lancements → utilisateurConnecte() retourne null en attendant.
 ) : AuthRepository {
