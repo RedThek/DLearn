@@ -1,5 +1,6 @@
 package edu.project.dlearn.presentation.suivi
 
+import edu.project.dlearn.core.AppConstants
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import edu.project.dlearn.domain.model.ProgressionStats
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 // TODO Sprint 3 : remplacer ELEVE_ID_DEMO par la session DataStore réelle
-private const val ELEVE_ID_DEMO = 1L
+private val ELEVE_ID_DEMO = AppConstants.ELEVE_DEMO_ID
 
 @HiltViewModel
 class SuiviViewModel @Inject constructor(

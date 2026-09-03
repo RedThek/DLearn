@@ -1,49 +1,93 @@
 # État actuel du projet — Liteschreib IKII
 
-> ⭐ **Ce fichier est le point d'entrée unique pour reprendre le travail**, que ce soit après une interruption brève ou une longue pause (académique, personnelle, imprévue). Il doit être mis à jour à la fin de chaque session ayant fait évoluer une mission. Voir la procédure complète de reprise dans `processus/guide-orchestration.md`, section 5.
+> ⭐ **Point d'entrée unique pour reprendre le travail.** Mise à jour systématique
+> en fin de session. Voir procédure complète : `processus/guide-orchestration.md`, section 5.
 
-**Dernière mise à jour :** 2026-09-02
+**Dernière mise à jour :** 2026-09-03 (The Architect — audit pré-Sprint 2)
 
 ---
 
 ## 1. Où en est le projet, en une phrase
 
-Build propre. A2 ✅, A1 ✅ (ADR-014 + Upgrade UI/UX), A3 ✅. Sprint 1 terminé avec succès. Sprint 2 en attente de A0 (contenu pédagogique validé).
+Build Sprint 1 propre ✅. **16 bugs identifiés** (4 critiques → correctifs obligatoires avant
+tout code Sprint 2). Instructions agents générées. Sprint 2 prêt à démarrer.
+
+---
 
 ## 2. Missions actives
 
-- **Front contenu** : [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) — En cours
-- **Sprint 2 préparation** : [`missions/A4-entites-room-prepopulation.md`](missions/A4-entites-room-prepopulation.md) — Bloquée par A0-T23
+| Priorité | Fiche | Statut | Bloquée par |
+|---|---|---|---|
+| 1 | [`missions/A5-modules-hilt.md`](missions/A5-modules-hilt.md) | 🔄 En cours — DataStore session | A4 partiellement |
+| 2 | [`missions/A0-cartographie-contenu-pedagogique.md`](missions/A0-cartographie-contenu-pedagogique.md) | 🔄 En cours — relecture humaine requise | — |
+| 3 | [`missions/A4-entites-room-prepopulation.md`](missions/A4-entites-room-prepopulation.md) | ⛔ Bloquée | A0-T23 |
 
-## 2bis. Missions préparées (fiches créées, non démarrées)
+---
 
-Ces fiches sont pré-instanciées pour anticiper les prochains sprints, mais aucune n'a encore démarré — leurs dépendances doivent d'abord être clôturées, dans cet ordre :
+## 3. Bugs critiques à résoudre avant Sprint 2
 
-| Ordre | Fiche | Sprint | Dépend de | Point de vigilance |
+> **Référence complète :** `docs/planification/bugs-pre-sprint2.md`
+
+| ID | Sévérité | Description | Agent | Résolu ? |
 |---|---|---|---|---|
-| 3 | [`missions/A4-entites-room-prepopulation.md`](missions/A4-entites-room-prepopulation.md) | Sprint 2 | A2, A0 | ⚠️ Bloquée en pratique tant que `09-cartographie-contenu-pedagogique.md` n'est pas rempli avec du contenu réel validé (risque R-07) |
-| 4 | [`missions/A5-modules-hilt.md`](missions/A5-modules-hilt.md) | Sprint 3 | A2, A4 | — |
+| B-01 | 🔴 CRITIQUE | `android.yml` JDK 11 ≠ Java 17 | Backend | [x] |
+| B-02 | 🔴 CRITIQUE | `codeql.yml` `checkout@v7` inexistant | Backend | [x] |
+| B-03 | 🔴 CRITIQUE | `AccueilScreen` import hiltViewModel erroné | Frontend | [x] |
+| B-04 | 🔴 CRITIQUE | Room `exportSchema` sans KSP arg | Backend | [x] |
+| B-05 | 🟠 ÉLEVÉ | `NavViewModel` jamais câblé dans NavGraph | Frontend | [x] |
+| B-06 | 🟠 ÉLEVÉ | `NavRoute` + `Route` — duplication constantes | Backend | [x] |
+| B-07 | 🟠 ÉLEVÉ | `utilisateurConnecte()` retourne toujours null | Backend | [x] |
+| B-08 | 🟠 ÉLEVÉ | `recupererProfilsLocaux()` retourne toujours vide | Backend | [x] |
 
-## 3. Dernier rapport de session
+---
 
-- `EXEC-SPRINT1-AGENT.md` exécuté le 2026-09-02.
+## 4. Instructions agents Sprint 2
 
-## 4. Sprint et cycle en cours
+| Fichier | Agent | Priorité |
+|---|---|---|
+| [`planification/EXEC-SPRINT2-BACKEND-AGENT.md`](planification/EXEC-SPRINT2-BACKEND-AGENT.md) | Backend Android Studio | 1 (démarrer maintenant) |
+| [`planification/EXEC-SPRINT2-FRONTEND-AGENT.md`](planification/EXEC-SPRINT2-FRONTEND-AGENT.md) | Frontend Android Studio | 2 (Phase 0 en parallèle, Phase 1+ après Backend Phase 1) |
 
-- **Cycle DBR** : Cycle 1 (Analyse/Conception terminées, Développement en cours)
-- **Sprint** : Sprint 1 terminé.
-- **Prochain sprint** : Sprint 2 — Entités Room & Pré-population (A4) + Modules Hilt (A5)
+---
 
-## 5. Décisions et risques à garder en tête
+## 5. Missions préparées (non démarrées)
 
-- Toutes les décisions d'architecture sont tranchées — voir le registre complet dans `06-architecture-technique.md` (ADR-001 à ADR-014)
-- **ADR-014** : Abandon du workflow Figma au profit d'une génération UI par agent de codage.
-- **Risque prioritaire à surveiller** : R-07 (contenu MVP, ADR-008) — portée resserrée au collège complet (6e, 5e, 4e, 3e, bande A1→A2) ; seuil de 5 unités validées par niveau (20 au total), **aucune unité encore validée**.
-- **Risque prioritaire suivant** : R-11 (délai d'approbation éthique/consentement).
+| Ordre | Fiche | Sprint | Dépend de |
+|---|---|---|---|
+| 4 | [`missions/A4-entites-room-prepopulation.md`](missions/A4-entites-room-prepopulation.md) | Sprint 2 | A0-T23, A2 ✅ |
+| 5 | [`missions/A5-modules-hilt.md`](missions/A5-modules-hilt.md) | Sprint 3 | A4 |
 
-## 6. Checklist de reprise rapide
+---
+
+## 6. Dernier rapport de session
+
+`docs/journal/2026-09-03.md` — Session architecturale The Architect,
+audit complet, 16 bugs catalogués, fichiers agents générés.
+
+---
+
+## 7. Sprint et cycle en cours
+
+- **Cycle DBR :** Cycle 1 — Développement en cours
+- **Sprint courant :** Sprint 2 (démarrage conditionnel à résolution B-01→B-04)
+- **Sprint précédent :** Sprint 1 terminé ✅ (A1, A2, A3 validées)
+
+---
+
+## 8. Décisions et risques prioritaires
+
+- **ADR-014 :** Abandon Figma — génération UI par agent ✅ actif
+- **Risque R-07 :** Contenu MVP — 0/5 unités validées par niveau (20 unités manquantes)
+- **Risque R-11 :** Délai approbation éthique — à engager **maintenant** en parallèle
+- **Nouveau risque à surveiller :** Session DataStore non testée sur appareils Tecno/Itel (ADR-012) — prévoir test physique après A5
+
+---
+
+## 9. Checklist de reprise rapide
 
 1. Lire ce fichier en entier
-2. Consulter EXEC-SPRINT1-AGENT.md pour l'historique récent.
-3. Vérifier l'état réel du dépôt (`git log`, `git status`, build)
-4. Appliquer la checklist de début de journée (`05-checklist-quotidienne.md`)
+2. Lire `docs/planification/bugs-pre-sprint2.md` (catalogue bugs)
+3. Lancer `EXEC-SPRINT2-BACKEND-AGENT.md` Phase 0 en premier
+4. Lancer `EXEC-SPRINT2-FRONTEND-AGENT.md` Phase 0 en parallèle
+5. Vérifier le build après chaque phase : `./gradlew assembleDebug`
+6. Ne pas avancer en A4 tant que B-01→B-04 ne sont pas résolus

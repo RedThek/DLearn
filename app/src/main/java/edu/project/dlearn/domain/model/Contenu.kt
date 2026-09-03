@@ -31,5 +31,3 @@ data class ProductionEcrite(
 )
 
 // StatutProgression et ProgressionStats sont déjà dans ProgressionStats.kt
-// Ajouter StatutProgression :
-enum class StatutProgression { NON_COMMENCE, EN_COURS, TERMINE }

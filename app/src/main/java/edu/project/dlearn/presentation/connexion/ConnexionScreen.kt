@@ -33,6 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -134,12 +135,25 @@ fun ConnexionScreen(
                     Spacer(Modifier.height(8.dp))
                     etat.profilsExistants.take(3).forEach { profil ->
                         OutlinedButton(
+                            // CORRECTION B-13 : naviguer vers SelectionProfilScreen
                             onClick = viewModel::onVoirProfilsExistants,
                             modifier = Modifier.fillMaxWidth().height(48.dp)
                         ) {
                             InitialsAvatar(profil.nomAffiche, taille = 28.dp)
                             Spacer(Modifier.width(8.dp))
-                            Text(profil.nomAffiche)
+                            Column(modifier = Modifier.weight(1f),
+                                   horizontalAlignment = Alignment.Start) {
+                                Text(profil.nomAffiche,
+                                     style = MaterialTheme.typography.bodyMedium,
+                                     fontWeight = FontWeight.SemiBold)
+                                Text(
+                                    text = if (profil.role == Role.ELEVE)
+                                               "Élève${profil.classe?.let { " · $it" } ?: ""}"
+                                           else "Enseignant",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                            }
                         }
                         Spacer(Modifier.height(4.dp))
                     }
@@ -165,7 +179,8 @@ fun ConnexionScreen(
                     label = "Identifiant",
                     placeholder = "ex : eleve.2451",
                     leadingIcon = Icons.Default.Person,
-                    enabled = !etat.enChargement
+                    enabled = !etat.enChargement,
+                    modifier = Modifier.testTag("champ_identifiant")
                 )
 
                 Spacer(Modifier.height(16.dp))
@@ -175,7 +190,8 @@ fun ConnexionScreen(
                     onValueChange = viewModel::onChangerMotDePasse,
                     visible = etat.motDePasseVisible,
                     onVisibilityChange = viewModel::onToggleVisibiliteMotDePasse,
-                    enabled = !etat.enChargement
+                    enabled = !etat.enChargement,
+                    modifier = Modifier.testTag("champ_mot_de_passe")
                 )
 
                 TextButton(
@@ -202,7 +218,8 @@ fun ConnexionScreen(
                     onClick = viewModel::onSeConnecter,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(52.dp),
+                        .height(52.dp)
+                        .testTag("bouton_connexion"),
                     enabled = !etat.enChargement
                 ) {
                     if (etat.enChargement) {

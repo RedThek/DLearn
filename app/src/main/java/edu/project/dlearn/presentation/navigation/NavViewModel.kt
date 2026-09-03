@@ -24,18 +24,18 @@ class NavViewModel @Inject constructor(
         viewModelScope.launch {
             val connecte = authRepository.utilisateurConnecte()
             if (connecte != null) {
-                _destinationInitiale.value = NavRoute.MAIN
+                _destinationInitiale.value = Route.MAIN
                 return@launch
             }
 
             val profils = authRepository.recupererProfilsLocaux()
             when {
-                profils.isEmpty() -> _destinationInitiale.value = NavRoute.CONNEXION
+                profils.isEmpty() -> _destinationInitiale.value = Route.CONNEXION
                 profils.size == 1 -> {
                     authRepository.connecterAuto(profils.first())
-                    _destinationInitiale.value = NavRoute.MAIN
+                    _destinationInitiale.value = Route.MAIN
                 }
-                else -> _destinationInitiale.value = NavRoute.SELECTION_PROFIL
+                else -> _destinationInitiale.value = Route.SELECTION_PROFIL
             }
         }
     }

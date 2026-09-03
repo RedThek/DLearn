@@ -1,5 +1,6 @@
 package edu.project.dlearn.data.repository
 
+import edu.project.dlearn.core.AppConstants
 import edu.project.dlearn.data.local.room.ApprentissageDao
 import edu.project.dlearn.data.local.room.ExerciceEntity
 import edu.project.dlearn.data.local.room.ReponseEleveEntity
@@ -37,7 +38,7 @@ class ApprentissageRepositoryImpl @Inject constructor(
         exerciceId: Long, reponseDonnee: String, estCorrecte: Boolean
     ) {
         // TODO: récupérer l'eleveId depuis la session (DataStore Sprint 3)
-        val eleveIdProvisoire = 1L
+        val eleveIdProvisoire = AppConstants.ELEVE_DEMO_ID
         dao.insertReponse(
             ReponseEleveEntity(
                 id            = java.util.UUID.randomUUID().toString(),

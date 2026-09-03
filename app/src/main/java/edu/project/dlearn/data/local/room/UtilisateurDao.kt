@@ -11,6 +11,9 @@ interface UtilisateurDao {
     @Query("SELECT * FROM utilisateur WHERE identifiant = :identifiant AND role = :role LIMIT 1")
     suspend fun trouverParIdentifiant(identifiant: String, role: String): UtilisateurEntity?
 
+    @Query("SELECT * FROM utilisateur WHERE id = :id LIMIT 1")
+    suspend fun trouverParId(id: Long): UtilisateurEntity?
+
     @Query("SELECT * FROM utilisateur")
     suspend fun recupererTous(): List<UtilisateurEntity>
 
