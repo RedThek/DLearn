@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CloudOff
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.School
@@ -22,6 +23,7 @@ import edu.project.dlearn.domain.model.UniteApprentissage
 
 @Composable
 fun EnseignantDashboardScreen(
+    onCreerEleve: () -> Unit = {},
     viewModel: EnseignantViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
@@ -33,7 +35,16 @@ fun EnseignantDashboardScreen(
         return
     }
 
-    Column(Modifier.fillMaxSize()) {
+    Scaffold(
+        floatingActionButton = {
+            if (etat.ongletActif == OngletEnseignant.CLASSE) {
+                FloatingActionButton(onClick = onCreerEleve) {
+                    Icon(Icons.Filled.Add, contentDescription = "Créer un élève")
+                }
+            }
+        }
+    ) { padding ->
+    Column(Modifier.fillMaxSize().padding(padding)) {
         // En-tête
         Column(Modifier.padding(horizontal = 16.dp, vertical = 16.dp)) {
             Text("Bonjour, ${etat.enseignantNom}", style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Bold)
@@ -64,6 +75,7 @@ fun EnseignantDashboardScreen(
             OngletEnseignant.CONTENUS    -> OngletContenus(etat.unitesDisponibles)
             OngletEnseignant.CORRECTIONS -> OngletCorrections()
         }
+    }
     }
 }
 

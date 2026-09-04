@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import edu.project.dlearn.core.AppConstants
 import edu.project.dlearn.core.components.AppTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,8 +56,8 @@ fun CreationEleveScreen(
     var fullNameError by rememberSaveable { mutableStateOf(false) }
     var classError by rememberSaveable { mutableStateOf(false) }
 
-    val classes = listOf("6e A", "6e B", "5e A", "5e B", "4e A", "4e B", "3e A", "3e B")
-    val levels = listOf("A1", "A2", "B1", "B2")
+    val classes = AppConstants.NIVEAUX_COLLEGE
+    val levels = listOf("A1", "A2")
 
     BoxWithConstraints(
         modifier = Modifier

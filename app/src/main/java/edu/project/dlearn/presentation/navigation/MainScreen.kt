@@ -12,14 +12,17 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import edu.project.dlearn.domain.model.Role
 import edu.project.dlearn.presentation.accueil.AccueilScreen
 import edu.project.dlearn.presentation.apprentissage.ApprentissageScreen
 import edu.project.dlearn.presentation.ecriture.EcritureScreen
+import edu.project.dlearn.presentation.exercice.ExerciceScreen
 import edu.project.dlearn.presentation.enseignant.EnseignantDashboardScreen
 import edu.project.dlearn.presentation.profil.ProfilScreen
 import edu.project.dlearn.presentation.suivi.SuiviScreen
@@ -30,12 +33,13 @@ import edu.project.dlearn.presentation.suivi.SuiviScreen
  */
 @Composable
 fun MainScreen(
-    role: Role = Role.ELEVE,   // ← AJOUT
+    role: Role = Role.ELEVE,
+    onNaviguerVersCreationEleve: () -> Unit = {},
     onDeconnexion: () -> Unit
 ) {
     if (role == Role.ENSEIGNANT) {
-        EnseignantDashboardScreen()
-        // TODO Sprint 3 : le dashboard enseignant aura sa propre BottomBar (Classe/Contenus/Corrections)
+        EnseignantDashboardScreen(onCreerEleve = onNaviguerVersCreationEleve)
+        // TODO Sprint 4+ : le dashboard enseignant aura sa propre BottomBar (Classe/Contenus/Corrections)
         return
     }
 
@@ -52,7 +56,19 @@ fun MainScreen(
             composable(BottomNavItem.Accueil.route) { 
                 AccueilScreen(onOuvrirLecture = { navController.navigate(BottomNavItem.Apprentissage.route) }) 
             }
-            composable(BottomNavItem.Apprentissage.route) { ApprentissageScreen() }
+            composable(BottomNavItem.Apprentissage.route) {
+                ApprentissageScreen(
+                    onCommencerExercices = { uniteId ->
+                        navController.navigate("exercices/$uniteId")
+                    }
+                )
+            }
+            composable(
+                route = "exercices/{uniteId}",
+                arguments = listOf(navArgument("uniteId") { type = NavType.StringType })
+            ) {
+                ExerciceScreen(onTermine = { navController.popBackStack() })
+            }
             composable(BottomNavItem.Ecriture.route) { EcritureScreen() }
             composable(BottomNavItem.Suivi.route) { 
                 SuiviScreen(onCommencerApprentissage = { navController.navigate(BottomNavItem.Apprentissage.route) }) 

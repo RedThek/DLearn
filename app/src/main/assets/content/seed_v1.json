@@ -119,11 +119,15 @@
 
     {"id": "EX-3E-01-001", "uniteId": "U-3E-01", "type": "QCM",             "enonce": "Wohin ist Serge im Sommer gefahren?",                                                                                                            "correctionAttendue": null},
     {"id": "EX-3E-01-002", "uniteId": "U-3E-01", "type": "TEXTE_A_TROUS",   "enonce": "Serge und seine Familie ___ letzten Sommer nach Kribi ___. (fahren → Perfekt)",                                                                 "correctionAttendue": "sind|gefahren"},
-    {"id": "EX-3E-01-003", "uniteId": "U-3E-01", "type": "PRODUCTION_GUIDEE","enonce": "Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? (8 à 10 phrases, Perfekt étendu attendu)",                    "correctionAttendue": null}
+    {"id": "EX-3E-01-003", "uniteId": "U-3E-01", "type": "PRODUCTION_GUIDEE","enonce": "Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? (8 à 10 phrases, Perfekt étendu attendu)",                    "correctionAttendue": null},
+    {"id": "EX-6E-01-003", "uniteId": "U-6E-01", "type": "VRAI_FAUX", "enonce": "Aïcha spielt gern Fußball mit ihren Freunden.", "correctionAttendue": "VRAI"},
+    {"id": "EX-5E-01-004", "uniteId": "U-5E-01", "type": "TEXTE_A_TROUS", "enonce": "Am Wochenende ___ ich oft mit meiner Familie zur Kirche. (gehen)", "correctionAttendue": "gehe"},
+    {"id": "EX-4E-01-003", "uniteId": "U-4E-01", "type": "QCM", "enonce": "Wo spielt Divine nach der Schule Fußball?", "correctionAttendue": null},
+    {"id": "EX-3E-01-004", "uniteId": "U-3E-01", "type": "VRAI_FAUX", "enonce": "Serge möchte später Arzt werden.", "correctionAttendue": "VRAI"}
   ],
   "options": [
     {"id": "OPT-6E-01-001-A", "exerciceId": "EX-6E-01-001", "texteOption": "zehn Jahre alt",     "estCorrecte": false},
-    {"id": "OPT-6E-01-001-B", "exerciceId": "EX-6E-01-001", "texteOption": "zwol f Jahre alt",    "estCorrecte": true},
+    {"id": "OPT-6E-01-001-B", "exerciceId": "EX-6E-01-001", "texteOption": "zwölf Jahre alt",    "estCorrecte": true},
     {"id": "OPT-6E-01-001-C", "exerciceId": "EX-6E-01-001", "texteOption": "vierzehn Jahre alt", "estCorrecte": false},
 
     {"id": "OPT-5E-01-001-A", "exerciceId": "EX-5E-01-001", "texteOption": "montags",            "estCorrecte": false},
@@ -132,6 +136,9 @@
 
     {"id": "OPT-3E-01-001-A", "exerciceId": "EX-3E-01-001", "texteOption": "Douala",             "estCorrecte": false},
     {"id": "OPT-3E-01-001-B", "exerciceId": "EX-3E-01-001", "texteOption": "Kribi",              "estCorrecte": true},
-    {"id": "OPT-3E-01-001-C", "exerciceId": "EX-3E-01-001", "texteOption": "Limbé",              "estCorrecte": false}
+    {"id": "OPT-3E-01-001-C", "exerciceId": "EX-3E-01-001", "texteOption": "Limbé",              "estCorrecte": false},
+    {"id": "OPT-4E-01-003-A", "exerciceId": "EX-4E-01-003", "texteOption": "zu Hause", "estCorrecte": false},
+    {"id": "OPT-4E-01-003-B", "exerciceId": "EX-4E-01-003", "texteOption": "auf dem Marktplatz", "estCorrecte": true},
+    {"id": "OPT-4E-01-003-C", "exerciceId": "EX-4E-01-003", "texteOption": "in der Schule", "estCorrecte": false}
   ]
 }

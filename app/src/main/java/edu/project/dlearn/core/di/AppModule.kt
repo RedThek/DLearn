@@ -22,6 +22,8 @@ import edu.project.dlearn.data.repository.PositionnementRepositoryImpl
 import edu.project.dlearn.domain.repository.PositionnementRepository
 import edu.project.dlearn.data.repository.ProgressionRepositoryImpl
 import edu.project.dlearn.domain.repository.ProgressionRepository
+import edu.project.dlearn.data.repository.ExerciceRepositoryImpl
+import edu.project.dlearn.domain.repository.ExerciceRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -71,7 +73,7 @@ private object SeedCallback : RoomDatabase.Callback() {
         db.execSQL(
             """
             INSERT INTO utilisateur (identifiant, motDePasseHash, nomAffiche, role, classe, niveau)
-            VALUES ('eleve.2451', '0d62b61ff9b60f8082d22dae0d0a7f7330b7729d323f8401d723511e2e7ca7e8', 'Aïcha N.', 'ELEVE', 'Classe de 3e', 'A1')
+            VALUES ('eleve.2451', '0d62b61ff9b60f8082d22dae0d0a7f7330b7729d323f8401d723511e2e7ca7e8', 'Aïcha N.', 'ELEVE', '3ème', 'A1')
             """.trimIndent()
         )
         db.execSQL(
@@ -116,4 +118,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindEcritureRepository(impl: EcritureRepositoryImpl): EcritureRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindExerciceRepository(impl: ExerciceRepositoryImpl): ExerciceRepository
 }
