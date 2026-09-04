@@ -1,6 +1,7 @@
 package edu.project.dlearn.data.repository
 
 import edu.project.dlearn.core.AppConstants
+import edu.project.dlearn.data.local.datasource.SessionManager
 import edu.project.dlearn.data.local.room.ApprentissageDao
 import edu.project.dlearn.data.local.room.ExerciceEntity
 import edu.project.dlearn.data.local.room.ReponseEleveEntity
@@ -9,11 +10,14 @@ import edu.project.dlearn.domain.model.ExerciceTexteATrous
 import edu.project.dlearn.domain.model.Vocabulaire
 import edu.project.dlearn.domain.repository.ApprentissageRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.util.UUID
 import javax.inject.Inject
 
 class ApprentissageRepositoryImpl @Inject constructor(
-    private val dao: ApprentissageDao
+    private val dao: ApprentissageDao,
+    private val sessionManager: SessionManager
 ) : ApprentissageRepository {
 
     override fun getFlashcardsDues(niveau: String): Flow<List<Vocabulaire>> =
@@ -33,16 +37,15 @@ class ApprentissageRepositoryImpl @Inject constructor(
         dao.updateVocab(vocab.copy(facteurDifficulte = nouveauFacteur, prochainRappel = prochainRappel))
     }
 
-    // Dans enregistrerResultatExercice, insérer dans reponse_eleve
     override suspend fun enregistrerResultatExercice(
         exerciceId: Long, reponseDonnee: String, estCorrecte: Boolean
     ) {
-        // TODO: récupérer l'eleveId depuis la session (DataStore Sprint 3)
-        val eleveIdProvisoire = AppConstants.ELEVE_DEMO_ID
+        val eleveId = sessionManager.utilisateurIdFlow.first()
+            ?: AppConstants.ELEVE_DEMO_ID
         dao.insertReponse(
             ReponseEleveEntity(
-                id            = java.util.UUID.randomUUID().toString(),
-                eleveId       = eleveIdProvisoire,
+                id            = UUID.randomUUID().toString(),
+                eleveId       = eleveId,
                 exerciceId    = exerciceId.toString(),
                 reponseDonnee = reponseDonnee,
                 estCorrecte   = estCorrecte

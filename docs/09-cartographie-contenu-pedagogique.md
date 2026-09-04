@@ -73,6 +73,8 @@ Freunden. Am Wochenende helfe ich meiner Mutter zu Hause.
 
 **Exercice de compréhension (QCM)** : « Wie alt ist Aïcha? » → a) zehn ☐ b) zwölf ☑ c) vierzehn ☐
 
+**Exercice vrai/faux (nouveau, Sprint 3)** : « Aïcha spielt gern Fußball mit ihren Freunden. » → Vrai
+
 **Exercice d'écriture guidée** : « Stelle dich vor: Wie heißt du? Wie alt bist du? Wo wohnst du? » *(3 à 4 phrases attendues, niveau A1)*
 
 #### U-5E-01 — « Meine Woche » (5ème, A1 consolidation)
@@ -92,6 +94,8 @@ keine Hausaufgaben mache.
 **Exercice QCM** : « Wann spielt Paul Basketball? » → a) montags ☐ b) donnerstags ☑ c) samstags ☐
 
 **Exercice vrai/faux** : « Paul geht am Samstag zur Schule. » → Faux
+
+**Exercice texte à trous (nouveau, Sprint 3)** : « Am Wochenende ___ ich oft mit meiner Familie zur Kirche. (gehen) » → gehe
 
 **Exercice d'écriture guidée** : « Beschreibe deine Woche: Was machst du montags, donnerstags und am Wochenende? » *(4 à 6 phrases attendues, niveau A1/A1+, subordonnée « weil » encouragée mais non exigée)*
 
@@ -114,6 +118,8 @@ Hausaufgaben gemacht und bin früh ins Bett gegangen.
 **Glossaire** : aufstehen (se lever) · die Schuluniform (l'uniforme scolaire) · der Unterricht (les cours) · der Marktplatz (la place du marché) · helfen (aider) · das Abendessen (le dîner) · die Hausaufgaben (les devoirs)
 
 **Exercice texte à trous** : « Ich ___ (aufstehen) um sechs Uhr. » *(réponse : stehe ... auf)*
+
+**Exercice QCM (nouveau, Sprint 3)** : « Wo spielt Divine nach der Schule Fußball? » → a) zu Hause ☐ b) auf dem Marktplatz ☑ c) in der Schule ☐
 
 **Exercice d'écriture guidée** : « Beschreibe deinen Tag: Was machst du morgens, mittags und abends? » *(6 à 8 phrases attendues, niveau A2, Perfekt requis pour au moins 2 actions passées)*
 
@@ -143,6 +149,8 @@ hoffe, dass wir nächstes Jahr wieder dorthin fahren.
 **Exercice QCM** : « Wohin ist Serge im Sommer gefahren? » → a) Douala ☐ b) Kribi ☑ c) Limbé ☐
 
 **Exercice texte à trous** : « Serge und seine Familie ___ (fahren) letzten Sommer nach Kribi. » *(réponse : sind ... gefahren)*
+
+**Exercice vrai/faux (nouveau, Sprint 3)** : « Serge möchte später Arzt werden. » → Vrai
 
 **Exercice de production écrite** : « Erzähle von deinen letzten Ferien: Wohin bist du gefahren? Was hast du gemacht? » *(niveau A2/BEPC, Perfekt étendu attendu, 8 à 10 phrases)*
 

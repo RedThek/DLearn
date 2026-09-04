@@ -239,20 +239,6 @@ fun ConnexionScreen(
                 Spacer(Modifier.height(24.dp))
 
                 Text(
-                    text = "Pas encore de compte ?",
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                TextButton(
-                    onClick = onDemanderCompte,
-                    enabled = !etat.enChargement
-                ) {
-                    Text("Demander un compte élève")
-                }
-
-                Spacer(Modifier.height(16.dp))
-
-                Text(
                     text = "Besoin d'aide ? Contactez votre enseignant.",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,

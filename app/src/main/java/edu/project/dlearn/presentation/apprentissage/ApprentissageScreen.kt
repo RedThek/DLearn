@@ -27,6 +27,7 @@ import edu.project.dlearn.domain.model.UniteApprentissage
 
 @Composable
 fun ApprentissageScreen(
+    onCommencerExercices: (uniteId: String) -> Unit = {},
     viewModel: ApprentissageViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -40,7 +41,8 @@ fun ApprentissageScreen(
         )
         is ApprentissageUiState.LectureUnite     -> LectureUniteScreen(
             etat    = etat,
-            onRetour = viewModel::onRetourBibliotheque
+            onRetour = viewModel::onRetourBibliotheque,
+            onCommencerExercices = onCommencerExercices
         )
     }
 }
@@ -116,7 +118,8 @@ private fun CarteUnite(unite: UniteApprentissage, onClick: () -> Unit) {
 @Composable
 private fun LectureUniteScreen(
     etat: ApprentissageUiState.LectureUnite,
-    onRetour: () -> Unit
+    onRetour: () -> Unit,
+    onCommencerExercices: (uniteId: String) -> Unit
 ) {
     var motGlossaireSelectionne by remember { mutableStateOf<EntreeGlossaire?>(null) }
 
@@ -184,7 +187,7 @@ private fun LectureUniteScreen(
 
         // Bouton bas de page
         Button(
-            onClick   = { /* TODO Sprint 3 : naviguer vers les exercices de cette unité */ },
+            onClick   = { onCommencerExercices(etat.unite.id) },
             modifier  = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp)

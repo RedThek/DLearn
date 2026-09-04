@@ -94,8 +94,24 @@ class NavigationTest {
     /** Scénario 4 : navigation 5 onglets élève sans crash. */
     @Test
     fun navigation_cinq_onglets_eleve_sans_crash() {
-        // TODO Sprint 3 : automatiser la connexion puis vérifier les 5 onglets.
+        // TODO Sprint 4 : automatiser la connexion puis vérifier les 5 onglets.
         // Dépend de la session DataStore persistée entre les tests.
         // Pour l'instant : vérifier que le test compile (aucune assertion).
+    }
+
+    /**
+     * Scénario 5 (Sprint 3, B-20) : l'écran de connexion ne propose plus de créer un
+     * compte élève — seul un enseignant authentifié peut le faire depuis son dashboard.
+     */
+    @Test
+    fun ecran_connexion_ne_propose_plus_creation_compte_eleve() {
+        composeRule.waitUntil(3_000) {
+            composeRule.onAllNodes(
+                hasText("Liteschreib IKII")
+            ).fetchSemanticsNodes().isNotEmpty()
+        }
+        composeRule.onAllNodes(hasText("Demander un compte élève"))
+            .fetchSemanticsNodes()
+            .also { nodes -> assert(nodes.isEmpty()) { "Le bouton de création de compte ne doit plus être visible sur ConnexionScreen (B-20)" } }
     }
 }
