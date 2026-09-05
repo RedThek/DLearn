@@ -130,6 +130,8 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-013 | Outil de suivi de sprint | **Accepted** — GitHub Projects (dépôt public) |
 | ADR-014 | Abandon du workflow Figma — génération UI par agent de codage | Accepted |
 | ADR-015 | Stratégie de seed de développement (déblocage A4) | **Accepted** |
+| ADR-016 | Simplification du schéma de données — unification ProfilEleve/ProfilEnseignant | Accepted |
+| ADR-017 | Politique de migration Room pré-pilote | Accepted |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -303,6 +305,78 @@ toutes les unités sont visibles. La DoD de A0 (validation humaine) reste inchan
 - `ContentDataSource.kt` lit le nouveau champ lors du seed
 - Les unités validées après A0-T23 seront mises à jour via `UPDATE` ou rechargement du seed
 - Risque R-07 reste Ouvert — le champ `isValidated` permet de le mesurer précisément
+
+### ADR-016 : Simplification du schéma de données — unification ProfilEleve/ProfilEnseignant
+**Statut :** Accepted
+**Date :** 2026-09-04 (formalisation rétroactive)
+
+#### Contexte
+Le schéma documenté dans `11-schema-donnees-room.md` (rédigé en amont du codage) prévoyait 4 entités de
+profil distinctes : `ProfilEleve`, `ProfilEnseignant`, `Classe`, et une table `Assignation` reliant les deux
+premières. Lors de l'implémentation réelle des Missions A4/A5, une simplification pragmatique a été adoptée
+sans être consignée formellement : une entité unique `UtilisateurEntity` avec un champ `role` (`ELEVE` |
+`ENSEIGNANT`) et un champ `classe: String?` en texte libre, sans table `Classe` relationnelle.
+
+#### Décision
+Formaliser rétroactivement cette simplification comme décision assumée pour le MVP (Cycle DBR 1). Le modèle
+"utilisateur unique" est retenu :
+- Une seule table `utilisateur`, discriminée par `role`.
+- `classe` est un attribut texte libre sur l'élève (ex. "3ème"), pas une entité relationnelle.
+- La relation enseignant → élèves n'est **pas** modélisée explicitement dans ce cycle : `EnseignantViewModel`
+  affiche actuellement tous les élèves présents sur l'appareil (`getAllEleves()`), ce qui est cohérent avec un
+  contexte pilote mono-enseignant/mono-classe par appareil.
+- La table `Assignation` (voir ADR ci-après, ajoutée en Sprint 3) référence directement `enseignantId` et soit
+  un `eleveId`, soit une chaîne `classe`, sans passer par une entité `Classe`.
+
+#### Options considérées
+- Implémenter le schéma complet à 14 entités tel que documenté initialement (rejeté : complexité relationnelle
+  disproportionnée pour un pilote mono-enseignant, retarde les Missions B/C sans bénéfice pédagogique immédiat)
+- Modèle simplifié `UtilisateurEntity` + attributs texte libres (retenu : réduit le nombre de jointures, aligné
+  sur le contexte réel du pilote Yaoundé)
+
+#### Conséquences
+- **Limite explicite à documenter pour le mémoire** : ce modèle ne permet pas de cloisonner plusieurs
+  enseignants suivant des classes différentes sur un même parc d'appareils partagés. Si le pilote s'étend à
+  plusieurs enseignants/classes avant la fin du Cycle 1, cette limite devra être réévaluée (migration vers une
+  entité `Classe` + relation explicite).
+- `11-schema-donnees-room.md` doit être mis à jour pour refléter le schéma réel (11 entités) et déplacer
+  `ProfilEleve`/`ProfilEnseignant`/`Classe` en section "modèle initialement envisagé, non retenu — voir
+  ADR-016" plutôt que de les supprimer (traçabilité DBR).
+- Risque à ajouter à `08-registre-des-risques.md` : absence de cloisonnement enseignant/classe en cas
+  d'extension du pilote.
+
+### ADR-017 : Politique de migration Room pré-pilote
+**Statut :** Accepted
+**Date :** 2026-09-04
+
+#### Contexte
+`AppDatabase` a connu deux incréments de version non documentés et non testés (implicitement 1→2 et 2→3,
+couverts par `fallbackToDestructiveMigration()`) avant qu'une première migration réelle et testée (3→4) soit
+introduite avec ADR-015. Le TODO inline dans `AppModule.kt`
+(`// TODO(dette-technique): fallbackToDestructiveMigration() à remplacer par des migrations explicites avant
+la Mission D0`) reste la seule trace de ce risque, sans politique explicite sur ce qui est acceptable.
+
+#### Décision
+1. `fallbackToDestructiveMigration()` reste actif comme filet de sécurité, mais son usage réel est **accepté
+   sans regret uniquement pour les versions de schéma ≤ 4** : aucune donnée de pilote réelle n'a jamais existé
+   sur un appareil hors développement à ces versions.
+2. **À partir de la version 5 (introduite ce sprint, voir Assignation/statut Soumis), toute nouvelle version du
+   schéma DOIT être accompagnée d'une `Migration` explicite testée via `MigrationTestHelper`**, sans exception.
+   Un changement de schéma sans migration testée associée doit être refusé en revue de code.
+3. Cette politique reste en vigueur jusqu'à Mission D0 (distribution pilote) et au-delà — elle n'est pas
+   temporaire.
+
+#### Options considérées
+- Reconstruire rétroactivement les migrations 1→2 et 2→3 (rejeté : les schémas historiques exacts à ces
+  versions n'ont jamais été exportés — `app/schemas/` ne contient que `3.json` et `4.json` — reconstruire à
+  l'aveugle introduirait plus de risque que cela n'en résout)
+- Accepter le passé, encadrer strictement l'avenir (retenu)
+
+#### Conséquences
+- Ajout d'un item à `05-checklist-quotidienne.md`, section "Checklist avant merge" : *"Si `AppDatabase.kt` est
+  modifié (version bump), une `Migration` explicite et un test `MigrationTestHelper` associé sont présents"*.
+- `14-charte-versionnage-contenu.md`, section 3 (tableau version Room ↔ application) doit être complété à
+  chaque migration à partir de maintenant.
 
 ## 7. Gabarit ADR (pour toute nouvelle décision)
 

@@ -1,0 +1,29 @@
+# Mission C3 — Synchronisation locale (BYOD)
+
+| Champ | Valeur |
+|---|---|
+| ID | C3 |
+| Titre | Synchronisation locale (BYOD) |
+| Type | Mission planifiée |
+| Sprint | Sprint 3 (groundwork) |
+| FR/NFR concernés | FR-29 à FR-31, NFR-01 |
+| ADR concerné(s) | ADR-004 |
+| **Statut global** | `Implémentation` |
+| Date de création | 2026-09-05 |
+| Date de mise à jour | 2026-09-05 |
+| Rapport lié | [2026-09-05](../journal/2026-09-05.md) |
+
+---
+
+## Phase 1 — Conception
+Terminée (ADR-004, ADR-017). Format d'échange v1 défini dans `14-charte-versionnage-contenu.md`.
+
+## Phase 2 — Implémentation
+- [x] (Backend) `SyncLogDao` et `SyncLogEntity` (B-22 corrigé)
+- [x] (Backend) `SyncRepository` et `ExportDataUseCase` (Export JSON)
+- [ ] (Frontend) Déclenchement du partage depuis l'écran Profil — *À faire par Frontend Agent*
+- [ ] (Backend) Mécanisme d'import (Mission B1, Sprint 4)
+
+## Phase 3 — Test
+- [x] Build backend OK
+- [ ] Test export fichier sur device réel

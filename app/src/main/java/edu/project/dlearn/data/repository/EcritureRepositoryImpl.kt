@@ -34,18 +34,25 @@ class EcritureRepositoryImpl @Inject constructor(
         dao.insertOrReplace(production.toEntity())
     }
 
-    override suspend fun soumettre(productionId: String, autoEvaluationJson: String?) {
-        // TODO Sprint 3 : marquer la production comme soumise (champ statut à ajouter)
-        // Pour l'instant, la sauvegarde de l'auto-évaluation fait office de "soumission locale".
+    override suspend fun soumettre(productionId: String, contenuTexte: String, autoEvaluationJson: String?) {
+        dao.marquerSoumise(
+            id                 = productionId,
+            contenuTexte       = contenuTexte,
+            autoEvaluationJson = autoEvaluationJson
+        )
     }
 
+    override fun getProductionsSoumises(): Flow<List<ProductionEcrite>> =
+        dao.getProductionsSoumises().map { list -> list.map { it.toDomain() } }
+
     private fun ProductionEcriteEntity.toDomain() = ProductionEcrite(
-        id              = id,
-        eleveId         = eleveId,
-        uniteId         = uniteId,
-        contenuTexte    = contenuTexte,
-        dateModification= dateModification,
-        autoEvaluationJson = autoEvaluationJson
+        id                 = id,
+        eleveId            = eleveId,
+        uniteId            = uniteId,
+        contenuTexte       = contenuTexte,
+        dateModification   = dateModification,
+        autoEvaluationJson = autoEvaluationJson,
+        statut             = statut
     )
 
     private fun ProductionEcrite.toEntity() = ProductionEcriteEntity(
@@ -54,6 +61,7 @@ class EcritureRepositoryImpl @Inject constructor(
         uniteId             = uniteId,
         contenuTexte        = contenuTexte,
         dateModification    = System.currentTimeMillis(),
-        autoEvaluationJson  = autoEvaluationJson
+        autoEvaluationJson  = autoEvaluationJson,
+        statut              = statut
     )
 }

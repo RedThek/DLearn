@@ -28,7 +28,8 @@ data class ProductionEcrite(
     val uniteId: String,
     val contenuTexte: String,
     val dateModification: Long,
-    val autoEvaluationJson: String? = null
+    val autoEvaluationJson: String? = null,
+    val statut: String = "BROUILLON"
 )
 
 // StatutProgression et ProgressionStats sont déjà dans ProgressionStats.kt
