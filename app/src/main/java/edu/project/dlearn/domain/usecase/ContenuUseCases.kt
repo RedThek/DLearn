@@ -26,3 +26,9 @@ class GetExtraitAvecGlossaireUseCase @Inject constructor(
     suspend operator fun invoke(uniteId: String): ExtraitAvecGlossaire? =
         repository.getExtraitAvecGlossaire(uniteId)
 }
+
+class GetUniteByIdUseCase @Inject constructor(
+    private val repository: ContenuRepository
+) {
+    suspend operator fun invoke(uniteId: String): UniteApprentissage? = repository.getUniteById(uniteId)
+}

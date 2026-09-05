@@ -132,6 +132,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-015 | Stratégie de seed de développement (déblocage A4) | **Accepted** |
 | ADR-016 | Simplification du schéma de données — unification ProfilEleve/ProfilEnseignant | Accepted |
 | ADR-017 | Politique de migration Room pré-pilote | Accepted |
+| ADR-018 | Stratégie d'import et de résolution de conflits — synchronisation locale | Accepted |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -410,5 +411,37 @@ la Mission D0`) reste la seule trace de ce risque, sans politique explicite sur 
 | `presentation` | Tests d'état de ViewModel | JUnit, Turbine (Flow) |
 | UI Compose | Tests d'instrumentation sur parcours critiques (Apprentissage, Écriture) | Compose UI Test, Espresso |
 | Intégration | Test bout en bout de la synchronisation locale | Test instrumenté sur deux instances/émulateurs |
+
+### ADR-018 : Stratégie d'import et de résolution de conflits — synchronisation locale
+**Statut :** Accepted
+**Date :** 2026-09-05
+
+#### Contexte
+L'export élève (v1, ADR-004) est fonctionnel depuis le Sprint 3. L'import côté enseignant reste à faire
+(anomalie AN-F3-02). Il faut décider comment traiter le cas où l'enseignant importe deux fois le même élève
+à des dates différentes (ex. l'élève a progressé depuis le dernier export reçu).
+
+#### Options considérées
+- Écraser systématiquement (dernier import gagne) — simple, risque de perte de données si les imports sont
+  reçus dans le désordre (ex. carte SD transmise en retard)
+- Fusion par timestamp au niveau enregistrement (`dateModification`/`dateMiseAJour` déjà présents dans le
+  schéma) — plus robuste, aucune nouvelle colonne nécessaire
+- Refuser l'import si un enregistrement plus récent existe déjà côté enseignant — le plus sûr, mais frustrant
+  en pilote (l'enseignant ne peut jamais forcer une resynchronisation)
+
+#### Décision
+Fusion par timestamp au niveau enregistrement. Le fichier d'export v1 ne portant qu'un horodatage global
+(`dateExport`), et non un horodatage par enregistrement, ce `dateExport` est utilisé comme référence pour
+tout le lot importé — **limite connue et documentée** : une fusion fine intra-lot nécessiterait un format
+d'échange v2 avec horodatage par enregistrement (à réévaluer si des exports partiels/successifs sur une même
+période deviennent fréquents en usage réel).
+
+#### Conséquences
+- Aucune migration Room nécessaire — l'algorithme se contente des DAO existants
+  (`ProgressionDao.getProgressionForUnite`, `ProductionEcriteDao.getProductionForUnite`).
+- `14-charte-versionnage-contenu.md` section 4 doit noter que la fusion par timestamp s'applique à partir du
+  format d'échange v1 (voir Phase 6 de ce fichier).
+- Si le format d'échange évolue en v2 (horodatage par enregistrement), cette logique de fusion devra être
+  révisée en conséquence — à noter comme dette technique dès maintenant plutôt que de la découvrir plus tard.
 
 Cible de couverture indicative : ≥ 70 % sur `domain`, tests d'instrumentation obligatoires sur les écrans marqués **M** (Must have) dans les exigences fonctionnelles.
