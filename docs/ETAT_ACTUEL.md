@@ -6,7 +6,7 @@
 
 ## 1. Où en est le projet, en une phrase
 
-Le Sprint 4 est terminé ✅ : la progression est désormais réelle et persistée, le module Écriture est lié au niveau de l'élève, les assignations enseignant sont visibles sur l'accueil élève, et l'import de données BYOD est opérationnel avec interface de sélection.
+Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est implémenté, et les bugs de progression B-28/B-29 sont clos. L'audit post-Sprint 4 (Reconciliation Sprint 5) a permis de réajuster les statuts pour le démarrage du Sprint 5.
 
 ---
 
@@ -14,9 +14,12 @@ Le Sprint 4 est terminé ✅ : la progression est désormais réelle et persist�
 
 | Priorité | Fiche | Statut réel (code) | Bloquée par |
 |---|---|---|---|
-| 1 | `missions/B2-ecran-apprentissage.md` | 🔄 À faire | — |
-| 2 | `missions/C3-synchronisation-locale.md` | ✅ Terminé | — |
-| 3 | `missions/A0-cartographie-contenu-pedagogique.md` | 🔄 En cours — relecture humaine toujours requise | Disponibilité relecteur natif |
+| 1 | `missions/B2-ecran-apprentissage.md` | 🔄 En cours — reste TTS | — |
+| 2 | `missions/B1-ecran-accueil.md` | 🔄 En cours — données mockées | ADR-019 (partiel) |
+| 3 | `missions/C2-dashboard-enseignant-implementation.md` | 🔎 Validation | — |
+| 4 | `missions/C3-synchronisation-locale.md` | 🔎 Validation | Test matériel |
+| 5 | `missions/A0-cartographie-contenu-pedagogique.md` | 🔄 En cours | Relecteur natif |
+| 6 | `missions/A4-entites-room-prepopulation.md` | ✅ Validée (infra close) | — |
 
 ---
 
@@ -31,8 +34,8 @@ Le Sprint 4 est terminé ✅ : la progression est désormais réelle et persist�
 | B-25 | 🟡 MOYEN | `SuiviScreen` : données codées en dur | ✅ Données réelles connectées |
 | B-26 | 🟡 MOYEN | Divergence schéma/docs | ✅ ADR-016 formalisé |
 | B-27 | 🟡 MOYEN | Politique migration Room | ✅ ADR-017 formalisé |
-| B-28 | 🟠 ÉLEVÉ | `unitesTerminees` à zéro (Bug silencieux) | ✅ Corrigé (Wiring ViewModel OK) |
-| B-29 | 🟡 MOYEN | `EcritureViewModel` unité fixe (Bug silencieux) | ✅ Corrigé (Route + SavedStateHandle OK) |
+| B-28 | 🟠 ÉLEVÉ | `unitesTerminees` à zéro (Bug silencieux) | ✅ Corrigé |
+| B-29 | 🟡 MOYEN | `EcritureViewModel` unité fixe (Bug silencieux) | ✅ Corrigé |
 
 ---
 
