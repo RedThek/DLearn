@@ -131,7 +131,7 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
   - [x] Création de compte élève par l'enseignant (identifiant/mot de passe) fonctionnelle
   - [x] FR-24 à FR-27 implémentés (Assigner/Corrections réels)
   - [x] Tests UI de base (ADR-014)
-- **Statut** : `Validé`
+- **Statut** : `Validation`
 
 ### Mission C3 — Synchronisation locale (BYOD)
 - **Sprint** : Sprint 3 (groundwork)
@@ -140,8 +140,8 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
   - [x] Groundwork export JSON + SyncLogDao
   - [x] FR-29 à FR-31 implémentés partiellement via export JSON + Partage Android
   - [ ] Test bout en bout entre deux appareils physiques (Android 9.0+) sans réseau internet, sur chacun des canaux de repli
-  - [ ] Gestion des conflits de synchronisation documentée
-  - [ ] Format de fichier d'échange versionné conforme à `14-charte-versionnage-contenu.md`
+  - [x] Gestion des conflits de synchronisation documentée (ADR-018)
+  - [x] Format de fichier d'échange versionné conforme à `14-charte-versionnage-contenu.md`
 - **Statut** : `En cours`
 
 ---

@@ -133,6 +133,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-016 | Simplification du schéma de données — unification ProfilEleve/ProfilEnseignant | Accepted |
 | ADR-017 | Politique de migration Room pré-pilote | Accepted |
 | ADR-018 | Stratégie d'import et de résolution de conflits — synchronisation locale | Accepted |
+| ADR-019 | Suivi de la durée de session d'étude | **Proposed** |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -443,5 +444,36 @@ période deviennent fréquents en usage réel).
   format d'échange v1 (voir Phase 6 de ce fichier).
 - Si le format d'échange évolue en v2 (horodatage par enregistrement), cette logique de fusion devra être
   révisée en conséquence — à noter comme dette technique dès maintenant plutôt que de la découvrir plus tard.
+
+### ADR-019 : Suivi de la durée de session d'étude
+**Statut :** Proposed
+**Date :** 2026-09-05
+
+#### Contexte
+FR-23 exige l'affichage du temps d'étude. AN-F3-01 (identifiée Sprint 3, toujours ouverte) constate qu'aucun
+mécanisme ne capture cette donnée — `SuiviScreen` affiche `"—"` plutôt qu'une valeur inventée, ce qui est le
+comportement honnête voulu, mais bloque FR-23 et empêche de clore proprement Mission B1/B4.
+
+#### Options considérées
+- **Chronométrage par écran** (`DisposableEffect` sur chaque écran pédagogique) — précis, granulaire par
+   module, mais sensible aux mises en arrière-plan et complexifie chaque écran.
+- **Minuteur applicatif global** via `ProcessLifecycleOwner` (un seul chronomètre actif tant que l'app est au
+   premier plan) — plus simple, cohérent avec la simplification déjà actée en ADR-016, pas de détail par
+   module.
+- **Estimation indirecte** (proxy à partir du nombre de réponses/productions) — rejeté : ce n'est pas un vrai
+   temps, risque de tromper l'élève et de fausser une analyse académique du mémoire.
+
+#### Décision proposée
+Option 2. Nouvelle entité `SessionEtudeEntity` (`id`, `eleveId`, `dateDebut`, `dateFin`), un `SessionEtudeDao`,
+enregistrement déclenché par un observateur `ProcessLifecycleOwner` au niveau de `DLearnApplication`. Le total
+quotidien/hebdomadaire est calculé en sommant les intervalles côté `ProgressionRepositoryImpl` (ou un
+`SessionRepository` dédié si la responsabilité grossit).
+
+#### Conséquences
+- Migration Room **5 → 6**, testée explicitement (`ADR-017` s'applique sans exception).
+- `SuiviViewModel` et `AccueilViewModel` peuvent enfin afficher un vrai temps au lieu de `"—"`/valeur mockée.
+- Granularité limitée à la session applicative globale (pas de détail Apprentissage vs Écriture) — acceptable
+  pour le MVP, à documenter comme limite assumée si le mémoire en a besoin plus tard.
+- Débloque proprement D-08 et referme AN-F3-01.
 
 Cible de couverture indicative : ≥ 70 % sur `domain`, tests d'instrumentation obligatoires sur les écrans marqués **M** (Must have) dans les exigences fonctionnelles.
