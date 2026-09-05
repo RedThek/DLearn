@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import edu.project.dlearn.domain.usecase.GetAllUnitesUseCase
 import edu.project.dlearn.domain.usecase.GetOrCreateBrouillonUseCase
 import edu.project.dlearn.domain.usecase.SauvegarderBrouillonUseCase
+import edu.project.dlearn.domain.usecase.SoumettreProductionUseCase
 import edu.project.dlearn.domain.usecase.GetUtilisateurConnecteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -26,6 +27,7 @@ class EcritureViewModel @Inject constructor(
     private val getAllUnites: GetAllUnitesUseCase,
     private val getOrCreateBrouillon: GetOrCreateBrouillonUseCase,
     private val sauvegarderBrouillon: SauvegarderBrouillonUseCase,
+    private val soumettreProduction: SoumettreProductionUseCase,
     private val getUtilisateurConnecte: GetUtilisateurConnecteUseCase
 ) : ViewModel() {
 
@@ -93,14 +95,10 @@ class EcritureViewModel @Inject constructor(
     fun onSoumettre() {
         viewModelScope.launch {
             val etat = _uiState.value
+            val production = etat.production ?: return@launch
             val ae = etat.autoEvaluation
             val json = """{"longueur":${ae.longueurRespectee},"coherence":${ae.coherenceAvecConsigne},"vocabulaire":${ae.vocabulaireNiveauGer}}"""
-            sauvegarderBrouillon(
-                etat.production?.copy(
-                    contenuTexte       = etat.texteEnCours,
-                    autoEvaluationJson = json
-                ) ?: return@launch
-            )
+            soumettreProduction(production.id, etat.texteEnCours, json)
             _uiState.update { it.copy(soumis = true) }
         }
     }

@@ -7,5 +7,8 @@ interface EcritureRepository {
     fun getProductionsByEleve(eleveId: Long): Flow<List<ProductionEcrite>>
     suspend fun getOrCreateBrouillon(eleveId: Long, uniteId: String): ProductionEcrite
     suspend fun sauvegarderBrouillon(production: ProductionEcrite)
-    suspend fun soumettre(productionId: String, autoEvaluationJson: String?)
+    suspend fun soumettre(productionId: String, contenuTexte: String, autoEvaluationJson: String?)
+
+    /** Toutes les productions marquées SOUMIS, tous élèves confondus (Mission C2, correctif B-24). */
+    fun getProductionsSoumises(): Flow<List<ProductionEcrite>>
 }

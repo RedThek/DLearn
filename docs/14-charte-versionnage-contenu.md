@@ -28,7 +28,8 @@ Suit le mécanisme natif Room (`@Database(version = n)`), avec une migration exp
 | Version Room | Application associée (MINOR) | Changement principal |
 |---|---|---|
 | 1 | 1.0.0 | Schéma initial (Mission A4) |
-| *à compléter* | *à compléter* | *à compléter* |
+| 4 | 1.x.x | Migration 3→4 (isValidated, ADR-015) |
+| 5 | 1.x.x | Migration 4→5 (Assignation, statut Soumis, SyncLogDao, ADR-017) |
 
 ## 4. Version du format d'échange (synchronisation locale, ADR-004)
 
@@ -38,8 +39,7 @@ Règle : le format d'échange privilégie la **rétrocompatibilité en lecture**
 
 | Version format d'échange | Application minimale requise | Changement |
 |---|---|---|
-| 1 | 1.0.0 | Format initial (Mission C3) |
-| *à compléter* | *à compléter* | *à compléter* |
+| 1 | 1.0.0 | Format initial (groundwork Mission C3, Sprint 3) — export élève uniquement (progression + productions soumises), JSON, pas encore d'import côté enseignant |
 
 ## 5. Processus de mise à jour manuelle (sans store, ADR-010)
 

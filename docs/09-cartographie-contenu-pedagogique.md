@@ -21,10 +21,10 @@ La population cible finale couvre l'intégralité du secondaire francophone came
 
 | Niveau scolaire | Cycle | Année d'apprentissage de l'allemand (hypothèse : continu depuis la 6e) | Niveau GeR visé (proposition) | Unités cibles indicatives | Phase de développement |
 |---|---|---|---|---|---|
-| 6ème | Collège (1er cycle) | 1ère année | A1 (découverte) | 6 à 8 | **MVP actuel** |
-| 5ème | Collège (1er cycle) | 2e année | A1 (consolidation) → A1/A2 | 6 à 8 | **MVP actuel** |
-| 4ème | Collège (1er cycle) | 3e année | A2 (découverte) | 6 à 8 | **MVP actuel** |
-| 3ème | Collège (1er cycle) — BEPC | 4e année | A2 (consolidation) | 6 à 8 | **MVP actuel** |
+| 6ème | Collège (1er cycle) | 1ère année | A1 (découverte) | 5 à 7 | **MVP actuel** |
+| 5ème | Collège (1er cycle) | 2e année | A1 (consolidation) → A1/A2 | 5 à 7 | **MVP actuel** |
+| 4ème | Collège (1er cycle) | 3e année | A2 (découverte) | 5 à 7 | **MVP actuel** |
+| 3ème | Collège (1er cycle) — BEPC | 4e année | A2 (consolidation) | 5 à 7 | **MVP actuel** |
 | 2nde | Lycée (2nd cycle) | 5e année | B1 (découverte) | 5 à 7 | Développement ultérieur |
 | 1ère | Lycée (2nd cycle) | 6e année | B1 (consolidation) | 5 à 7 | Développement ultérieur |
 | Terminale | Lycée (2nd cycle) — Baccalauréat | 7e année | B1+ / B2 (selon filière et intensité) | 5 à 7 | Développement ultérieur |

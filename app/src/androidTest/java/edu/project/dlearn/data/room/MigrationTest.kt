@@ -39,4 +39,26 @@ class MigrationTest {
         cursor.close()
         db.close()
     }
+
+    @Test
+    @Throws(IOException::class)
+    fun migration4a5_ajoute_assignation_et_statut() {
+        helper.createDatabase(TEST_DB, 4).apply { close() }
+
+        val db = helper.runMigrationsAndValidate(
+            TEST_DB, 5, true, AppDatabase.MIGRATION_4_5
+        )
+
+        val cursorStatut = db.query("SELECT statut FROM production_ecrite LIMIT 1")
+        cursorStatut.close()
+
+        db.execSQL(
+            "INSERT INTO assignation (id, enseignantId, cibleType, cibleId, uniteId, dateAssignation) " +
+            "VALUES ('test-1', 1, 'ELEVE', '1', 'U-6E-01', 1000)"
+        )
+        val cursorAssignation = db.query("SELECT * FROM assignation WHERE id = 'test-1'")
+        assert(cursorAssignation.count == 1)
+        cursorAssignation.close()
+        db.close()
+    }
 }

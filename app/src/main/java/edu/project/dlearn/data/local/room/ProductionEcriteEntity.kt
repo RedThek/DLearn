@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 // autoEvaluationJson : résultat JSON de la grille FR-17 (longueur, cohérence, vocabulaire)
 // Format : {"longueur": true, "coherence": false, "vocabulaire": true}
+// statut (ajouté v5, correctif B-21) : "BROUILLON" | "SOUMIS"
 @Entity(tableName = "production_ecrite")
 data class ProductionEcriteEntity(
     @PrimaryKey val id: String,
@@ -13,5 +14,6 @@ data class ProductionEcriteEntity(
     val contenuTexte: String,
     val dateCreation: Long = System.currentTimeMillis(),
     val dateModification: Long = System.currentTimeMillis(),
-    val autoEvaluationJson: String? = null
+    val autoEvaluationJson: String? = null,
+    val statut: String = "BROUILLON"
 )

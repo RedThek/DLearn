@@ -6,9 +6,11 @@ import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import edu.project.dlearn.data.local.room.AppDatabase
 import edu.project.dlearn.data.local.room.ApprentissageDao
+import edu.project.dlearn.data.local.room.AssignationDao
 import edu.project.dlearn.data.local.room.ContenuDao
 import edu.project.dlearn.data.local.room.ProductionEcriteDao
 import edu.project.dlearn.data.local.room.ProgressionDao
+import edu.project.dlearn.data.local.room.SyncLogDao
 import edu.project.dlearn.data.local.room.UtilisateurDao
 import edu.project.dlearn.data.repository.ApprentissageRepositoryImpl
 import edu.project.dlearn.domain.repository.ApprentissageRepository
@@ -24,6 +26,10 @@ import edu.project.dlearn.data.repository.ProgressionRepositoryImpl
 import edu.project.dlearn.domain.repository.ProgressionRepository
 import edu.project.dlearn.data.repository.ExerciceRepositoryImpl
 import edu.project.dlearn.domain.repository.ExerciceRepository
+import edu.project.dlearn.data.repository.AssignationRepositoryImpl
+import edu.project.dlearn.domain.repository.AssignationRepository
+import edu.project.dlearn.data.repository.SyncRepositoryImpl
+import edu.project.dlearn.domain.repository.SyncRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -40,10 +46,8 @@ object DatabaseModule {
     @Singleton
     fun provideAppDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, "liteschreib.db")
-            // TODO(dette-technique): fallbackToDestructiveMigration() à remplacer par des
-            // migrations explicites avant la Mission D0 (distribution pilote).
             .fallbackToDestructiveMigration()
-            .addMigrations(AppDatabase.MIGRATION_3_4)
+            .addMigrations(AppDatabase.MIGRATION_3_4, AppDatabase.MIGRATION_4_5)
             .addCallback(SeedCallback)
             .build()
 
@@ -61,12 +65,16 @@ object DatabaseModule {
 
     @Provides
     fun provideProductionEcriteDao(database: AppDatabase): ProductionEcriteDao = database.productionEcriteDao()
+
+    @Provides
+    fun provideAssignationDao(database: AppDatabase): AssignationDao = database.assignationDao()
+
+    @Provides
+    fun provideSyncLogDao(database: AppDatabase): SyncLogDao = database.syncLogDao()
 }
 
 // Seed 2 comptes de démo pour pouvoir tester l'écran Connexion dès le premier lancement,
 // sans attendre le vrai mécanisme de provisionnement enseignant -> élèves (import BYOD, ADR-004).
-// Identifiants : eleve.2451 / eleve1234   et   enseignant.100 / enseignant1234
-// Hash SHA-256 pré-calculés (voir AuthRepositoryImpl.hacher pour l'algo utilisé).
 private object SeedCallback : RoomDatabase.Callback() {
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
@@ -91,21 +99,15 @@ abstract class RepositoryModule {
 
     @Binds
     @Singleton
-    abstract fun bindApprentissageRepository(
-        impl: ApprentissageRepositoryImpl
-    ): ApprentissageRepository
+    abstract fun bindApprentissageRepository(impl: ApprentissageRepositoryImpl): ApprentissageRepository
 
     @Binds
     @Singleton
-    abstract fun bindAuthRepository(
-        impl: AuthRepositoryImpl
-    ): AuthRepository
+    abstract fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 
     @Binds
     @Singleton
-    abstract fun bindPositionnementRepository(
-        impl: PositionnementRepositoryImpl
-    ): PositionnementRepository
+    abstract fun bindPositionnementRepository(impl: PositionnementRepositoryImpl): PositionnementRepository
 
     @Binds
     @Singleton
@@ -122,4 +124,12 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindExerciceRepository(impl: ExerciceRepositoryImpl): ExerciceRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAssignationRepository(impl: AssignationRepositoryImpl): AssignationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSyncRepository(impl: SyncRepositoryImpl): SyncRepository
 }
