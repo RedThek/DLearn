@@ -13,13 +13,13 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.Star
 import androidx.lifecycle.viewModelScope
+import edu.project.dlearn.core.AppConstants
 import edu.project.dlearn.domain.repository.AuthRepository
 import edu.project.dlearn.domain.usecase.GetUtilisateurConnecteUseCase
-import kotlinx.coroutines.delay
+import edu.project.dlearn.domain.usecase.ExportDataUseCase
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
 
 sealed interface ProfilEvenement {
     data object Deconnecte : ProfilEvenement
@@ -28,7 +28,8 @@ sealed interface ProfilEvenement {
 @HiltViewModel
 class ProfilViewModel @Inject constructor(
     private val authRepository: AuthRepository,
-    private val getUtilisateurConnecte: GetUtilisateurConnecteUseCase
+    private val getUtilisateurConnecte: GetUtilisateurConnecteUseCase,
+    private val exportDataUseCase: ExportDataUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
@@ -55,6 +56,9 @@ class ProfilViewModel @Inject constructor(
     private val _evenements = MutableSharedFlow<ProfilEvenement>()
     val evenements: SharedFlow<ProfilEvenement> = _evenements
 
+    private val _fichierExporte = MutableSharedFlow<String>()
+    val fichierExporte: SharedFlow<String> = _fichierExporte
+
     init {
         chargerProfil()
     }
@@ -69,7 +73,6 @@ class ProfilViewModel @Inject constructor(
                     niveauActuel = utilisateur.niveau ?: "A1"
                 )}
             }
-            // Badges et autres données mockées conservées jusqu'à Mission B1
         }
     }
 
@@ -77,9 +80,14 @@ class ProfilViewModel @Inject constructor(
         if (_uiState.value.synchronisationEnCours) return
         viewModelScope.launch {
             _uiState.update { it.copy(synchronisationEnCours = true) }
-            // TODO: déclencher le vrai flux d'export/import fichier BYOD (ADR-004) ici.
-            delay(1200.milliseconds)
-            _uiState.update { it.copy(synchronisationEnCours = false, derniereSynchro = "À l'instant") }
+            val utilisateur = getUtilisateurConnecte()
+            val eleveId = utilisateur?.id ?: AppConstants.ELEVE_DEMO_ID
+            val resultat = exportDataUseCase(eleveId)
+            resultat.onSuccess { chemin -> _fichierExporte.emit(chemin) }
+            _uiState.update { it.copy(
+                synchronisationEnCours = false,
+                derniereSynchro = if (resultat.isSuccess) "À l'instant" else "Échec — réessayer"
+            )}
         }
     }
 

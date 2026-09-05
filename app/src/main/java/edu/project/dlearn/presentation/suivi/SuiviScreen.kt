@@ -4,17 +4,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.LocalFireDepartment
-import androidx.compose.material.icons.filled.School
 import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
@@ -59,10 +58,12 @@ fun SuiviScreen(
             } else {
                 // Résumé Global
                 item {
+                    val progressionReelle = stats.competencesParNiveau.values
+                        .let { if (it.isEmpty()) 0f else it.average().toFloat() }
                     ProgressCard(
                         title = "Progression globale",
-                        progress = 0.65f, // Placeholder if not in ProgressionStats
-                        supportingText = "${stats.motsAppris} mots appris · Niveau A2 en cours"
+                        progress = progressionReelle,
+                        supportingText = "${stats.motsAppris} mots appris · basé sur ${stats.competencesParNiveau.size} niveau(x) suivi(s)"
                     )
                 }
 
@@ -84,8 +85,9 @@ fun SuiviScreen(
                             icon = Icons.Default.TrendingUp,
                             modifier = Modifier.weight(1f)
                         )
+                        // TODO Sprint 4 (FR-23) : nécessite un suivi de durée de session, non implémenté — voir anomalie AN-F3-01
                         StatItem(
-                            value = "8h",
+                            value = "—",
                             label = "Temps",
                             icon = Icons.Default.Timeline,
                             modifier = Modifier.weight(1f)
@@ -129,38 +131,20 @@ fun SuiviScreen(
 
                 // Historique récent
                 item {
-                    DlearnSectionHeader(
-                        title = "Historique récent",
-                        actionLabel = "Voir tout",
-                        onActionClick = { }
-                    )
+                    DlearnSectionHeader(title = "Historique récent")
                 }
-
                 item {
-                    ActivityCard(
-                        title = "Vocabulaire : La ville",
-                        typeLabel = "EXERCICE",
-                        icon = Icons.Default.School,
-                        metadata = "Aujourd'hui · Score 85%",
-                        onClick = { }
-                    )
-                }
-
-                item {
-                    ActivityCard(
-                        title = "Lecture : Berlin",
-                        typeLabel = "LECTURE",
-                        icon = Icons.Default.History,
-                        metadata = "Hier · 12 min",
-                        onClick = { }
+                    EmptyStateCard(
+                        title = "Historique bientôt disponible",
+                        message = "Le détail de tes dernières activités sera affiché ici dans une prochaine mise à jour."
                     )
                 }
 
                 // Message d'encouragement
                 item {
                     EmptyStateCard(
-                        title = "Bel effort !",
-                        message = "Tu as progressé de 15% cette semaine. Continue comme ça !",
+                        title = "Continue comme ça !",
+                        message = "Chaque exercice terminé te rapproche de ton objectif de niveau.",
                         actionLabel = "Lancer un défi",
                         onActionClick = { }
                     )

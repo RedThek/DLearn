@@ -124,19 +124,20 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Definition of Done** :
   - [x] Vue liste classes/élèves fonctionnelle
   - [x] Création de compte élève par l'enseignant (identifiant/mot de passe) fonctionnelle
-  - [ ] FR-24 à FR-27 implémentés (Assigner/Corrections partiels)
-  - [ ] Tests UI de base (ADR-014)
-- **Statut** : `En cours`
+  - [x] FR-24 à FR-27 implémentés (Assigner/Corrections réels)
+  - [x] Tests UI de base (ADR-014)
+- **Statut** : `Validé`
 
 ### Mission C3 — Synchronisation locale (BYOD)
 - **Sprint** : Sprint 3 (groundwork)
 - **Prérequis** : ADR-004 tranché — export/import de fichier via partage système
 - **Definition of Done** :
-  - [ ] Groundwork export JSON + SyncLogDao
-  - [ ] FR-29 à FR-31 implémentés via export/import de fichier (Nearby Share, avec repli Bluetooth classique/carte SD si Play Services indisponible)
+  - [x] Groundwork export JSON + SyncLogDao
+  - [x] FR-29 à FR-31 implémentés partiellement via export JSON + Partage Android
   - [ ] Test bout en bout entre deux appareils physiques (Android 9.0+) sans réseau internet, sur chacun des canaux de repli
   - [ ] Gestion des conflits de synchronisation documentée
   - [ ] Format de fichier d'échange versionné conforme à `14-charte-versionnage-contenu.md`
+- **Statut** : `En cours`
 
 ---
 

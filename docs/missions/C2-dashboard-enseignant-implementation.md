@@ -23,13 +23,15 @@ Terminée (voir `RECONCILIATION-SPRINT3.md`). Simplification via ADR-016 validé
 - [x] (Backend) `AssignationEntity`, `AssignationDao`, `AssignationRepository`
 - [x] (Backend) `SoumettreProductionUseCase` (B-21 corrigé)
 - [x] (Backend) `GetProductionsSoumisesUseCase`
-- [ ] (Frontend) Dialog Assigner fonctionnel (FR-26) — *À faire par Frontend Agent*
-- [ ] (Frontend) Onglet Corrections réel (FR-27) — *À faire par Frontend Agent*
+- [x] (Frontend) Dialog Assigner fonctionnel (FR-26)
+- [x] (Frontend) Onglet Corrections réel (FR-27)
 
 ## Phase 3 — Test
 - [x] Migration Room 4→5 testée via `MigrationTest.kt`
 - [x] Build backend OK
-- [ ] Tests UI (Frontend)
+- [x] Build frontend OK
+- [ ] Tests UI (Frontend) — *À faire*
 
 ## Phase 4 — Validation
-- [ ] DoD complète (attend le frontend)
+- [x] Auto-revue effectuée
+- [ ] DoD complète (attend validation finale/screenshots)

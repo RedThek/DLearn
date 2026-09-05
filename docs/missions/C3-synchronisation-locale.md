@@ -21,9 +21,10 @@ Terminée (ADR-004, ADR-017). Format d'échange v1 défini dans `14-charte-versi
 ## Phase 2 — Implémentation
 - [x] (Backend) `SyncLogDao` et `SyncLogEntity` (B-22 corrigé)
 - [x] (Backend) `SyncRepository` et `ExportDataUseCase` (Export JSON)
-- [ ] (Frontend) Déclenchement du partage depuis l'écran Profil — *À faire par Frontend Agent*
+- [x] (Frontend) Déclenchement du partage depuis l'écran Profil
 - [ ] (Backend) Mécanisme d'import (Mission B1, Sprint 4)
 
 ## Phase 3 — Test
 - [x] Build backend OK
+- [x] Build frontend OK
 - [ ] Test export fichier sur device réel
