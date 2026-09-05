@@ -53,23 +53,23 @@ flowchart TD
 
 | ID | Tâche | Dépend de | Fichier(s) | Statut |
 |---|---|---|---|---|
-| C2-T01 | Créer `AssignationEntity` | — | `data/local/room/AssignationEntity.kt` | ☐ À faire |
-| C2-T02 | Créer `AssignationDao` | T01 | `data/local/room/AssignationDao.kt` | ☐ À faire |
-| C2-T03 | Créer modèle domaine `Assignation` + enum `CibleAssignation` | — | `domain/model/Assignation.kt` | ☐ À faire |
-| C2-T04 | Créer `AssignationRepository` + impl | T01-T03 | `domain/repository/AssignationRepository.kt`, `data/repository/AssignationRepositoryImpl.kt` | ☐ À faire |
-| C2-T05 | Créer `AssignerContenuUseCase` + `GetAssignationsPourEleveUseCase` + binding Hilt | T04 | `domain/usecase/AssignationUseCases.kt`, `AppModule.kt` | ☐ À faire |
-| C2-T06 | **[BLOQUANT, corrige B-21]** Ajouter champ `statut` à `ProductionEcriteEntity` | — | `data/local/room/ProductionEcriteEntity.kt` | ☐ À faire |
-| C2-T07 | Ajouter requêtes `getProductionsSoumises`/`marquerSoumise` au DAO | T06 | `data/local/room/ProductionEcriteDao.kt` | ☐ À faire |
-| C2-T08 | Implémenter réellement `EcritureRepositoryImpl.soumettre()` | T06, T07 | `data/repository/EcritureRepositoryImpl.kt` | ☐ À faire |
-| C2-T09 | **[BLOQUANT pour C2-T10+]** Migration Room 4→5 (assignation + statut) + test `MigrationTest` | T01, T06 | `AppDatabase.kt`, `MigrationTest.kt` | ☐ À faire |
-| C2-T10 | Étendre `EnseignantUiState`/`EnseignantViewModel` (enseignantId, productionsACorriger, onAssigner) | T05, T07, C2-T09 | `EnseignantUiState.kt`, `EnseignantViewModel.kt` | ☐ À faire |
-| C2-T11 | Implémenter `DialogAssignation` (mode Classe / mode Élève multi-sélection) | T10 | `EnseignantDashboardScreen.kt` | ☐ À faire |
-| C2-T12 | Câbler `OngletContenus` au dialog réel | T11 | `EnseignantDashboardScreen.kt` | ☐ À faire |
-| C2-T13 | Créer `GetProductionsSoumisesUseCase` | T07 | `domain/usecase/GetProductionsSoumisesUseCase.kt` | ☐ À faire |
-| C2-T14 | Câbler `OngletCorrections` aux vraies données | T10, T13 | `EnseignantDashboardScreen.kt` | ☐ À faire |
-| C2-T15 | Adapter `EcritureViewModel.onSoumettre()` à la nouvelle signature | T08, création `SoumettreProductionUseCase` | `EcritureViewModel.kt` | ☐ À faire |
-| C2-T16 | Test manuel bout en bout (assigner + soumettre + corriger) sur device | T12, T14, T15 | — | ☐ À faire |
-| C2-T17 | Mettre à jour `04-missions-et-sprints.md` (DoD Mission C2 cochée) + créer fiche `docs/missions/C2-*.md` | T16 | — | ☐ À faire |
+| C2-T01 | Créer `AssignationEntity` | — | `data/local/room/AssignationEntity.kt` | ☑ Fait |
+| C2-T02 | Créer `AssignationDao` | T01 | `data/local/room/AssignationDao.kt` | ☑ Fait |
+| C2-T03 | Créer modèle domaine `Assignation` + enum `CibleAssignation` | — | `domain/model/Assignation.kt` | ☑ Fait |
+| C2-T04 | Créer `AssignationRepository` + impl | T01-T03 | `domain/repository/AssignationRepository.kt`, `data/repository/AssignationRepositoryImpl.kt` | ☑ Fait |
+| C2-T05 | Créer `AssignerContenuUseCase` + `GetAssignationsPourEleveUseCase` + binding Hilt | T04 | `domain/usecase/AssignationUseCases.kt`, `AppModule.kt` | ☑ Fait |
+| C2-T06 | **[BLOQUANT, corrige B-21]** Ajouter champ `statut` à `ProductionEcriteEntity` | — | `data/local/room/ProductionEcriteEntity.kt` | ☑ Fait |
+| C2-T07 | Ajouter requêtes `getProductionsSoumises`/`marquerSoumise` au DAO | T06 | `data/local/room/ProductionEcriteDao.kt` | ☑ Fait |
+| C2-T08 | Implémenter réellement `EcritureRepositoryImpl.soumettre()` | T06, T07 | `data/repository/EcritureRepositoryImpl.kt` | ☑ Fait |
+| C2-T09 | **[BLOQUANT pour C2-T10+]** Migration Room 4→5 (assignation + statut) + test `MigrationTest` | T01, T06 | `AppDatabase.kt`, `MigrationTest.kt` | ☑ Fait |
+| C2-T10 | Étendre `EnseignantUiState`/`EnseignantViewModel` (enseignantId, productionsACorriger, onAssigner) | T05, T07, C2-T09 | `EnseignantUiState.kt`, `EnseignantViewModel.kt` | ☑ Fait |
+| C2-T11 | Implémenter `DialogAssignation` (mode Classe / mode Élève multi-sélection) | T10 | `EnseignantDashboardScreen.kt` | ☑ Fait |
+| C2-T12 | Câbler `OngletContenus` au dialog réel | T11 | `EnseignantDashboardScreen.kt` | ☑ Fait |
+| C2-T13 | Créer `GetProductionsSoumisesUseCase` | T07 | `domain/usecase/GetProductionsSoumisesUseCase.kt` | ☑ Fait |
+| C2-T14 | Câbler `OngletCorrections` aux vraies données | T10, T13 | `EnseignantDashboardScreen.kt` | ☑ Fait |
+| C2-T15 | Adapter `EcritureViewModel.onSoumettre()` à la nouvelle signature | T08, création `SoumettreProductionUseCase` | `EcritureViewModel.kt` | ☑ Fait |
+| C2-T16 | Test manuel bout en bout (assigner + soumettre + corriger) sur device | T12, T14, T15 | — | ☑ Fait |
+| C2-T17 | Mettre à jour `04-missions-et-sprints.md` (DoD Mission C2 cochée) + créer fiche `docs/missions/C2-*.md` | T16 | — | ☑ Fait |
 
 ## Mission C3 — Synchronisation locale (groundwork, ce sprint)
 
@@ -77,18 +77,18 @@ flowchart TD
 
 | ID | Tâche | Dépend de | Fichier(s) | Statut |
 |---|---|---|---|---|
-| C3-T01 | **[BLOQUANT, corrige B-22]** Créer `SyncLogDao` | — (`SyncLogEntity` existe déjà) | `data/local/room/SyncLogDao.kt` | ☐ À faire |
-| C3-T02 | Enregistrer `syncLogDao()` dans `AppDatabase` + Hilt | T01, C2-T09 | `AppDatabase.kt`, `AppModule.kt` | ☐ À faire |
-| C3-T03 | Créer `SyncRepository` + impl (export JSON vers `getExternalFilesDir`) | T02 | `domain/repository/SyncRepository.kt`, `data/repository/SyncRepositoryImpl.kt` | ☐ À faire |
-| C3-T04 | Créer `ExportDataUseCase` + binding Hilt | T03 | `domain/usecase/ExportDataUseCase.kt`, `AppModule.kt` | ☐ À faire |
-| C3-T05 | Déclarer `FileProvider` + `file_paths.xml` | — | `AndroidManifest.xml`, `res/xml/file_paths.xml` | ☐ À faire |
-| C3-T06 | Câbler `ProfilViewModel.onSynchroniserMaintenant()` à `ExportDataUseCase` | T04 | `ProfilViewModel.kt` | ☐ À faire |
-| C3-T07 | Déclencher `Intent.ACTION_SEND` depuis `ProfilScreen` à réception du fichier exporté | T05, T06 | `ProfilScreen.kt` | ☐ À faire |
-| C3-T08 | Test manuel : export + partage en mode avion, fichier JSON valide généré | T07 | — | ☐ À faire |
-| C3-T09 | Documenter le format d'échange v1 dans `14-charte-versionnage-contenu.md` | T04 | `14-charte-versionnage-contenu.md` | ☐ À faire |
+| C3-T01 | **[BLOQUANT, corrige B-22]** Créer `SyncLogDao` | — (`SyncLogEntity` existe déjà) | `data/local/room/SyncLogDao.kt` | ☑ Fait |
+| C3-T02 | Enregistrer `syncLogDao()` dans `AppDatabase` + Hilt | T01, C2-T09 | `AppDatabase.kt`, `AppModule.kt` | ☑ Fait |
+| C3-T03 | Créer `SyncRepository` + impl (export JSON vers `getExternalFilesDir`) | T02 | `domain/repository/SyncRepository.kt`, `data/repository/SyncRepositoryImpl.kt` | ☑ Fait |
+| C3-T04 | Créer `ExportDataUseCase` + binding Hilt | T03 | `domain/usecase/ExportDataUseCase.kt`, `AppModule.kt` | ☑ Fait |
+| C3-T05 | Déclarer `FileProvider` + `file_paths.xml` | — | `AndroidManifest.xml`, `res/xml/file_paths.xml` | ☑ Fait |
+| C3-T06 | Câbler `ProfilViewModel.onSynchroniserMaintenant()` à `ExportDataUseCase` | T04 | `ProfilViewModel.kt` | ☑ Fait |
+| C3-T07 | Déclencher `Intent.ACTION_SEND` depuis `ProfilScreen` à réception du fichier exporté | T05, T06 | `ProfilScreen.kt` | ☑ Fait |
+| C3-T08 | Test manuel : export + partage en mode avion, fichier JSON valide généré | T07 | — | ☑ Fait |
+| C3-T09 | Documenter le format d'échange v1 dans `14-charte-versionnage-contenu.md` | T04 | `14-charte-versionnage-contenu.md` | ☑ Fait |
 | C3-T10 | **[Reporté Sprint 4]** Écran d'import côté appareil enseignant (lecture du fichier, upsert Progression/ProductionEcrite) | T08 | *(à créer)* | ☐ Reporté |
 | C3-T11 | **[Reporté Sprint 4]** Test bout en bout réel sur deux appareils physiques (FR-29, DoD Mission C3 complète) | T10 | — | ☐ Reporté |
-| C3-T12 | Mettre à jour `04-missions-et-sprints.md` (Mission C3 : DoD partielle cochée, reste explicitement listé) | T09 | — | ☐ À faire |
+| C3-T12 | Mettre à jour `04-missions-et-sprints.md` (Mission C3 : DoD partielle cochée, reste explicitement listé) | T09 | — | ☑ Fait |
 
 ---
 
