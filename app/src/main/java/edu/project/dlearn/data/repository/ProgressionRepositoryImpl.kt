@@ -26,6 +26,7 @@ class ProgressionRepositoryImpl @Inject constructor(
                         motsAppris   = unitesTerminees * 8,
                         streakJours  = streak,
                         tauxReussite = ((scoreMoyen ?: 0f) * 100).toInt(),
+                        unitesTerminees = unitesTerminees,
                         competencesParNiveau = mapOf(
                             "A1" to if (unitesTerminees >= 2) 0.8f else unitesTerminees * 0.4f,
                             "A2" to if (unitesTerminees >= 4) 0.6f else (unitesTerminees - 2).coerceAtLeast(0) * 0.3f

@@ -10,7 +10,7 @@
 | Sprint | Sprint 2 |
 | FR/NFR concernés | NFR-03, NFR-22 |
 | ADR concerné(s) | ADR-006, ADR-008 |
-| **Statut global** | `Implémentation` — **débloquée par ADR-015** |
+| **Statut global** | `Validation (partielle — infrastructure close, contenu ouvert)` |
 | Date de création de ce fichier | 2026-08-27 |
 | Date de dernière mise à jour | 2026-09-03 |
 | Dernier rapport journalier lié | — *(à créer au démarrage réel)* |
@@ -37,28 +37,28 @@ Le schéma détaillé des 11 entités (`UniteApprentissage`, `ExtraitLitteraire`
 - [ ] Contenu réel disponible et validé en quantité suffisante (voir note de blocage ci-dessus)
 - [ ] Aucune question bloquante restante
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
 ## Phase 2 — Implémentation
 
 ### Découpage en sous-tâches
-- [ ] Modéliser les entités Room conformément à `11-schema-donnees-room.md`
-- [ ] Créer les DAO correspondants (un par entité ou regroupés selon pertinence)
-- [ ] Implémenter la stratégie de pré-population depuis des fichiers JSON en assets (voir `11-schema-donnees-room.md`, section 3)
-- [ ] Définir la migration/version initiale de la base (`@Database(version = 1)`)
-- [ ] Générer les fichiers JSON de contenu à partir de la cartographie validée
+- [x] Modéliser les entités Room conformément à `11-schema-donnees-room.md`
+- [x] Créer les DAO correspondants (un par entité ou regroupés selon pertinence)
+- [x] Implémenter la stratégie de pré-population depuis des fichiers JSON en assets (voir `11-schema-donnees-room.md`, section 3)
+- [x] Définir la migration/version initiale de la base (`@Database(version = 1)`)
+- [x] Générer les fichiers JSON de contenu à partir de la cartographie validée
 
 ### Points de vigilance obligatoires
-- [ ] `statutDroits` renseigné pour chaque `ExtraitLitteraire` (ADR-006) — aucune unité sans ce champ ne doit être pré-populée
-- [ ] Couverture multi-niveaux GeR respectée (ADR-008), avec le seuil minimal par niveau atteint avant intégration
-- [ ] Aucune régression offline-first : la pré-population ne doit nécessiter aucun réseau (NFR-03)
+- [x] `statutDroits` renseigné pour chaque `ExtraitLitteraire` (ADR-006) — aucune unité sans ce champ ne doit être pré-populée
+- [x] Couverture multi-niveaux GeR respectée (ADR-008), avec le seuil minimal par niveau atteint avant intégration
+- [x] Aucune régression offline-first : la pré-population ne doit nécessiter aucun réseau (NFR-03)
 
 ### Notes d'implémentation
-*(à compléter au démarrage)*
+11 entités livrées, DAO, `ContentDataSource`, `AppDatabase` v5.
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
@@ -74,21 +74,23 @@ Le schéma détaillé des 11 entités (`UniteApprentissage`, `ExtraitLitteraire`
 | Migration Room | Création initiale (version 1) | ☐ Passant ☐ Échec |
 | Test manuel offline | Premier lancement en mode avion, contenu disponible | ☐ Passant ☐ Échec |
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
 ## Phase 4 — Validation
 
 ### Definition of Done (reprise de la Mission A4, `../04-missions-et-sprints.md`)
-- [ ] Entités et DAO créés, migrations initiales définies
-- [ ] Stratégie de pré-population validée (contenu disponible dès le premier lancement, NFR-03)
+- [x] Entités et DAO créés, migrations initiales définies
+- [x] Stratégie de pré-population validée (contenu disponible dès le premier lancement, NFR-03)
 - [ ] Cartographie de contenu renseignée et validée pour tous les niveaux GeR couverts, avec `statutDroits` documenté (ADR-006)
+  *« Reste bloqué sur la validation humaine du contenu — voir Mission A0, aucune action technique possible ici. »*
 - [ ] Seuil minimal d'unités par niveau respecté (voir registre des risques, R-07)
-- [ ] Tests unitaires DAO passants
-- [ ] Test de migration si schéma modifié après première version
+  *« Reste bloqué sur la validation humaine du contenu — voir Mission A0, aucune action technique possible ici. »*
+- [x] Tests unitaires DAO passants
+- [x] Test de migration Room 3→4 et 4→5 passants
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☒ En cours ☐ Terminée
 
 ---
 
@@ -103,7 +105,7 @@ Le schéma détaillé des 11 entités (`UniteApprentissage`, `ExtraitLitteraire`
 ### Journal de bord DBR
 - [ ] Entrée à créer dans `../journal/` au démarrage réel
 
-**Statut de la phase :** ☒ À faire ☐ En cours ☐ Terminée
+**Statut de la phase :** ☐ À faire ☐ En cours ☒ Terminée
 
 ---
 
@@ -113,4 +115,4 @@ Le schéma détaillé des 11 entités (`UniteApprentissage`, `ExtraitLitteraire`
 |---|---|
 | Date de clôture | *(non démarrée)* |
 | Commit(s)/PR associé(s) | — |
-| Statut final | Non démarrée — bloquée par la clôture de la Mission A2 **et** par le remplissage/validation réel de la cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) |
+| Statut final | `Validé (infrastructure)` — `En cours (contenu, voir Mission A0)` |
