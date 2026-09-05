@@ -1,14 +1,17 @@
 package edu.project.dlearn.presentation.apprentissage
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import edu.project.dlearn.core.AppConstants
 import edu.project.dlearn.domain.model.ExtraitAvecGlossaire
 import edu.project.dlearn.domain.model.UniteApprentissage
 import edu.project.dlearn.domain.usecase.EnregistrerResultatFlashcardUseCase
 import edu.project.dlearn.domain.usecase.GetAllUnitesUseCase
 import edu.project.dlearn.domain.usecase.GetExtraitAvecGlossaireUseCase
 import edu.project.dlearn.domain.usecase.GetFlashcardsUseCase
+import edu.project.dlearn.domain.usecase.GetUtilisateurConnecteUseCase
+import edu.project.dlearn.domain.usecase.MarquerUniteEnCoursUseCase
 import edu.project.dlearn.domain.usecase.ValiderReponseExerciceUseCase
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,7 +25,9 @@ class ApprentissageViewModel @Inject constructor(
     private val getExtrait: GetExtraitAvecGlossaireUseCase,
     private val getFlashcards: GetFlashcardsUseCase,
     private val enregistrerFlashcard: EnregistrerResultatFlashcardUseCase,
-    private val validerReponse: ValiderReponseExerciceUseCase
+    private val validerReponse: ValiderReponseExerciceUseCase,
+    private val marquerUniteEnCours: MarquerUniteEnCoursUseCase,
+    private val getUtilisateurConnecte: GetUtilisateurConnecteUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ApprentissageUiState>(ApprentissageUiState.Chargement)
@@ -46,6 +51,10 @@ class ApprentissageViewModel @Inject constructor(
                 unite   = unite,
                 extrait = extrait
             )
+            // Correctif B-28 : la table `progression` doit refléter que l'élève a commencé l'unité,
+            // faute de quoi Suivi/Enseignant restent à zéro en permanence.
+            val eleveId = getUtilisateurConnecte()?.id ?: AppConstants.ELEVE_DEMO_ID
+            marquerUniteEnCours(eleveId, unite.id)
         }
     }
 

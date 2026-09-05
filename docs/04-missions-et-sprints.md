@@ -94,23 +94,25 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Sprint** : Sprint 5
 - **Definition of Done** :
   - [x] Module Exercice complet (QCM/texte à trous/vrai-faux) implémenté
-  - [ ] FR-09 à FR-14 implémentés
+  - [ ] FR-09 à FR-11 implémentés
+  - [x] FR-12 implémenté : correction offline vérifiée (mode avion)
+  - [ ] FR-13, FR-14 implémentés
   - [ ] FR-32 implémenté : écran/dialogue de vérification de la voix TTS allemande au premier accès, avec proposition de téléchargement si connexion disponible (ADR-007)
   - [ ] Intégration TTS fonctionnelle et strictement hors ligne une fois la voix installée
-  - [ ] Correction d'exercices vérifiée offline (mode avion)
   - [ ] Tests UI Compose sur le parcours de lecture, incluant le scénario « voix non installée » et « voix installée »
 
 ### Mission B3 — Écran Écriture
 - **Sprint** : Sprint 6
 - **Definition of Done** :
   - [ ] FR-15 à FR-17 implémentés
-  - [ ] Sauvegarde automatique vérifiée (perte de données testée : rotation d'écran, mise en arrière-plan)
-  - [ ] Grille d'auto-évaluation fonctionnelle
+  - [x] Sauvegarde automatique vérifiée (perte de données testée : rotation d'écran, mise en arrière-plan)
+  - [x] Grille d'auto-évaluation fonctionnelle
 
 ### Mission B4 — Écran Suivi
 - **Sprint** : Sprint 7
 - **Definition of Done** :
-  - [ ] FR-20 à FR-22 implémentés
+  - [x] FR-20 à FR-21 implémentés avec données réelles (B-28)
+  - [ ] FR-22 implémenté (FSRS)
   - [ ] Cohérence des données vérifiée avec le module Accueil et Apprentissage
   - [ ] Algorithme de planification des révisions testé unitairement
 

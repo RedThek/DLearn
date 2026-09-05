@@ -28,6 +28,7 @@ import edu.project.dlearn.domain.model.UniteApprentissage
 @Composable
 fun ApprentissageScreen(
     onCommencerExercices: (uniteId: String) -> Unit = {},
+    onCommencerEcriture: (uniteId: String) -> Unit = {},
     viewModel: ApprentissageViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -42,7 +43,8 @@ fun ApprentissageScreen(
         is ApprentissageUiState.LectureUnite     -> LectureUniteScreen(
             etat    = etat,
             onRetour = viewModel::onRetourBibliotheque,
-            onCommencerExercices = onCommencerExercices
+            onCommencerExercices = onCommencerExercices,
+            onCommencerEcriture = onCommencerEcriture
         )
     }
 }
@@ -119,7 +121,8 @@ private fun CarteUnite(unite: UniteApprentissage, onClick: () -> Unit) {
 private fun LectureUniteScreen(
     etat: ApprentissageUiState.LectureUnite,
     onRetour: () -> Unit,
-    onCommencerExercices: (uniteId: String) -> Unit
+    onCommencerExercices: (uniteId: String) -> Unit,
+    onCommencerEcriture: (uniteId: String) -> Unit
 ) {
     var motGlossaireSelectionne by remember { mutableStateOf<EntreeGlossaire?>(null) }
 
@@ -185,15 +188,25 @@ private fun LectureUniteScreen(
             Spacer(Modifier.height(24.dp))
         }
 
-        // Bouton bas de page
-        Button(
-            onClick   = { onCommencerExercices(etat.unite.id) },
-            modifier  = Modifier
+        // Barre d'actions bas de page (remplace le Button unique existant)
+        Row(
+            Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp)
-                .height(52.dp)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Commencer les exercices", fontWeight = FontWeight.SemiBold)
+            OutlinedButton(
+                onClick  = { onCommencerEcriture(etat.unite.id) },
+                modifier = Modifier.weight(1f).height(52.dp)
+            ) {
+                Text("Rédiger", fontWeight = FontWeight.SemiBold)
+            }
+            Button(
+                onClick  = { onCommencerExercices(etat.unite.id) },
+                modifier = Modifier.weight(1f).height(52.dp)
+            ) {
+                Text("Exercices", fontWeight = FontWeight.SemiBold)
+            }
         }
     }
 

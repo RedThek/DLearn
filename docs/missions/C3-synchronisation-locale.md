@@ -8,7 +8,7 @@
 | Sprint | Sprint 3 (groundwork) |
 | FR/NFR concernés | FR-29 à FR-31, NFR-01 |
 | ADR concerné(s) | ADR-004 |
-| **Statut global** | `Test` |
+| **Statut global** | `Validation` |
 | Date de création | 2026-09-05 |
 | Date de mise à jour | 2026-09-05 |
 | Rapport lié | [2026-09-05](../journal/2026-09-05.md) |
@@ -23,6 +23,7 @@ Terminée (ADR-004, ADR-017, ADR-018). Format d'échange v1 défini dans `14-cha
 - [x] (Backend) `SyncRepository` et `ExportDataUseCase` (Export JSON)
 - [x] (Frontend) Déclenchement du partage depuis l'écran Profil
 - [x] (Backend) Mécanisme d'import (ADR-018, Sprint 4)
+- [x] (Frontend) Sélecteur de fichier et UI d'import
 
 ## Phase 3 — Test
 - [x] Build backend OK
