@@ -18,3 +18,10 @@ class SauvegarderBrouillonUseCase @Inject constructor(
     suspend operator fun invoke(production: ProductionEcrite) =
         repository.sauvegarderBrouillon(production)
 }
+
+class SoumettreProductionUseCase @Inject constructor(
+    private val repository: EcritureRepository
+) {
+    suspend operator fun invoke(productionId: String, contenuTexte: String, autoEvaluationJson: String?) =
+        repository.soumettre(productionId, contenuTexte, autoEvaluationJson)
+}

@@ -24,4 +24,16 @@ interface ProductionEcriteDao {
 
     @Query("DELETE FROM production_ecrite WHERE id = :id")
     suspend fun delete(id: String)
+
+    @Query("SELECT * FROM production_ecrite WHERE statut = 'SOUMIS' ORDER BY dateModification DESC")
+    fun getProductionsSoumises(): Flow<List<ProductionEcriteEntity>>
+
+    @Query("UPDATE production_ecrite SET statut = :statut, contenuTexte = :contenuTexte, autoEvaluationJson = :autoEvaluationJson, dateModification = :dateModification WHERE id = :id")
+    suspend fun marquerSoumise(
+        id: String,
+        contenuTexte: String,
+        autoEvaluationJson: String?,
+        statut: String = "SOUMIS",
+        dateModification: Long = System.currentTimeMillis()
+    )
 }

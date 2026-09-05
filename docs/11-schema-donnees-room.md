@@ -4,54 +4,43 @@ Ce document précise le modèle de données attendu pour la Mission A4 (`04-miss
 
 ## 1. Diagramme relationnel (vue d'ensemble)
 
+```mermaid
+erDiagram
+    UTILISATEUR ||--o{ PROGRESSION : suit
+    UTILISATEUR ||--o{ PRODUCTION_ECRITE : redige
+    UTILISATEUR ||--o{ REPONSE_ELEVE : repond
+    UTILISATEUR ||--o{ ASSIGNATION : assigne
+    UNITE_APPRENTISSAGE ||--o{ EXTRAIT_LITTERAIRE : contient
+    UNITE_APPRENTISSAGE ||--o{ EXERCICE : contient
+    UNITE_APPRENTISSAGE ||--o{ PROGRESSION : concerne
+    UNITE_APPRENTISSAGE ||--o{ PRODUCTION_ECRITE : concerne
+    UNITE_APPRENTISSAGE ||--o{ ASSIGNATION : cible
+    EXERCICE ||--o{ OPTION_EXERCICE : propose
+    EXERCICE ||--o{ REPONSE_ELEVE : recoit
+    EXTRAIT_LITTERAIRE ||--o{ GLOSSAIRE_ENTREE : annote
+    SYNC_LOG {
+        string id PK
+        string appareilSource
+        string canalTransfert
+        string statut
+    }
 ```
-ProfilEnseignant 1───N Classe 1───N ProfilEleve
-                                        │
-                                        │ 1
-                                        │
-                                        N
-                                  Progression N───1 UniteApprentissage 1───N ExtraitLitteraire
-                                        │                                          │
-                                        │                                    1───N GlossaireEntree
-                                  ProductionEcrite N───1 UniteApprentissage
-                                        │
-                                  PlanificationRevision N───1 UniteApprentissage
 
-UniteApprentissage 1───N Exercice 1───N OptionExercice
-ProfilEleve 1───N ReponseEleve N───1 Exercice
+*(`SYNC_LOG` reste isolée du reste du modèle métier — table technique, cohérent avec ADR-004.)*
 
-ProfilEnseignant 1───N Assignation N───1 UniteApprentissage
-Assignation N───1 (ProfilEleve ou Classe)
+## 2. Entités détaillées (Schéma réel — 11 entités)
 
-SyncLog (table technique, indépendante du modèle métier)
-```
+### Utilisateur (UtilisateurEntity)
+Unifie les profils élève et enseignant (ADR-016).
 
-## 2. Entités détaillées
-
-### ProfilEleve
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant local de l'élève |
-| `nom` | String | Nom affiché (peut être un pseudonyme pour le pilote, voir protocole éthique) |
-| `classeId` (FK → Classe) | String | Classe de rattachement |
-| `niveauGerCourant` | String | Niveau GeR actuel (A1, A2, B1…) |
-| `avatarRef` | String? | Référence d'avatar local (FR-03) |
-| `dateCreation` | Long (timestamp) | Date de création du profil |
-| `codeAcces` | String? | PIN local optionnel si device partagé, utilisé par l'écran de sélection de profil de l'application unique (ADR-009, FR-33) |
-
-### ProfilEnseignant
-| Champ | Type | Description |
-|---|---|---|
-| `id` (PK) | String (UUID) | Identifiant local de l'enseignant |
-| `nom` | String | Nom affiché |
-| `etablissement` | String? | Nom de l'établissement |
-
-### Classe
-| Champ | Type | Description |
-|---|---|---|
-| `id` (PK) | String (UUID) | Identifiant de la classe |
-| `nom` | String | Ex. « 3ème A » |
-| `enseignantId` (FK → ProfilEnseignant) | String | Enseignant responsable |
+| `id` (PK) | Long | Identifiant unique |
+| `nomAffiche` | String | Nom de l'utilisateur |
+| `role` | String | `ELEVE` | `ENSEIGNANT` |
+| `classe` | String? | Nom de la classe (ex. "3ème A") — uniquement pour le rôle ELEVE |
+| `niveau` | String? | Niveau GeR (ex. "A1") — uniquement pour le rôle ELEVE |
+| `codeAcces` | String? | PIN optionnel |
 
 ### UniteApprentissage
 Correspond à une ligne validée de `09-cartographie-contenu-pedagogique.md`.
@@ -64,120 +53,124 @@ Correspond à une ligne validée de `09-cartographie-contenu-pedagogique.md`.
 | `titre` | String | Titre de l'unité |
 | `objectifsApprentissage` | String | Texte libre ou liste sérialisée |
 | `ordreAffichage` | Int | Ordre de présentation dans le parcours |
+| `isValidated` | Boolean | État de validation pédagogique (ADR-015) |
 
 ### ExtraitLitteraire
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant de l'extrait |
-| `uniteId` (FK → UniteApprentissage) | String | Unité associée |
-| `texteAllemand` | String (long text) | Contenu de l'extrait |
+| `id` (PK) | String | Identifiant de l'extrait |
+| `uniteId` | String | Unité associée (FK → UniteApprentissage) |
+| `texteAllemand` | String | Contenu de l'extrait |
 | `auteur` | String? | Auteur de l'œuvre |
 | `source` | String? | Référence bibliographique |
-| `statutDroits` | String | `domaine_public` / `autorisation_obtenue` / `texte_original` — reflète la cartographie |
+| `statutDroits` | String | `domaine_public` / `autorisation_obtenue` / `texte_original` |
 
 ### GlossaireEntree
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `extraitId` (FK → ExtraitLitteraire) | String | Extrait associé |
-| `motAllemand` | String | Mot ou expression surligné (FR-10) |
+| `id` (PK) | String | Identifiant |
+| `extraitId` | String | Extrait associé (FK → ExtraitLitteraire) |
+| `motAllemand` | String | Mot ou expression surligné |
 | `traductionFr` | String | Traduction/définition en français |
 
 ### Exercice
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `uniteId` (FK → UniteApprentissage) | String | Unité associée |
-| `type` | Enum (`QCM`, `TEXTE_A_TROUS`, `VRAI_FAUX`, `PRODUCTION_GUIDEE`) | Type d'exercice |
+| `id` (PK) | String | Identifiant |
+| `uniteId` | String | Unité associée (FK → UniteApprentissage) |
+| `type` | String | `QCM`, `TEXTE_A_TROUS`, `VRAI_FAUX`, `PRODUCTION_GUIDEE` |
 | `enonce` | String | Consigne |
-| `correctionAttendue` | String? | Réponse attendue (hors QCM, voir OptionExercice) |
+| `correctionAttendue` | String? | Réponse attendue |
 
 ### OptionExercice
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `exerciceId` (FK → Exercice) | String | Exercice associé |
+| `id` (PK) | String | Identifiant |
+| `exerciceId` | String | Exercice associé (FK → Exercice) |
 | `texteOption` | String | Texte de l'option |
 | `estCorrecte` | Boolean | Vrai si c'est la bonne réponse |
 
 ### ReponseEleve
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `eleveId` (FK → ProfilEleve) | String | Élève ayant répondu |
-| `exerciceId` (FK → Exercice) | String | Exercice concerné |
+| `id` (PK) | String | Identifiant |
+| `eleveId` | Long | Élève ayant répondu (FK → Utilisateur) |
+| `exerciceId` | String | Exercice concerné (FK → Exercice) |
 | `reponseDonnee` | String | Réponse fournie |
 | `estCorrecte` | Boolean | Résultat de la correction offline |
-| `dateReponse` | Long (timestamp) | Date de la réponse |
+| `dateReponse` | Long | Date de la réponse |
 
 ### ProductionEcrite
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `eleveId` (FK → ProfilEleve) | String | Auteur |
-| `uniteId` (FK → UniteApprentissage) | String | Unité liée |
-| `contenuTexte` | String (long text) | Texte rédigé par l'élève |
+| `id` (PK) | String | Identifiant unique |
+| `eleveId` | Long | Auteur (FK → Utilisateur) |
+| `uniteId` | String | Unité liée (FK → UniteApprentissage) |
+| `contenuTexte` | String | Texte rédigé |
 | `dateCreation` | Long | Date de création |
-| `dateModification` | Long | Dernière modification (sauvegarde auto, FR-15) |
-| `autoEvaluationJson` | String? | Résultat de la grille d'auto-évaluation (FR-17), sérialisé |
+| `dateModification` | Long | Dernière modification |
+| `autoEvaluationJson` | String? | Résultat de la grille d'auto-évaluation |
+| `statut` | String | `BROUILLON` | `SOUMIS` (ADR-017, correctif B-21) |
 
 ### Progression
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `eleveId` (FK → ProfilEleve) | String | Élève concerné |
-| `uniteId` (FK → UniteApprentissage) | String | Unité concernée |
-| `statut` | Enum (`NON_COMMENCE`, `EN_COURS`, `TERMINE`) | État d'avancement (FR-14) |
+| `id` (PK) | String | Identifiant |
+| `eleveId` | Long | Élève concerné (FK → Utilisateur) |
+| `uniteId` | String | Unité concernée (FK → UniteApprentissage) |
+| `statut` | String | `NON_COMMENCE`, `EN_COURS`, `TERMINE` |
 | `scoreMoyen` | Float? | Score moyen aux exercices de l'unité |
 | `dateMiseAJour` | Long | Dernière mise à jour |
-
-### PlanificationRevision
-| Champ | Type | Description |
-|---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `eleveId` (FK → ProfilEleve) | String | Élève concerné |
-| `uniteId` (FK → UniteApprentissage) | String | Unité ou item à réviser |
-| `dateProchaineRevision` | Long | Échéance calculée (FR-22) |
-| `etatAlgorithme` | String | État sérialisé de l'algorithme de répétition espacée (paramètres type FSRS) |
 
 ### Assignation
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
-| `enseignantId` (FK → ProfilEnseignant) | String | Enseignant à l'origine de l'assignation |
-| `cibleType` | Enum (`ELEVE`, `CLASSE`) | Type de cible |
-| `cibleId` | String | `eleveId` ou `classeId` selon `cibleType` |
-| `uniteId` (FK → UniteApprentissage) | String | Contenu assigné |
-| `dateAssignation` | Long | Date de l'assignation (FR-26) |
+| `id` (PK) | String | Identifiant unique (UUID) |
+| `enseignantId` | Long | ID de l'enseignant (FK → Utilisateur) |
+| `cibleType` | String | `ELEVE` | `CLASSE` |
+| `cibleId` | String | ID élève (String) ou nom de classe |
+| `uniteId` | String | Unité assignée (FK → UniteApprentissage) |
+| `dateAssignation` | Long | Timestamp de l'assignation (FR-26) |
 
 ### SyncLog (table technique)
-Reflète le mécanisme tranché en **ADR-004** : export/import de fichier via les mécanismes de partage natifs de l'appareil (Nearby Share en priorité, repli Bluetooth classique/carte SD).
-
 | Champ | Type | Description |
 |---|---|---|
-| `id` (PK) | String (UUID) | Identifiant |
+| `id` (PK) | String | Identifiant |
 | `appareilSource` | String | Identifiant local de l'appareil source |
-| `appareilCible` | String? | Identifiant de l'appareil cible (si connu) |
-| `canalTransfert` | Enum (`NEARBY_SHARE`, `BLUETOOTH`, `FICHIER_MANUEL`) | Canal effectivement utilisé (ADR-004) — permet de mesurer la fréquence de repli (risque R-15) |
-| `versionFichierEchange` | String | Numéro de version du format d'échange (voir `14-charte-versionnage-contenu.md`) |
+| `appareilCible` | String? | Identifiant de l'appareil cible |
+| `canalTransfert` | String | `NEARBY_SHARE`, `BLUETOOTH`, `FICHIER_MANUEL` |
+| `versionFichierEchange` | String | Numéro de version du format d'échange |
 | `dateSync` | Long | Date de synchronisation |
-| `statut` | Enum (`SUCCES`, `ECHEC`, `PARTIEL`) | Résultat |
-| `resumePayload` | String? | Résumé de ce qui a été transféré (débogage) |
+| `statut` | String | `SUCCES`, `ECHEC`, `PARTIEL` |
+| `resumePayload` | String? | Résumé de ce qui a été transféré |
+
+## 2-bis. Modèle initialement envisagé, non retenu — voir ADR-016
+
+Cette section conserve les entités relationnelles initialement prévues pour assurer la traçabilité.
+
+### ProfilEleve (obsolète)
+Remplacé par `UtilisateurEntity`. Prévoyait : `nom`, `classeId`, `niveauGerCourant`, `avatarRef`, `codeAcces`.
+
+### ProfilEnseignant (obsolète)
+Remplacé par `UtilisateurEntity`. Prévoyait : `nom`, `etablissement`.
+
+### Classe (obsolète)
+Remplacé par le champ `classe` (String) dans `UtilisateurEntity`. Prévoyait une entité relationnelle propre.
+
+### PlanificationRevision (en attente)
+Prévue pour le Sprint 7 (ADR-003).
 
 ## 3. Stratégie de pré-population
 
 - Le contenu (`UniteApprentissage`, `ExtraitLitteraire`, `GlossaireEntree`, `Exercice`, `OptionExercice`) est fourni sous forme de fichiers **JSON en assets**, générés à partir de la cartographie validée (`09-cartographie-contenu-pedagogique.md`).
-- Au premier lancement, un `RoomDatabase.Callback.onCreate()` (ou une tâche d'initialisation dédiée) charge ces JSON et peuple la base — **aucun réseau requis** (NFR-03).
-- Les tables liées à l'usage (`ProfilEleve`, `Progression`, `ReponseEleve`, `ProductionEcrite`, `PlanificationRevision`, `Assignation`, `SyncLog`) ne sont **jamais** pré-peuplées : elles se remplissent à l'usage réel.
+- Au premier lancement, un `RoomDatabase.Callback.onCreate()` charge ces JSON et peuple la base — **aucun réseau requis**.
 
 ## 4. Stratégie de migration
 
-- Chaque évolution de schéma incrémente la version de la base (`@Database(version = n)`).
-- Une migration explicite (`Migration(n-1, n)`) est écrite et testée avant tout merge modifiant une entité existante (NFR-22).
-- Les migrations liées au contenu pédagogique (ajout d'unités, de niveaux GeR) doivent être distinguées des migrations liées à la structure (ajout de colonnes) — les premières peuvent souvent être gérées par un simple ajout de données plutôt qu'une migration de schéma.
-- Toute migration est accompagnée d'un test de migration Room (lecture d'une base à l'ancienne version, vérification post-migration).
+- Chaque évolution de schéma incrémente la version de la base.
+- Une migration explicite est écrite et testée avant tout merge modifiant une entité existante.
+- **Migration 4→5** : ajout table `assignation`, ajout colonne `statut` sur `production_ecrite` — voir ADR-017.
 
-## 5. Points ouverts restants (les autres ont été tranchés en ADR-004, ADR-006, ADR-009)
+## 5. Points ouverts restants
 
-- Format exact de sérialisation de `etatAlgorithme` (JSON libre vs colonnes dédiées) — dépend de l'algorithme de répétition espacée retenu (voir roadmap Sprint 7).
-- Granularité exacte de `resumePayload` dans `SyncLog` (niveau de détail pour le débogage sans exposer de données sensibles).
+- Format exact de sérialisation de `etatAlgorithme` (Répétition espacée, Sprint 7).

@@ -50,6 +50,7 @@ Ces checklists rythment le travail quotidien afin de sécuriser la qualité tech
 - [ ] Revue de code effectuée (auto-revue si travail solo, ou revue croisée si encadrant/pair disponible)
 - [ ] CI verte (build + tests + lint)
 - [ ] Aucun conflit de fusion non résolu
+- [ ] Si `AppDatabase.kt` est modifié (version bump), une `Migration` explicite et un test `MigrationTestHelper` associé sont présents (ADR-017)
 - [ ] Documentation technique mise à jour si l'architecture ou une exigence a évolué
 
 ## 6. Checklist avant un jalon académique (mois 6 / mois 12)

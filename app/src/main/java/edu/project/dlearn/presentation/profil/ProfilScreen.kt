@@ -1,5 +1,6 @@
 package edu.project.dlearn.presentation.profil
 
+import android.content.Intent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,10 +12,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,12 +28,28 @@ fun ProfilScreen(
 ) {
     val etat by viewModel.uiState.collectAsState()
     var showLogoutDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.evenements.collect { evenement ->
             when (evenement) {
                 ProfilEvenement.Deconnecte -> onDeconnexion()
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.fichierExporte.collect { chemin ->
+            val fichier = File(chemin)
+            val uri = FileProvider.getUriForFile(
+                context, "${context.packageName}.fileprovider", fichier
+            )
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "application/json"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            context.startActivity(Intent.createChooser(intent, "Partager mes données"))
         }
     }
 

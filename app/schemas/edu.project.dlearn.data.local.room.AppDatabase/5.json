@@ -1,0 +1,603 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 5,
+    "identityHash": "9643ed4ea4f4433b87c0200e3ed26c3a",
+    "entities": [
+      {
+        "tableName": "vocabulaire",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `motAllemand` TEXT NOT NULL, `motFrancais` TEXT NOT NULL, `niveauCECR` TEXT NOT NULL, `exemplePhrase` TEXT, `prochainRappel` INTEGER NOT NULL, `facteurDifficulte` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "motAllemand",
+            "columnName": "motAllemand",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "motFrancais",
+            "columnName": "motFrancais",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "niveauCECR",
+            "columnName": "niveauCECR",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exemplePhrase",
+            "columnName": "exemplePhrase",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "prochainRappel",
+            "columnName": "prochainRappel",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "facteurDifficulte",
+            "columnName": "facteurDifficulte",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "utilisateur",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `identifiant` TEXT NOT NULL, `motDePasseHash` TEXT NOT NULL, `nomAffiche` TEXT NOT NULL, `role` TEXT NOT NULL, `classe` TEXT, `niveau` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "identifiant",
+            "columnName": "identifiant",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "motDePasseHash",
+            "columnName": "motDePasseHash",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "nomAffiche",
+            "columnName": "nomAffiche",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "role",
+            "columnName": "role",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "classe",
+            "columnName": "classe",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "niveau",
+            "columnName": "niveau",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "unite_apprentissage",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `niveauGer` TEXT NOT NULL, `chapitreCurriculum` TEXT NOT NULL, `titre` TEXT NOT NULL, `objectifsApprentissage` TEXT NOT NULL, `ordreAffichage` INTEGER NOT NULL, `isValidated` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "niveauGer",
+            "columnName": "niveauGer",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "chapitreCurriculum",
+            "columnName": "chapitreCurriculum",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "titre",
+            "columnName": "titre",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "objectifsApprentissage",
+            "columnName": "objectifsApprentissage",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ordreAffichage",
+            "columnName": "ordreAffichage",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isValidated",
+            "columnName": "isValidated",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "extrait_litteraire",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uniteId` TEXT NOT NULL, `texteAllemand` TEXT NOT NULL, `auteur` TEXT, `source` TEXT, `statutDroits` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniteId",
+            "columnName": "uniteId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "texteAllemand",
+            "columnName": "texteAllemand",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "auteur",
+            "columnName": "auteur",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "source",
+            "columnName": "source",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "statutDroits",
+            "columnName": "statutDroits",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "glossaire_entree",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `extraitId` TEXT NOT NULL, `motAllemand` TEXT NOT NULL, `traductionFr` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "extraitId",
+            "columnName": "extraitId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "motAllemand",
+            "columnName": "motAllemand",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "traductionFr",
+            "columnName": "traductionFr",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "exercice",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `uniteId` TEXT NOT NULL, `type` TEXT NOT NULL, `enonce` TEXT NOT NULL, `correctionAttendue` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniteId",
+            "columnName": "uniteId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enonce",
+            "columnName": "enonce",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "correctionAttendue",
+            "columnName": "correctionAttendue",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "option_exercice",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `exerciceId` TEXT NOT NULL, `texteOption` TEXT NOT NULL, `estCorrecte` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciceId",
+            "columnName": "exerciceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "texteOption",
+            "columnName": "texteOption",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estCorrecte",
+            "columnName": "estCorrecte",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "progression",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `eleveId` INTEGER NOT NULL, `uniteId` TEXT NOT NULL, `statut` TEXT NOT NULL, `scoreMoyen` REAL, `dateMiseAJour` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eleveId",
+            "columnName": "eleveId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniteId",
+            "columnName": "uniteId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statut",
+            "columnName": "statut",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "scoreMoyen",
+            "columnName": "scoreMoyen",
+            "affinity": "REAL"
+          },
+          {
+            "fieldPath": "dateMiseAJour",
+            "columnName": "dateMiseAJour",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_progression_eleveId_uniteId",
+            "unique": true,
+            "columnNames": [
+              "eleveId",
+              "uniteId"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_progression_eleveId_uniteId` ON `${TABLE_NAME}` (`eleveId`, `uniteId`)"
+          }
+        ]
+      },
+      {
+        "tableName": "production_ecrite",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `eleveId` INTEGER NOT NULL, `uniteId` TEXT NOT NULL, `contenuTexte` TEXT NOT NULL, `dateCreation` INTEGER NOT NULL, `dateModification` INTEGER NOT NULL, `autoEvaluationJson` TEXT, `statut` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eleveId",
+            "columnName": "eleveId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniteId",
+            "columnName": "uniteId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contenuTexte",
+            "columnName": "contenuTexte",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateCreation",
+            "columnName": "dateCreation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateModification",
+            "columnName": "dateModification",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoEvaluationJson",
+            "columnName": "autoEvaluationJson",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "statut",
+            "columnName": "statut",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "reponse_eleve",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `eleveId` INTEGER NOT NULL, `exerciceId` TEXT NOT NULL, `reponseDonnee` TEXT NOT NULL, `estCorrecte` INTEGER NOT NULL, `dateReponse` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "eleveId",
+            "columnName": "eleveId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "exerciceId",
+            "columnName": "exerciceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "reponseDonnee",
+            "columnName": "reponseDonnee",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "estCorrecte",
+            "columnName": "estCorrecte",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateReponse",
+            "columnName": "dateReponse",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "sync_log",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `appareilSource` TEXT NOT NULL, `appareilCible` TEXT, `canalTransfert` TEXT NOT NULL, `versionFichierEchange` TEXT NOT NULL, `dateSync` INTEGER NOT NULL, `statut` TEXT NOT NULL, `resumePayload` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "appareilSource",
+            "columnName": "appareilSource",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "appareilCible",
+            "columnName": "appareilCible",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "canalTransfert",
+            "columnName": "canalTransfert",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "versionFichierEchange",
+            "columnName": "versionFichierEchange",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateSync",
+            "columnName": "dateSync",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "statut",
+            "columnName": "statut",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "resumePayload",
+            "columnName": "resumePayload",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "assignation",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `enseignantId` INTEGER NOT NULL, `cibleType` TEXT NOT NULL, `cibleId` TEXT NOT NULL, `uniteId` TEXT NOT NULL, `dateAssignation` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "enseignantId",
+            "columnName": "enseignantId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cibleType",
+            "columnName": "cibleType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cibleId",
+            "columnName": "cibleId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "uniteId",
+            "columnName": "uniteId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dateAssignation",
+            "columnName": "dateAssignation",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9643ed4ea4f4433b87c0200e3ed26c3a')"
+    ]
+  }
+}

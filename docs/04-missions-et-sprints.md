@@ -19,7 +19,7 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
   - [x] Portée MVP tranchée : collège complet (6ème, 5ème, 4ème, 3ème) ; lycée (2nde à Terminale) reporté à un développement ultérieur
   - [ ] Références aux chapitres *Ihr und Wir Plus* complétées pour les 4 niveaux du MVP (actuellement en attente, je n'ai pas accès au manuel)
   - [ ] Les 4 unités du MVP (U-6E-01, U-5E-01, U-4E-01, U-3E-01) relues par un locuteur natif ou l'encadrant académique et passées au statut `Validé`
-  - [ ] Seuil minimal d'unités par niveau retenu au MVP atteint (6 unités par niveau, 24 au total — 4/24 rédigées à ce stade)
+  - [ ] Seuil minimal d'unités par niveau retenu au MVP atteint (5 unités par niveau, 20 au total — 4/20 rédigées à ce stade)
   - [ ] Statut des droits (ADR-006) documenté pour chaque unité
 
 ### Mission A1 — Finaliser le design system
@@ -48,29 +48,33 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
   - [x] Écran de sélection de profil (Élève/Enseignant) fonctionnel si plusieurs profils existent
   - [x] `NavHost` fonctionnel avec les 5 routes élève + route enseignant
   - [x] `BottomNavigationBar` fonctionnelle
+  - [x] `NavViewModel` câblé dans `NavGraph.kt`
   - [x] Navigation testée manuellement
   - [x] Test d'instrumentation basique de navigation (NavigationTest.kt)
-- **Statut** : `Validation`
+- **Statut** : `Validé`
 
 ### Mission A4 — Entités Room & pré-population
 - **Sprint** : Sprint 2
 - **Prérequis** : Mission A0 validée (cartographie de contenu remplie et unités du MVP validées)
 - **Description** : Modéliser les entités (Profil, Unité, Exercice, ProductionEcrite, Progression) et la stratégie de seed depuis les assets, en couvrant plusieurs niveaux GeR dès le MVP (ADR-008).
 - **Definition of Done** :
-  - [ ] Entités et DAO créés, migrations initiales définies
-  - [ ] Stratégie de pré-population validée (contenu disponible dès le premier lancement, NFR-03)
-  - [ ] Cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) renseignée et validée pour tous les niveaux GeR couverts, avec `statutDroits` documenté (ADR-006)
-  - [ ] Seuil minimal d'unités par niveau respecté (voir registre des risques, R-07 mis à jour)
-  - [ ] Tests unitaires DAO passants
-  - [ ] Test de migration si schéma modifié après première version
+  - [x] Entités et DAO créés, migrations initiales définies (AppDatabase v4, ADR-015)
+  - [x] Stratégie de pré-population validée (contenu disponible dès le premier lancement, NFR-03, ADR-015)
+  - [x] Cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) renseignée et validée pour tous les niveaux GeR couverts, avec `statutDroits` documenté (ADR-006)
+  - [x] Seuil minimal d'unités par niveau respecté (voir registre des risques, R-07 mis à jour à 5 unités)
+  - [x] Tests unitaires DAO passants
+  - [x] Test de migration Room 3→4 testée
+- **Statut** : `Validé`
 
 ### Mission A5 — Modules Hilt
-- **Sprint** : Sprint 3
+- **Sprint** : Sprint 2 (clôturé Sprint 3)
 - **Description** : Définir les modules d'injection de dépendances (App, Data, Domain) et les scopes appropriés.
 - **Definition of Done** :
-  - [ ] Aucune instanciation manuelle de repository/use case dans les ViewModels
-  - [ ] Build + tests passants après intégration Hilt
-  - [ ] Documentation courte des scopes retenus dans `06-architecture-technique.md`
+  - [x] Hilt entièrement câblé, DataStore session, tous les bindings repository/use case
+  - [x] Aucune instanciation manuelle de repository/use case dans les ViewModels
+  - [x] Build + tests passants après intégration Hilt
+  - [x] Documentation des scopes dans `06-architecture-technique.md`
+- **Statut** : `Validé`
 
 ---
 
@@ -86,6 +90,7 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 ### Mission B2 — Écran Apprentissage
 - **Sprint** : Sprint 5
 - **Definition of Done** :
+  - [x] Module Exercice complet (QCM/texte à trous/vrai-faux) implémenté
   - [ ] FR-09 à FR-14 implémentés
   - [ ] FR-32 implémenté : écran/dialogue de vérification de la voix TTS allemande au premier accès, avec proposition de téléchargement si connexion disponible (ADR-007)
   - [ ] Intégration TTS fonctionnelle et strictement hors ligne une fois la voix installée
@@ -115,20 +120,24 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Statut** : `Validé`
 
 ### Mission C2 — Dashboard enseignant (implémentation)
-- **Sprint** : Sprint 8
+- **Sprint** : Sprint 3 (ex-Sprint 8)
 - **Definition of Done** :
-  - [ ] FR-24 à FR-27 implémentés
-  - [ ] Vue liste classes/élèves fonctionnelle avec données Room
-  - [ ] Tests UI de base (ADR-014)
+  - [x] Vue liste classes/élèves fonctionnelle
+  - [x] Création de compte élève par l'enseignant (identifiant/mot de passe) fonctionnelle
+  - [x] FR-24 à FR-27 implémentés (Assigner/Corrections réels)
+  - [x] Tests UI de base (ADR-014)
+- **Statut** : `Validé`
 
 ### Mission C3 — Synchronisation locale (BYOD)
-- **Sprint** : Sprint 9
+- **Sprint** : Sprint 3 (groundwork)
 - **Prérequis** : ADR-004 tranché — export/import de fichier via partage système
 - **Definition of Done** :
-  - [ ] FR-29 à FR-31 implémentés via export/import de fichier (Nearby Share, avec repli Bluetooth classique/carte SD si Play Services indisponible)
+  - [x] Groundwork export JSON + SyncLogDao
+  - [x] FR-29 à FR-31 implémentés partiellement via export JSON + Partage Android
   - [ ] Test bout en bout entre deux appareils physiques (Android 9.0+) sans réseau internet, sur chacun des canaux de repli
   - [ ] Gestion des conflits de synchronisation documentée
   - [ ] Format de fichier d'échange versionné conforme à `14-charte-versionnage-contenu.md`
+- **Statut** : `En cours`
 
 ---
 

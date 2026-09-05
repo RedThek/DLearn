@@ -35,4 +35,7 @@ interface ApprentissageDao {
     // Enregistrer la réponse dans reponse_eleve
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertReponse(reponse: ReponseEleveEntity)
+
+    @Query("SELECT DISTINCT dateReponse FROM reponse_eleve WHERE eleveId = :eleveId ORDER BY dateReponse DESC")
+    suspend fun getDatesActivite(eleveId: Long): List<Long>
 }
