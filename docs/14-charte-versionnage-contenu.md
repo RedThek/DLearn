@@ -39,7 +39,7 @@ Règle : le format d'échange privilégie la **rétrocompatibilité en lecture**
 
 | Version format d'échange | Application minimale requise | Changement |
 |---|---|---|
-| 1 | 1.0.0 | Format initial (groundwork Mission C3, Sprint 3) — export élève uniquement (progression + productions soumises), JSON, pas encore d'import côté enseignant |
+| 1 | 1.0.0 | Format initial — export élève, **import fonctionnel côté enseignant depuis Sprint 4** (fusion par timestamp au niveau enregistrement, ADR-018) | Correctifs B-22, ADR-018 |
 
 ## 5. Processus de mise à jour manuelle (sans store, ADR-010)
 

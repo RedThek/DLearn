@@ -1,5 +1,7 @@
 package edu.project.dlearn.presentation.enseignant
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CloudOff
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.School
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.InitialsAvatar
 import edu.project.dlearn.domain.model.UniteApprentissage
+import kotlinx.coroutines.launch
 
 @Composable
 fun EnseignantDashboardScreen(
@@ -29,6 +33,31 @@ fun EnseignantDashboardScreen(
     viewModel: EnseignantViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    val selecteurFichier = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        uri?.let { viewModel.onImporterFichier(it.toString()) }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.evenements.collect { evenement ->
+            when (evenement) {
+                is EnseignantEvenement.ImportReussi -> scope.launch {
+                    snackbarHostState.showSnackbar(
+                        "Import réussi : ${evenement.resume.progressionsMisesAJour} progression(s), " +
+                        "${evenement.resume.productionsMisesAJour} production(s) mises à jour" +
+                        if (evenement.resume.ignorees > 0) " (${evenement.resume.ignorees} ignorée(s), déjà à jour)" else ""
+                    )
+                }
+                is EnseignantEvenement.ImportEchoue -> scope.launch {
+                    snackbarHostState.showSnackbar("Échec de l'import : ${evenement.message}")
+                }
+            }
+        }
+    }
 
     if (etat.enChargement) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -38,11 +67,18 @@ fun EnseignantDashboardScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
-            if (etat.ongletActif == OngletEnseignant.CLASSE) {
-                FloatingActionButton(onClick = onCreerEleve) {
+            when (etat.ongletActif) {
+                OngletEnseignant.CLASSE -> FloatingActionButton(onClick = onCreerEleve) {
                     Icon(Icons.Filled.Add, contentDescription = "Créer un élève")
                 }
+                OngletEnseignant.CORRECTIONS -> FloatingActionButton(
+                    onClick = { selecteurFichier.launch(arrayOf("application/json")) }
+                ) {
+                    Icon(Icons.Filled.FileDownload, contentDescription = "Importer les données d'un élève")
+                }
+                else -> {}
             }
         }
     ) { padding ->

@@ -19,6 +19,12 @@ data class ProductionACorriger(
     val dateModification: Long
 )
 
+data class ImportUiResume(
+    val progressionsMisesAJour: Int,
+    val productionsMisesAJour: Int,
+    val ignorees: Int
+)
+
 data class EnseignantUiState(
     val enseignantId: Long = 0L,
     val enseignantNom: String = "",

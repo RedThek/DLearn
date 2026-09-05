@@ -34,6 +34,9 @@ class ContenuRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun getUniteById(uniteId: String): UniteApprentissage? =
+        dao.getUniteById(uniteId)?.toDomain()
+
     private fun UniteApprentissageEntity.toDomain() = UniteApprentissage(
         id                    = id,
         niveauGer             = niveauGer,

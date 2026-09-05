@@ -19,6 +19,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
 
+import androidx.compose.foundation.lazy.items
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccueilScreen(
@@ -126,6 +128,25 @@ fun AccueilScreen(
                         message = "Ton parcours commence ici. Lance ta première activité.",
                         actionLabel = "Commencer",
                         onActionClick = onOuvrirLecture
+                    )
+                }
+            }
+
+            // Assigné par l'enseignant (Mission B1, correctif AN-B3-01)
+            if (etat.assignations.isNotEmpty()) {
+                item {
+                    DlearnSectionHeader(
+                        title    = "Assigné par ton enseignant",
+                        subtitle = "${etat.assignations.size} unité(s) à faire"
+                    )
+                }
+                items(etat.assignations, key = { it.uniteId }) { assignation ->
+                    ActivityCard(
+                        title     = assignation.titre,
+                        typeLabel = "ASSIGNÉ",
+                        icon      = Icons.Default.AutoAwesome,
+                        metadata  = "Niveau ${assignation.niveauGer}",
+                        onClick   = onOuvrirLecture
                     )
                 }
             }

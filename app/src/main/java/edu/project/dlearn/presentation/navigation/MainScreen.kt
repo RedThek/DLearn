@@ -60,6 +60,9 @@ fun MainScreen(
                 ApprentissageScreen(
                     onCommencerExercices = { uniteId ->
                         navController.navigate("exercices/$uniteId")
+                    },
+                    onCommencerEcriture = { uniteId ->
+                        navController.navigate("ecriture?uniteId=$uniteId")
                     }
                 )
             }
@@ -69,7 +72,16 @@ fun MainScreen(
             ) {
                 ExerciceScreen(onTermine = { navController.popBackStack() })
             }
-            composable(BottomNavItem.Ecriture.route) { EcritureScreen() }
+            composable(
+                route = "ecriture?uniteId={uniteId}",
+                arguments = listOf(
+                    navArgument("uniteId") {
+                        type = NavType.StringType
+                        nullable = true
+                        defaultValue = null
+                    }
+                )
+            ) { EcritureScreen() }
             composable(BottomNavItem.Suivi.route) { 
                 SuiviScreen(onCommencerApprentissage = { navController.navigate(BottomNavItem.Apprentissage.route) }) 
             }

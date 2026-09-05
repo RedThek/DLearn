@@ -54,17 +54,20 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Statut** : `Validé`
 
 ### Mission A4 — Entités Room & pré-population
-- **Sprint** : Sprint 2
-- **Prérequis** : Mission A0 validée (cartographie de contenu remplie et unités du MVP validées)
+- **Sprint** : Sprint 2 (infrastructure) — contenu validé toujours dépendant de la Mission A0
+- **Prérequis** : Mission A0 validée (cartographie de contenu remplie et unités du MVP validées) —
+  **débloquée techniquement par ADR-015** (seed brouillon + `isValidated`), sans que cela ne substitue à la
+  validation humaine du contenu
 - **Description** : Modéliser les entités (Profil, Unité, Exercice, ProductionEcrite, Progression) et la stratégie de seed depuis les assets, en couvrant plusieurs niveaux GeR dès le MVP (ADR-008).
-- **Definition of Done** :
-  - [x] Entités et DAO créés, migrations initiales définies (AppDatabase v4, ADR-015)
+- **Definition of Done — Infrastructure technique (close)** :
+  - [x] Entités et DAO créés, migrations initiales définies (AppDatabase v5, ADR-015/017)
   - [x] Stratégie de pré-population validée (contenu disponible dès le premier lancement, NFR-03, ADR-015)
-  - [x] Cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) renseignée et validée pour tous les niveaux GeR couverts, avec `statutDroits` documenté (ADR-006)
-  - [x] Seuil minimal d'unités par niveau respecté (voir registre des risques, R-07 mis à jour à 5 unités)
   - [x] Tests unitaires DAO passants
-  - [x] Test de migration Room 3→4 testée
-- **Statut** : `Validé`
+  - [x] Tests de migration Room 3→4 et 4→5 passants
+- **Definition of Done — Contenu pédagogique (reste ouvert, suivi sous Mission A0)** :
+  - [ ] Cartographie de contenu (`09-cartographie-contenu-pedagogique.md`) renseignée et validée pour tous les niveaux GeR couverts, avec `statutDroits` documenté (ADR-006)
+  - [ ] Seuil minimal d'unités par niveau respecté (voir registre des risques, R-07 mis à jour à 5 unités)
+- **Statut** : `Validé (infrastructure)` — `En cours (contenu, voir Mission A0)`
 
 ### Mission A5 — Modules Hilt
 - **Sprint** : Sprint 2 (clôturé Sprint 3)
@@ -91,23 +94,25 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Sprint** : Sprint 5
 - **Definition of Done** :
   - [x] Module Exercice complet (QCM/texte à trous/vrai-faux) implémenté
-  - [ ] FR-09 à FR-14 implémentés
+  - [ ] FR-09 à FR-11 implémentés
+  - [x] FR-12 implémenté : correction offline vérifiée (mode avion)
+  - [ ] FR-13, FR-14 implémentés
   - [ ] FR-32 implémenté : écran/dialogue de vérification de la voix TTS allemande au premier accès, avec proposition de téléchargement si connexion disponible (ADR-007)
   - [ ] Intégration TTS fonctionnelle et strictement hors ligne une fois la voix installée
-  - [ ] Correction d'exercices vérifiée offline (mode avion)
   - [ ] Tests UI Compose sur le parcours de lecture, incluant le scénario « voix non installée » et « voix installée »
 
 ### Mission B3 — Écran Écriture
 - **Sprint** : Sprint 6
 - **Definition of Done** :
   - [ ] FR-15 à FR-17 implémentés
-  - [ ] Sauvegarde automatique vérifiée (perte de données testée : rotation d'écran, mise en arrière-plan)
-  - [ ] Grille d'auto-évaluation fonctionnelle
+  - [x] Sauvegarde automatique vérifiée (perte de données testée : rotation d'écran, mise en arrière-plan)
+  - [x] Grille d'auto-évaluation fonctionnelle
 
 ### Mission B4 — Écran Suivi
 - **Sprint** : Sprint 7
 - **Definition of Done** :
-  - [ ] FR-20 à FR-22 implémentés
+  - [x] FR-20 à FR-21 implémentés avec données réelles (B-28)
+  - [ ] FR-22 implémenté (FSRS)
   - [ ] Cohérence des données vérifiée avec le module Accueil et Apprentissage
   - [ ] Algorithme de planification des révisions testé unitairement
 
