@@ -98,6 +98,25 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 | FR-30 | Le contenu pédagogique (textes, exercices) est pré-chargé à l'installation, sans téléchargement obligatoire | M | L'app fonctionne dès le premier lancement, sans connexion |
 | FR-31 | Les mises à jour de contenu peuvent être appliquées via un fichier local (ex. package de contenu versionné) | C | Import d'un package met à jour le contenu sans écraser la progression élève |
 
+## 11-bis. Module — Extension littéraire (Bloc F, horizons H1/H2 — voir `18-vision-produit-et-horizons.md`)
+
+Ces exigences sont des **entrées de backlog à spécifier** : leurs critères d'acceptation seront affinés à l'ouverture de chaque mission du Bloc F.
+
+| ID | Exigence | Priorité | Horizon | Critère d'acceptation |
+|---|---|---|---|---|
+| FR-35 | L'élève peut consulter des fiches-méthode de rédaction par type de production (dialogue, description, lettre, e-mail, publicité, discours, argumentation), calibrées A1–A2 | S | H1 | Fiches consultables hors ligne, rattachées à un niveau GeR |
+| FR-36 | L'élève dispose d'un outil de structuration « idée – argument – exemple » avant de rédiger | S | H1 | Trois champs guidés ; le contenu est réutilisable dans l'éditeur d'écriture |
+| FR-37 | L'élève peut relever des défis d'écriture courts (thème, longueur indicative, minuteur optionnel) | C | H1 | Production rattachée au défi ; longueur non bloquante, adaptée au niveau (`16-…`, section 5) |
+| FR-38 | L'enseignant peut commenter une production, et le commentaire revient à l'élève après synchronisation | S | H1 (fin) | Commentaire visible côté élève après import ; dépend d'ADR-027 |
+| FR-39 | L'élève et l'enseignant peuvent consulter l'historique des versions d'une production (brouillon, soumis, révisé) | C | H1 (fin) | Versions horodatées, non modifiables |
+| FR-40 | L'enseignant peut générer un recueil PDF de classe à partir de productions sélectionnées, avec le consentement de l'élève | C | H1 (fin) | PDF généré localement ; pseudonyme possible ; aucune donnée transmise |
+| FR-41 | Le système affiche des points, niveaux et badges **dérivés** de l'activité réelle, et peut produire un certificat de participation PDF | C | H2 | Aucun compteur persisté ; classement de classe optionnel et désactivé par défaut (ADR-023) |
+| FR-42 | L'élève dispose d'un dictionnaire hors ligne allemand ↔ français, puis anglais et espagnol | C | H2 | Pack optionnel ; recherche hors ligne ; licences conformes à ADR-025 |
+| FR-43 | L'élève dispose d'aides à l'écriture à règles hors ligne (orthographe, synonymes, règles grammaticales élémentaires du niveau) | C | H2 | Niveau N0 d'ADR-024 ; aucune donnée transmise |
+| FR-44 | L'enseignant peut animer un club de lecture de classe (questions guidées, défis de lecture mensuels, quiz) | C | H2 | Contenus distribués par l'enseignant ; aucun forum |
+| FR-45 | L'enseignant peut organiser un concours de classe ou d'établissement (ouverture, dépôt par export, jury, résultats diffusés par fichier) | C | H2 | Fonctionne sans connexion ; annonces via FR-08 |
+| FR-46 | Publication en ligne, forum, commentaires publics, échanges internationaux, portail éditeurs, soumission de manuscrits, classes virtuelles, IA cloud pour élèves | W | H3 | Hors périmètre de la thèse (ADR-020) |
+
 ## 12. Exigences explicitement hors périmètre (Phase 3 — IA/NLP, différées)
 
 Ces fonctionnalités sont **volontairement exclues** du socle initial pour ne pas coupler le risque IA à l'architecture (cf. principe directeur du README) :

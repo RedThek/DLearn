@@ -20,6 +20,8 @@ Ces checklists rythment le travail quotidien afin de sécuriser la qualité tech
 - [ ] Les valeurs de couleur/typographie/espacement utilisées proviennent du design system (`Color.kt`, `Type.kt`, `Shape.kt`), jamais codées en dur dans un composable
 - [ ] Chaque nouveau cas d'usage (`UseCase`) du domaine est accompagné d'au moins un test unitaire
 - [ ] Chaque nouvel écran est validé visuellement sur device/émulateur, screenshot archivé dans docs/screenshots/<ID-mission>/
+- [ ] Le nouveau code respecte la convention package-by-feature (ADR-022) ; le code existant n'est pas déplacé
+- [ ] Tout contenu, donnée, police ou bibliothèque tiers ajouté est inscrit dans `19-registre-licences-contenus-tiers.md` (ADR-025)
 
 ## 3. Checklist de fin de journée
 
@@ -52,6 +54,8 @@ Ces checklists rythment le travail quotidien afin de sécuriser la qualité tech
 - [ ] Aucun conflit de fusion non résolu
 - [ ] Si `AppDatabase.kt` est modifié (version bump), une `Migration` explicite et un test `MigrationTestHelper` associé sont présents (ADR-017)
 - [ ] Documentation technique mise à jour si l'architecture ou une exigence a évolué
+- [ ] Toute fonctionnalité nouvelle est rattachée à un horizon dans `18-vision-produit-et-horizons.md` ; aucune capacité H3 n'est présente dans le build pilote (NFR-31)
+- [ ] Les 5 onglets et les flux principaux ne sont pas modifiés pendant la période pilote sans ADR (NFR-32)
 
 ## 6. Checklist avant un jalon académique (mois 6 / mois 12)
 

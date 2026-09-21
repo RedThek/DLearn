@@ -233,6 +233,21 @@ unser eigenes Verhalten nachzudenken.
 - **Statut du contenu** : `À rédiger` / `Rédigé (brouillon)` / `Relu` / `Validé`
 - **Statut des droits** : `À vérifier` / `Domaine public` / `Autorisation obtenue` / `Texte original` — conformément à l'approche hybride tranchée en **ADR-006**
 
+### 3.5 Types de contenu à prévoir (ADR-020, horizons H1/H2)
+
+La cartographie couvre aujourd'hui un seul type de contenu : l'**unité de lecture** (extrait, glossaire, exercices). La vision produit (`18-…`) en prévoit d'autres. Chacun suit les mêmes règles : statut des droits (ADR-006, ADR-025), relecture humaine, entrée dans le registre `19-…` s'il comporte un élément tiers.
+
+| Type de contenu | Horizon | Gabarit | Validation | Droits |
+|---|---|---|---|---|
+| Unité de lecture | H1 (existant) | `16-gabarit-auteur-exercice.md` | Relecture native (A0) | Texte original / domaine public |
+| Fiche-méthode de rédaction | H1 | À créer (extension de `16-…`) | Relecture native + encadrant | Texte original |
+| Défi d'écriture | H1 | À créer (extension de `16-…`) | Relecture native | Texte original |
+| Entrée de bibliothèque / inspiration | H2 | À créer | Relecture native + vérification des droits | Domaine public à vérifier par édition |
+| Questionnaire de club de lecture | H2 | À créer | Relecture native | Texte original |
+| Pack de dictionnaire | H2 | Voir ADR-028 (à venir) | Contrôle de licence | Registre `19-…` |
+
+> **Règle de capacité** (ADR-020) : le seuil de 5 unités validées par niveau (section 5) reste inchangé et prioritaire. Un nouveau type de contenu n'est produit qu'avec sa capacité de validation humaine identifiée, afin de ne pas aggraver R-07.
+
 ## 4. Processus de validation d'une unité
 
 1. Remplir la ligne de la matrice (contenu + métadonnées)

@@ -53,6 +53,19 @@ Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est
 
 ---
 
+## Vision produit (2026-09-21)
+
+Une proposition d'extension en plateforme littéraire a été classée en horizons (ADR-020, `18-vision-produit-et-horizons.md`). **Périmètre de la thèse inchangé** : noyau pédagogique hors ligne (H1) puis enrichissements hors ligne (H2) ; la plateforme en ligne est H3, après la soutenance.
+
+| Élément | État |
+|---|---|
+| ADR-020 à ADR-025 (sans impact code) | Acceptés — à intégrer dans `06-…` |
+| Bloc F du backlog | Créé — F0 en cours, F1 à trancher |
+| Décisions à prendre au lot suivant (impact code/format) | ADR-026 identité, ADR-027 synchronisation v2, ADR-028 packs de contenu |
+| Risques ajoutés | R-22 à R-27 (dont R-26 et R-27 : constats à confirmer par test à deux appareils) |
+
+---
+
 ## 6. Sprint et cycle en cours
 
 - **Sprint courant :** Sprint 4 terminé ✅
