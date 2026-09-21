@@ -134,6 +134,12 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-017 | Politique de migration Room pré-pilote | Accepted |
 | ADR-018 | Stratégie d'import et de résolution de conflits — synchronisation locale | Accepted |
 | ADR-019 | Suivi de la durée de session d'étude | **Proposed** |
+| ADR-020 | Périmètre produit et horizons (H1/H2/H3) | Accepted |
+| ADR-021 | Rôles par capacités et navigation à 5 onglets | Accepted |
+| ADR-022 | Convention package-by-feature pour le nouveau code | Accepted |
+| ADR-023 | Gamification dérivée et éthique du classement | Accepted |
+| ADR-024 | Niveaux d'IA (N0 à N3) | Accepted |
+| ADR-025 | Politique de licences des contenus et données tiers | Accepted |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -475,5 +481,155 @@ quotidien/hebdomadaire est calculé en sommant les intervalles côté `Progressi
 - Granularité limitée à la session applicative globale (pas de détail Apprentissage vs Écriture) — acceptable
   pour le MVP, à documenter comme limite assumée si le mémoire en a besoin plus tard.
 - Débloque proprement D-08 et referme AN-F3-01.
+
+### ADR-020 : Périmètre produit et horizons (H1/H2/H3)
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Une proposition de fonctionnalités (`DLearn-New-Fonctionnalités.md`) élargit le projet vers une plateforme de promotion de la littérature allemande (lecteurs, auteurs, éditeurs, concours, communauté, IA, dictionnaire multilingue, gamification). Elle mêle deux produits : un outil pédagogique DaF hors ligne, compatible avec ADR-002 et ADR-008, et une plateforme sociale et éditoriale en ligne, incompatible avec ADR-002 et exigeant un backend, de la modération et une protection des mineurs. L'analyse d'impact de l'Architecte (2026-09-21) conclut qu'intégrer l'ensemble au MVP menacerait R-06, R-07, R-11, R-13 et la validité de l'évaluation DBR.
+
+#### Décision
+1. Le périmètre de la thèse est le **noyau pédagogique hors ligne** (horizon H1, Cycle DBR 1) puis des **enrichissements hors ligne** (H2, Cycle DBR 2). La plateforme en ligne est **H3**, après la soutenance.
+2. La classification de référence des capacités est celle de `18-vision-produit-et-horizons.md`, section 5.
+3. Toute nouvelle idée est classée dans ce document (capacité, horizon, critères K1–K6) avant d'entrer au backlog. Si elle touche l'architecture, un ADR précède le code.
+4. Aucune capacité H3 n'est compilée ni exposée dans le build pilote (NFR-31).
+5. Pendant l'évaluation pilote, l'intervention reste stable : les 5 onglets et les flux principaux ne changent pas sans ADR (NFR-32).
+6. Règle de capacité : la validation humaine du contenu (Mission A0) est la ressource limitante ; un nouveau type de contenu n'est planifié qu'avec sa capacité de validation identifiée.
+7. ADR-002 reste en vigueur. Le superséder exige un ADR dédié et un protocole éthique refait (`10-…`, `12-…`, `13-…`).
+
+#### Options considérées
+- Intégrer toute la proposition au MVP (rejeté : volume 5 à 10 fois supérieur, développeur unique, dilution de l'évaluation DBR).
+- Refuser la proposition (rejeté : perd des éléments à forte valeur pédagogique, comme la boucle brouillon → feedback → publication de classe).
+- Triage par horizons avec noyau pédagogique d'abord (retenu).
+
+#### Conséquences
+- Création de `18-vision-produit-et-horizons.md`, du Bloc F dans le backlog et des risques R-22 à R-27.
+- Aucun changement de code ; aucun sprint existant n'est modifié.
+- La possibilité de H3 est préservée par des décisions d'architecture à prendre au lot suivant (ADR-026 à ADR-028), sans construire H3.
+
+### ADR-021 : Rôles par capacités et navigation à 5 onglets
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+La proposition prévoit cinq « espaces » (Lecteurs, Élèves, Enseignants, Auteurs, Éditeurs) et un menu de 7 entrées. Or `Role` vaut {ELEVE, ENSEIGNANT} (ADR-009), `RoleSelector` itère on `Role.entries`, et la navigation à 5 onglets est validée par NFR-14 et NFR-15 (Material 3 recommande 3 à 5 destinations).
+
+#### Décision
+1. `Role` reste {ELEVE, ENSEIGNANT}. Aucune valeur n'est ajoutée avant évaluation du pilote.
+2. « Auteur » et « Lecteur » sont des **usages** d'un élève ou d'un enseignant, pas des rôles. « Éditeur » est un acteur H3 (portail web), hors de l'application élève.
+3. Les nouvelles capacités sont conditionnées par le rôle existant et par un drapeau de build. Aucun graphe de navigation supplémentaire par rôle.
+4. Les 5 onglets sont conservés. Toute nouvelle capacité s'insère dans un onglet existant ou comme sous-écran. Le renommage éventuel Apprentissage → Bibliothèque et Écriture → Atelier est étudié après le pilote (NFR-32).
+5. Le menu à 7 entrées de la proposition est rejeté ; sa correspondance avec les 5 onglets est en `18-…`, section 7.
+
+#### Options considérées
+- Ajouter des rôles Auteur/Éditeur/Lecteur (rejeté : casse `RoleSelector`, les graphes de navigation et les permissions, pour des rôles sans sens hors ligne).
+- Passer à 7 onglets (rejeté : ergonomie sur petits écrans, NFR-14/NFR-15).
+
+#### Conséquences
+- `RoleSelector`, `NavGraph` et `MainScreen` restent inchangés.
+- Un modèle de permissions plus fin (capacités) pourra être introduit avec H3 par un ADR dédié.
+
+### ADR-022 : Convention package-by-feature pour le nouveau code
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Les couches `domain/` et `data/` sont organisées à plat (`domain/model`, `domain/usecase`, `data/repository`…), alors que `presentation/` est déjà organisée par fonctionnalité. L'ajout de plusieurs contextes métier (atelier, feedback, gamification, dictionnaire) rendrait les dossiers plats difficiles à parcourir.
+
+#### Décision
+1. Le **nouveau code** est organisé par fonctionnalité à l'intérieur des couches : `domain/<feature>/{model,repository,usecase}`, `data/<feature>/{room,repository}`, `presentation/<feature>/`.
+2. Le **code existant n'est pas déplacé** ; il n'est migré que lorsqu'une mission le modifie déjà en profondeur.
+3. Les modules Hilt sont créés **par fonctionnalité** (par exemple un module `Atelier`), dans `core/di/`, sans faire grossir `AppModule.kt`.
+4. La règle de dépendance (`presentation` → `domain` ← `data`, NFR-16) est inchangée.
+5. Le découpage en modules Gradle est **différé** ; il sera réévalué quand trois fonctionnalités H2 seront livrées ou si le temps de build incrémental devient gênant (seuil à fixer lors de cette réévaluation).
+
+#### Options considérées
+- Refactorer tout le code existant maintenant (rejeté : risque de régression sans bénéfice immédiat, sprint en cours).
+- Modules Gradle immédiats (rejeté : complexité disproportionnée pour un développeur unique).
+- Ne rien changer (rejeté : dérive de lisibilité prévisible).
+
+#### Conséquences
+- Une convention à appliquer dès la première mission du Bloc F ; la checklist avant merge est complétée.
+- Coexistence temporaire de deux styles d'organisation, assumée et documentée.
+
+### ADR-023 : Gamification dérivée et éthique du classement
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+La proposition demande points, niveaux, badges, classement et certificats. Le public est constitué de mineurs ; les données restent locales (ADR-002) ; le modèle actuel contient déjà des événements réels (`reponse_eleve`, `progression`, `production_ecrite`, et `session_etude` avec ADR-019).
+
+#### Décision
+1. Points, niveaux et badges sont des **vues dérivées** de l'activité réelle. Aucun compteur mutable n'est persisté. Une table d'événements dédiée n'est créée que pour les événements non enregistrés ailleurs (par exemple un défi accompli).
+2. **Aucun classement public ou mondial.** Un classement de classe est **optionnel, désactivé par défaut et commandé par l'enseignant**. L'accent est mis sur la progression personnelle.
+3. Pas de mécanique punitive (perte de points, humiliation par le rang).
+4. Les points ne sont **pas une mesure de compétence** : dans le mémoire, ils sont des indicateurs d'engagement, jamais des résultats d'apprentissage.
+5. Les points ne servent à aucune notation scolaire. Les données étant locales et modifiables, elles ne sont pas fiables pour un enjeu réel.
+6. Les certificats de participation sont générés localement (PDF), sans donnée transmise.
+
+#### Options considérées
+- Compteurs persistés (rejeté : divergence possible avec les données sources, migrations inutiles).
+- Classement global (rejeté : exposition de mineurs, nécessite un serveur, triche).
+
+#### Conséquences
+- Aucune migration Room à prévoir pour démarrer.
+- Le protocole éthique doit mentionner que la gamification est un facteur d'engagement, pour éviter toute confusion d'interprétation (`10-protocole-ethique-consentement.md`).
+
+### ADR-024 : Niveaux d'IA (N0 à N3)
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+La proposition cite une IA pour corriger, améliorer le style, proposer des synonymes, générer des idées, coacher la publication et détecter les textes générés. ADR-003 reporte l'IA au Cycle 2, avec des ports de domaine (Mission E1) ; R-05 signale que Gemini Nano est probablement indisponible sur les appareils de référence (Tecno, Itel, Infinix).
+
+#### Décision
+Quatre niveaux, du plus compatible au moins compatible :
+
+| Niveau | Nature | Statut |
+|---|---|---|
+| **N0** | Règles et dictionnaires hors ligne (orthographe, synonymes, règles grammaticales élémentaires, dictionnaire) | H2, autorisé |
+| **N1** | Modèles embarqués (TFLite ; Gemini Nano seulement si détecté, jamais supposé) | Cycle 2, autorisé avec repli gracieux |
+| **N2** | IA utilisée **par l'enseignant hors de l'application** pour préparer du contenu ; la sortie est un JSON conforme au gabarit `16-…` et **validé par un humain** avant seed | Autorisé, processus de contenu |
+| **N3** | IA cloud pour les élèves dans l'application | **Interdit** tant qu'un ADR dédié n'a pas supersédé ADR-002 |
+
+Règles associées :
+1. **Aucune donnée d'élève ne quitte l'appareil**, quel que soit le niveau.
+2. Les ports de domaine sont découpés par capacité (`SpellChecker`, `SynonymProvider`, `GrammarRuleChecker`) et distincts de l'assistant génératif (`WritingAssistant`, Mission E1). Les moteurs restent dans `data/` (NFR-16).
+3. La **détection de textes générés par IA est écartée** : non fiable sur des textes courts d'apprenants non natifs. On lui substitue la traçabilité du processus d'écriture (versions horodatées, FR-39).
+4. Le contenu produit avec de l'IA (N2) ne devient jamais `Validé` sans relecture humaine (Mission A0).
+
+#### Options considérées
+- Adopter une IA cloud dès maintenant (rejeté : ADR-002, mineurs, coût de connexion).
+- Attendre sans rien préciser (rejeté : laisse le champ libre à des choix incompatibles).
+
+#### Conséquences
+- La Mission E1 définit les ports selon ce découpage.
+- Le niveau N2 accélère la production de contenu, mais ne réduit pas la charge de validation humaine (R-07).
+
+### ADR-025 : Politique de licences des contenus et données tiers
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Le dépôt est public (ADR-013) et son fichier `LICENSE` est **CC0 1.0** : tout ce que le porteur écrit est versé au domaine public.
+La proposition ajoute des bibliothèques de textes, un dictionnaire multilingue, des synonymes, des polices et de l'audio, dont les licences sont hétérogènes (attribution, partage à l'identique, copyleft).
+
+#### Décision
+1. Tout contenu, donnée, police ou bibliothèque tiers est inscrit dans `19-registre-licences-contenus-tiers.md` **avant** intégration (NFR-30).
+2. Règles d'admission : domaine public, CC0, licences permissives et polices SIL OFL sont admis ; les licences à attribution sont admises avec mention dans l'écran « Crédits » ; les licences à partage à l'identique ou copyleft (CC BY-SA, GPL, LGPL, GFDL) ne sont **pas intégrées au dépôt ni à l'APK** sans validation écrite de l'encadrant, et peuvent être distribuées comme **pack externe** sous leur propre licence.
+3. Un fichier `THIRD_PARTY_NOTICES` recense les éléments tiers embarqués ; ils ne sont pas couverts par le CC0 du dépôt.
+4. En cas de doute sur une licence : **refus par défaut**.
+5. Les textes rédigés avec l'aide d'un modèle de langage sont enregistrés comme « texte original » et exigent une relecture humaine.
+6. Les productions d'élèves ne sont jamais versées au dépôt (R-17).
+
+#### Options considérées
+- Ne pas formaliser et traiter au cas par cas (rejeté : risque de contamination de licence dans un dépôt public).
+- Interdire tout contenu tiers (rejeté : priverait le projet de ressources du domaine public et de polices nécessaires).
+
+#### Conséquences
+- Création du registre et de `THIRD_PARTY_NOTICES` lors de la première intégration réelle.
+- Le dictionnaire (Wiktionary, CC BY-SA) suivra la voie « pack externe » ; sa forme est à décider dans ADR-028.
+- Ce registre n'est pas un avis juridique : la validation par l'encadrant reste requise pour les cas non triviaux.
 
 Cible de couverture indicative : ≥ 70 % sur `domain`, tests d'instrumentation obligatoires sur les écrans marqués **M** (Must have) dans les exigences fonctionnelles.

@@ -201,3 +201,65 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Definition of Done** :
   - [ ] Chapitres de revue de littérature rédigés (IA/NLP en apprentissage des langues, didactique numérique du DaF, études empiriques MALL)
   - [ ] Traçabilité DBR complète (journal de bord, décisions, résultats d'évaluation) consolidée
+
+---
+
+## Bloc F — Extension littéraire (horizons H1/H2, voir `18-vision-produit-et-horizons.md`)
+
+> Toutes les missions de ce bloc sont `À faire`. Aucune n'est planifiée dans un sprint tant que F1 n'est pas tranchée, sauf F0 (documentaire, déjà réalisée par le présent lot).
+
+### Mission F0 — Gel de périmètre et gouvernance de la vision
+- **Sprint** : Sprint 5 (parallèle, documentaire)
+- **Description** : classer la proposition en horizons, formaliser les décisions sans impact code.
+- **Definition of Done** :
+  - [ ] ADR-020 à ADR-025 intégrés à `06-architecture-technique.md`
+  - [ ] `18-…` et `19-…` ajoutés ; `README.md` et `ETAT_ACTUEL.md` mis à jour
+  - [ ] Risques R-22 à R-27 inscrits ; FR-35 à FR-46 et NFR-30 à NFR-32 inscrits
+- **Statut** : `À faire`
+
+### Mission F1 — Décisions structurantes d'identité, de synchronisation et de packs
+- **Prérequis** : F0
+- **Description** : trancher ADR-026 (identité globale), ADR-027 (format d'échange v2 bidirectionnel), ADR-028 (packs de contenu, dictionnaire dans une base séparée). Ces décisions touchent le schéma et le format d'échange : elles sont **le préalable** de F3, F5 et des besoins de C3.
+- **Definition of Done** :
+  - [ ] ADR-026, ADR-027, ADR-028 rédigés et acceptés
+  - [ ] Impact sur `11-schema-donnees-room.md` et `14-charte-versionnage-contenu.md` documenté
+- **Statut** : `À faire`
+
+### Mission F2 — Atelier d'écriture guidé
+- **Sprint** : Sprint 6–7 (à confirmer, cohérent avec Mission B3)
+- **Exigences** : FR-35, FR-36, FR-37
+- **Prérequis** : F0 ; gabarit `16-…` étendu (fiche-méthode, défi d'écriture)
+- **Definition of Done** :
+  - [ ] Fiches-méthode, structuration idée–argument–exemple et défis courts implémentés
+  - [ ] Contenu relu par un locuteur natif ou l'encadrant (Mission A0)
+  - [ ] Tests UI et vérification hors ligne
+- **Statut** : `À faire`
+
+### Mission F3 — Boucle de feedback et publication de classe
+- **Exigences** : FR-38, FR-39, FR-40
+- **Prérequis** : F1 (ADR-026, ADR-027), Mission C3 complète
+- **Definition of Done** :
+  - [ ] Commentaires enseignant renvoyés à l'élève
+  - [ ] Historique de versions et recueil PDF de classe (consentement de l'élève)
+  - [ ] Test à deux appareils physiques
+- **Statut** : `À faire`
+
+### Mission F4 — Gamification locale
+- **Exigences** : FR-41 · **Horizon** : H2 · **Prérequis** : ADR-023
+- **Statut** : `À faire`
+
+### Mission F5 — Dictionnaire hors ligne
+- **Exigences** : FR-42 · **Horizon** : H2 · **Prérequis** : F1 (ADR-028), ADR-025, audit des licences
+- **Statut** : `À faire`
+
+### Mission F6 — Aides à l'écriture à règles
+- **Exigences** : FR-43 · **Horizon** : H2 · **Prérequis** : Mission E1 (ports), ADR-024, ADR-025
+- **Statut** : `À faire`
+
+### Mission F7 — Club de classe et concours de classe
+- **Exigences** : FR-44, FR-45 · **Horizon** : H2 · **Prérequis** : F3, contenu (A0), ADR-025
+- **Statut** : `À faire`
+
+### Mission F8 — « DLearn Hub » (conception uniquement)
+- **Exigences** : FR-46 · **Horizon** : H3 (après la soutenance) · **Prérequis** : ADR supersédant ADR-002, protocole éthique refait
+- **Statut** : `Hors périmètre de la thèse`

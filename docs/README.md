@@ -29,6 +29,8 @@ Ces documents sont relativement figés : ils décrivent le projet dans son ensem
 | 15 | [15-guide-enseignant-onboarding.md](15-guide-enseignant-onboarding.md) | Guide d'installation et de prise en main pour l'enseignant pilote |
 | 16 | [16-gabarit-auteur-exercice.md](16-gabarit-auteur-exercice.md) | Gabarit standardisé de création d'une unité de contenu pédagogique |
 | 17 | [17-diagrammes-uml.md](17-diagrammes-uml.md) | Diagrammes UML formalisés en PlantUML (cas d'usage, classes, séquences) |
+| 18 | [18-vision-produit-et-horizons.md](18-vision-produit-et-horizons.md) | Vision produit, capacités dédupliquées et classement en horizons H1/H2/H3 (ADR-020) |
+| 19 | [19-registre-licences-contenus-tiers.md](19-registre-licences-contenus-tiers.md) | Registre des licences des contenus, données et polices tiers (ADR-025) |
 
 ## Suivi opérationnel en direct (vivant, mis à jour en continu)
 
@@ -53,6 +55,7 @@ Ces principes s'appliquent à **tout** le développement et doivent être vérif
 3. **Clean Architecture dès l'origine** — séparation stricte domain → data → presentation, pour éviter tout refactoring coûteux lors de l'intégration IA.
 4. **Fidélité Figma 1:1** — le design system doit correspondre exactement aux exports Dev Mode ; aucun token approximé.
 5. **Double redevabilité** — chaque mission de développement doit pouvoir être documentée pour la soutenance (traçabilité DBR : journal de bord, décisions, itérations).
+6. **Horizons produit** — toute nouvelle idée est classée H1/H2/H3 dans `18-vision-produit-et-horizons.md` avant d'entrer au backlog ; aucune capacité H3 n'entre dans le build pilote.
 
 ## État du projet (dernière mise à jour du dossier)
 
