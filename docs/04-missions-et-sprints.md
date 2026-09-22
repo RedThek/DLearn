@@ -139,10 +139,12 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Definition of Done** :
   - [x] Groundwork export JSON + SyncLogDao
   - [x] FR-29 à FR-31 implémentés partiellement via export JSON + Partage Android
-  - [ ] Test bout en bout entre deux appareils physiques (Android 9.0+) sans réseau internet, sur chacun des canaux de repli
-  - [x] Gestion des conflits de synchronisation documentée (ADR-018)
+  - [ ] Test bout en bout entre deux appareils physiques (Android 9.0+) sans réseau internet, **dans les deux sens** (format v2, ADR-027), sur chacun des canaux de repli
+  - [x] Gestion des conflits documentée (ADR-018 pour v1, remplacé par ADR-027 pour v2)
   - [x] Format de fichier d'échange versionné conforme à `14-charte-versionnage-contenu.md`
 - **Statut** : `En cours`
+
+> C3-T10 et C3-T11 sont redirigées vers le format v2 (Mission F1b). Le format v1 n'est plus accepté à l'import (rupture documentée dans 14-charte-versionnage-contenu.md).
 
 ---
 
@@ -156,6 +158,8 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
   - [ ] Procédure d'installation via « sources inconnues » testée sur au moins deux appareils Android 9.0+
   - [ ] Guide enseignant (`15-guide-enseignant-onboarding.md`) finalisé et inclus dans le package de distribution
   - [ ] Schéma de version de l'application et du contenu appliqué (`14-charte-versionnage-contenu.md`)
+  - [ ] Build de release **sans compte de démonstration** (NFR-33, R-28) ; installation à froid vérifiée
+  - [ ] Missions F1a et F1b terminées (identité globale, échange v2) ou dérogation documentée
 
 ### Mission D1 — Couverture de tests
 - **Sprint** : Sprint 10
@@ -219,10 +223,39 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 
 ### Mission F1 — Décisions structurantes d'identité, de synchronisation et de packs
 - **Prérequis** : F0
-- **Description** : trancher ADR-026 (identité globale), ADR-027 (format d'échange v2 bidirectionnel), ADR-028 (packs de contenu, dictionnaire dans une base séparée). Ces décisions touchent le schéma et le format d'échange : elles sont **le préalable** de F3, F5 et des besoins de C3.
+- **Description** : trancher ADR-026 (identité globale), ADR-027 (format d'échange v2 par bundles), ADR-028 (packs de contenu, dictionnaire dans une base séparée) et rédiger la spécification `20-specification-formats-echange-et-packs.md`. Mission documentaire ; l'implémentation est répartie en F1a, F1b et F1c.
 - **Definition of Done** :
-  - [ ] ADR-026, ADR-027, ADR-028 rédigés et acceptés
-  - [ ] Impact sur `11-schema-donnees-room.md` et `14-charte-versionnage-contenu.md` documenté
+  - [ ] ADR-026, ADR-027, ADR-028 intégrés à `06-architecture-technique.md`
+  - [ ] `20-…` ajouté ; `11-…` et `14-…` mis à jour ; R-26 à R-30 inscrits
+- **Statut** : `À faire` (documentation rédigée, en attente d'intégration)
+
+### Mission F1a — Identité globale et exclusion du seed de démonstration
+- **Exigences** : NFR-33, NFR-35 · **ADR** : ADR-026
+- **Sprint** : à planifier ; **avant le pilote (D0) et avant tout usage réel de l'import v2** ; peut être groupée avec la migration 5→6 si celle-ci n'est pas encore fusionnée
+- **Description** : ajouter `uid` (index unique) et l'index unique sur `identifiant`, `instanceId` en DataStore, conversion des assignations existantes, seed de démonstration réservé au build de débogage.
+- **Definition of Done** :
+  - [ ] Migration explicite testée (`MigrationTest`, ADR-017)
+  - [ ] Création de compte robuste aux collisions d'`identifiant`
+  - [ ] Build de release sans compte de démonstration (vérification à froid)
+- **Statut** : `À faire`
+
+### Mission F1b — Échange v2 : bundles, `rev`, import atomique, hash étiqueté
+- **Exigences** : FR-29, FR-47, NFR-34 · **ADR** : ADR-027 · **Prérequis** : F1a
+- **Description** : bundles `STUDENT_REPORT`, `PROVISION`, `FEEDBACK`, `CLASS_PACKET` conformes à `20-…`, import atomique avec résumé, détection de rejeu, `rev` sur `progression` et `production_ecrite`, hash PBKDF2 étiqueté avec rehash à la connexion.
+- **Definition of Done** :
+  - [ ] Vecteur de test de `20-…` reproduit par un test unitaire
+  - [ ] Tests d'un fichier tronqué, d'un rejeu et d'un import interrompu
+  - [ ] Test à deux appareils physiques dans les deux sens (C3-T11)
+  - [ ] `14-…` mis à jour (format v2, rupture avec v1)
+- **Statut** : `À faire`
+
+### Mission F1c — Packs de contenu : importeur unique et upsert
+- **Exigences** : FR-31 · **ADR** : ADR-028 · **Prérequis** : F1a
+- **Description** : le seed devient le pack `core` ; importeur unique ; upsert transactionnel avec `revision` et `retire` ; table `pack_installe`.
+- **Definition of Done** :
+  - [ ] Une correction de contenu se propage sans perte de progression
+  - [ ] Installation idempotente d'un même pack
+  - [ ] Migration explicite testée (ADR-017)
 - **Statut** : `À faire`
 
 ### Mission F2 — Atelier d'écriture guidé
@@ -237,7 +270,7 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 
 ### Mission F3 — Boucle de feedback et publication de classe
 - **Exigences** : FR-38, FR-39, FR-40
-- **Prérequis** : F1 (ADR-026, ADR-027), Mission C3 complète
+- **Prérequis** : F1b, Mission C3 complète
 - **Definition of Done** :
   - [ ] Commentaires enseignant renvoyés à l'élève
   - [ ] Historique de versions et recueil PDF de classe (consentement de l'élève)
@@ -249,7 +282,7 @@ Chaque mission correspond à une unité de travail assignable à un sprint. Une 
 - **Statut** : `À faire`
 
 ### Mission F5 — Dictionnaire hors ligne
-- **Exigences** : FR-42 · **Horizon** : H2 · **Prérequis** : F1 (ADR-028), ADR-025, audit des licences
+- **Exigences** : FR-42 · **Horizon** : H2 · **Prérequis** : F1c, ADR-025, audit des licences
 - **Statut** : `À faire`
 
 ### Mission F6 — Aides à l'écriture à règles

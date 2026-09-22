@@ -21,6 +21,8 @@ Format : `CONTENU-vX.Y` où :
 
 Chaque unité de contenu (`UniteApprentissage`) porte elle-même un champ `versionUnite` (à ajouter au schéma Room si nécessaire) permettant de savoir depuis quelle version de contenu elle est disponible — utile pour distinguer, lors du pilote, ce qui a pu changer entre deux appareils désynchronisés (cf. R-15, R-03).
 
+Les contenus sont désormais distribués par **packs** (ADR-028, `20-…`). Un pack porte sa propre version SemVer (`packVersion`) et, pour un pack de contenu, l'étiquette `contentVersion` (`CONTENU-vX.Y`). Le pack `core` correspond au seed embarqué dans l'APK.
+
 ## 3. Version du schéma Room
 
 Suit le mécanisme natif Room (`@Database(version = n)`), avec une migration explicite testée à chaque incrément (voir NFR-22 et `11-schema-donnees-room.md`, section 4). Le tableau de correspondance ci-dessous doit être tenu à jour :
@@ -30,6 +32,9 @@ Suit le mécanisme natif Room (`@Database(version = n)`), avec une migration exp
 | 1 | 1.0.0 | Schéma initial (Mission A4) |
 | 4 | 1.x.x | Migration 3→4 (isValidated, ADR-015) |
 | 5 | 1.x.x | Migration 4→5 (Assignation, statut Soumis, SyncLogDao, ADR-017) |
+| N+1 *(à attribuer)* | 1.x.x | `utilisateur.uid`, index unique sur `identifiant`, conversion de `assignation.cibleId` (ADR-026, Mission F1a) |
+| N+2 *(à attribuer)* | 1.x.x | `rev`, hash étiqueté, `sync_log.bundleId` (ADR-027, Mission F1b) |
+| N+3 *(à attribuer)* | 1.x.x | `pack_installe`, `revision` et `retire` sur les tables de contenu (ADR-028, Mission F1c) |
 
 ## 4. Version du format d'échange (synchronisation locale, ADR-004)
 
@@ -39,7 +44,10 @@ Règle : le format d'échange privilégie la **rétrocompatibilité en lecture**
 
 | Version format d'échange | Application minimale requise | Changement |
 |---|---|---|
-| 1 | 1.0.0 | Format initial — export élève, **import fonctionnel côté enseignant depuis Sprint 4** (fusion par timestamp au niveau enregistrement, ADR-018) | Correctifs B-22, ADR-018 |
+| 1 | 1.0.0 | Format de développement : export élève, import enseignant (fusion par horodatage, ADR-018). N'a jamais servi sur le terrain. **Refusé à l'import à partir du format v2** |
+| 2 | *à attribuer (Mission F1b)* | Bundles par propriétaire (`STUDENT_REPORT`, `PROVISION`, `FEEDBACK`, `CLASS_PACKET`), identité par `uid`, arbitrage par `rev`, somme de contrôle, import atomique (ADR-026, ADR-027, `20-…`) |
+
+> **Rupture v1 → v2 (assumée et documentée).** Le format v1 ne porte pas d'identité globale et n'a été utilisé sur aucun appareil de pilote. Un import v1 est refusé avec un message explicite. Cette rupture est la seule prévue ; les évolutions futures se font par ajouts compatibles (`minReader`).
 
 ## 5. Processus de mise à jour manuelle (sans store, ADR-010)
 
@@ -50,6 +58,7 @@ Puisque l'application est distribuée par APK partagé localement, il n'existe p
 3. Le fichier est transféré à l'enseignant référent (via le même canal que la distribution initiale, ADR-010).
 4. L'enseignant redistribue aux élèves lors d'une séance dédiée, en réutilisant la procédure du guide enseignant (`15-guide-enseignant-onboarding.md`).
 5. La progression et les productions écrites existantes des élèves doivent être préservées lors de la mise à jour (non-régression testée avant diffusion, voir migrations Room).
+6. Une mise à jour de **contenu** seul passe par un pack `.ikiipack` (ADR-028) : elle ne demande ni nouvel APK ni réinstallation, et préserve la progression.
 
 ## 6. Changelog (journal des versions)
 

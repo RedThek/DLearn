@@ -31,6 +31,7 @@ Ces documents sont relativement figés : ils décrivent le projet dans son ensem
 | 17 | [17-diagrammes-uml.md](17-diagrammes-uml.md) | Diagrammes UML formalisés en PlantUML (cas d'usage, classes, séquences) |
 | 18 | [18-vision-produit-et-horizons.md](18-vision-produit-et-horizons.md) | Vision produit, capacités dédupliquées et classement en horizons H1/H2/H3 (ADR-020) |
 | 19 | [19-registre-licences-contenus-tiers.md](19-registre-licences-contenus-tiers.md) | Registre des licences des contenus, données et polices tiers (ADR-025) |
+| 20 | [20-specification-formats-echange-et-packs.md](20-specification-formats-echange-et-packs.md) | Spécification des bundles d'échange v2 et des packs de contenu, avec vecteur de test (ADR-026 à 028) |
 
 ## Suivi opérationnel en direct (vivant, mis à jour en continu)
 

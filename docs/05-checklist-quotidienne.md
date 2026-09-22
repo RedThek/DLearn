@@ -56,6 +56,8 @@ Ces checklists rythment le travail quotidien afin de sécuriser la qualité tech
 - [ ] Documentation technique mise à jour si l'architecture ou une exigence a évolué
 - [ ] Toute fonctionnalité nouvelle est rattachée à un horizon dans `18-vision-produit-et-horizons.md` ; aucune capacité H3 n'est présente dans le build pilote (NFR-31)
 - [ ] Les 5 onglets et les flux principaux ne sont pas modifiés pendant la période pilote sans ADR (NFR-32)
+- [ ] Toute évolution d'un format d'échange ou d'un pack respecte `20-specification-formats-echange-et-packs.md` (vecteur de test, `checksum`, import atomique) et est consignée dans `14-…`
+- [ ] Le build de release ne contient aucun compte de démonstration (NFR-33)
 
 ## 6. Checklist avant un jalon académique (mois 6 / mois 12)
 

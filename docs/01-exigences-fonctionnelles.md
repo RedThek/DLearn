@@ -38,6 +38,7 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 | FR-03 | Un élève peut consulter et modifier ses informations de profil (avatar, préférences d'affichage) | S | Modifications persistées en base Room |
 | FR-04 | Plusieurs profils élève peuvent coexister sur un même appareil partagé (contexte BYOD limité) | C | Sélecteur de profil au lancement si > 1 profil |
 | FR-33 *(ADR-009)* | L'application est unique (un seul APK) et propose un sélecteur de rôle/profil (Élève / Enseignant) au lancement, avec bascule possible entre profils sur un même appareil | M | Écran de sélection de rôle affiché si plusieurs profils existent ; navigation racine distincte selon le rôle choisi |
+| FR-47 *(ADR-026, ADR-027)* | L'enseignant peut transmettre à un élève son compte (identifiant et mot de passe initial) par un fichier adressé à cet élève ; l'élève se connecte ensuite hors ligne sur son propre appareil | S | Bundle `PROVISION` importé sur l'appareil de l'élève ; connexion réussie sans réseau ; aucun mot de passe en clair dans le fichier |
 
 ## 6. Module — Accueil
 
@@ -94,9 +95,9 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 
 | ID | Exigence | Priorité | Critère d'acceptation |
 |---|---|---|---|
-| FR-29 *(ADR-004)* | Les données élève/enseignant peuvent être synchronisées sans internet, via export/import de fichier utilisant les mécanismes de partage natifs de l'appareil (Nearby Share, Bluetooth, câble, ou carte SD en repli) | S | Transfert réussi entre deux appareils sans réseau mobile/Wi-Fi internet, avec repli fonctionnel si Nearby Share indisponible |
+| FR-29 *(ADR-004, révisé par ADR-027)* | Les données élève/enseignant peuvent être synchronisées **dans les deux sens** sans internet, via des fichiers (bundles) transmis par les mécanismes de partage natifs de l'appareil (Nearby Share, Bluetooth, câble, ou carte SD en repli) | S | Transfert réussi entre deux appareils sans réseau ; import atomique avec résumé ; un fichier corrompu ou déjà importé est refusé avec un message explicite ; format conforme à `20-…` |
 | FR-30 | Le contenu pédagogique (textes, exercices) est pré-chargé à l'installation, sans téléchargement obligatoire | M | L'app fonctionne dès le premier lancement, sans connexion |
-| FR-31 | Les mises à jour de contenu peuvent être appliquées via un fichier local (ex. package de contenu versionné) | C | Import d'un package met à jour le contenu sans écraser la progression élève |
+| FR-31 *(révisé par ADR-028)* | Les mises à jour de contenu et les données de référence (dictionnaire) sont installées via des **packs `.ikiipack`** transférés par fichier, sans écraser la progression de l'élève | **S** | Installation, mise à jour et retrait d'un pack sans perte de progression ; installation idempotente ; contenus retirés masqués et non supprimés |
 
 ## 11-bis. Module — Extension littéraire (Bloc F, horizons H1/H2 — voir `18-vision-produit-et-horizons.md`)
 

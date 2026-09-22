@@ -59,10 +59,11 @@ Une proposition d'extension en plateforme littéraire a été classée en horizo
 
 | Élément | État |
 |---|---|
-| ADR-020 à ADR-025 (sans impact code) | Acceptés — à intégrer dans `06-…` |
-| Bloc F du backlog | Créé — F0 en cours, F1 à trancher |
-| Décisions à prendre au lot suivant (impact code/format) | ADR-026 identité, ADR-027 synchronisation v2, ADR-028 packs de contenu |
-| Risques ajoutés | R-22 à R-27 (dont R-26 et R-27 : constats à confirmer par test à deux appareils) |
+| ADR-020 à ADR-025 (sans impact code) | Acceptés — intégrés dans `06-…` |
+| Bloc F du backlog | Créé — F0 terminé, F1 à intégrer |
+| ADR-026 (identité), ADR-027 (échange v2), ADR-028 (packs) | Acceptés — à intégrer dans `06-…` ; spécification `20-…` rédigée ; implémentation : Missions F1a, F1b, F1c |
+| Préalables du pilote (D0) | F1a (comptes de démonstration exclus du build de release, R-28) et F1b (échange v2, clôture de C3) |
+| Risques ajoutés | R-28 à R-30 ; R-26 et R-27 : décision prise, constats à confirmer par test à deux appareils |
 
 ---
 
