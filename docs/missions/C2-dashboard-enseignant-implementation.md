@@ -35,3 +35,13 @@ Terminée (voir `RECONCILIATION-SPRINT3.md`). Simplification via ADR-016 validé
 ## Phase 4 — Validation
 - [x] Auto-revue effectuée
 - [ ] DoD complète (attend validation finale/screenshots)
+
+## Point de vigilance ajouté le 2026-09-22 (ADR-026)
+
+`EnseignantViewModel.charger()` construit `productionsResume` avec :
+
+    val eleve = elevesParId[p.eleveId] ?: return@mapNotNull null
+
+Une production dont l'`eleveId` ne correspond à aucun élève connu de l'enseignant est **écartée silencieusement** de l'onglet Corrections — aucun message, aucun compteur. C'est exactement le mécanisme que R-26 (`08-registre-des-risques.md`) documente comme risque de collision d'identité entre appareils, observable dans le module que possède cette mission.
+
+**Action** : à corriger dans le cadre de la Mission F1b (import atomique avec résumé, `20-specification-formats-echange-et-packs.md` §6 — un enregistrement d'élève inconnu doit être **compté et signalé**, jamais silencieusement ignoré). Aucune action requise dans C2 elle-même avant F1b.
