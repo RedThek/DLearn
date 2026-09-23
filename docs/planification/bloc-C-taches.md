@@ -102,3 +102,35 @@ rapport journalier (`docs/journal/`), qui reste la trace narrative de chaque ses
 `AccueilScreen` (FR-08, anomalie AN-B3-01), import côté enseignant (C3-T10/T11), suivi de durée de session
 pour clore B-25 complètement (anomalie AN-F3-01), et poursuite du seuil de contenu A0 (5 unités validées par
 niveau — toujours 1/5 par niveau à ce stade, cf. `09-cartographie-contenu-pedagogique.md` section 5).
+
+---
+
+## 10. Complément 2026-09-22 — Test à deux appareils resté ouvert, et rework format v2
+
+### Constat
+
+La tâche **C3-T11** (« Test bout en bout réel sur deux appareils physiques ») a été marquée `☐ Reporté` lors du Sprint 3, avec la note « Reporté Sprint 4 ». Le journal du 2026-09-05 et les fiches de mission ne montrent aucune trace de son exécution en Sprint 4 non plus. `docs/missions/C3-synchronisation-locale.md` a été corrigée en conséquence le 2026-09-22.
+
+### Nouvelles tâches
+
+| ID | Tâche | Dépend de | Fichier(s) | Statut |
+|---|---|---|---|---|
+| C3-T12 | **[BLOQUANT pour la clôture de C3]** Exécuter `../TEST-PROTOCOLE-F1-DEUX-APPAREILS.md` sur le format v1 actuel, sans modification de code | — | `docs/planification/TEST-PROTOCOLE-F1-DEUX-APPAREILS.md` | ☐ À faire |
+| C3-T13 | Consigner le résultat (R-26/R-27 confirmés ou non) dans `08-registre-des-risques.md` et dans un journal daté | C3-T12 | `docs/journal/`, `08-registre-des-risques.md` | ☐ À faire |
+| C3-T14 | Corriger `EnseignantViewModel` pour signaler (et non plus écarter en silence) une production d'élève inconnu — *report anticipé, réalisé en pratique dans le cadre de F1b* | C3-T13, Mission F1b | `EnseignantViewModel.kt` | ☐ À faire (voir Mission F1b) |
+| C3-T15 | Réexécuter le test à deux appareils avec le format v2 (bundles `STUDENT_REPORT`/`CLASS_PACKET`/`FEEDBACK`/`PROVISION`) | Mission F1b | `docs/missions/F1b-echange-v2-bundles.md` | ☐ À faire |
+| C3-T16 | Clôturer définitivement la Mission C3 (Phase 4, DoD complète) | C3-T15 | `docs/missions/C3-synchronisation-locale.md` | ☐ À faire |
+
+### Schéma de dépendance
+
+```mermaid
+flowchart LR
+    T11["C3-T11 (v1)\nJamais exécuté"] -.constat.-> T12["C3-T12\nExécuter le protocole"]
+    T12 --> T13["C3-T13\nConsigner R-26/R-27"]
+    T13 --> F1a["Mission F1a"]
+    F1a --> F1b["Mission F1b"]
+    F1b --> T15["C3-T15\nTest deux appareils (v2)"]
+    T15 --> T16["C3-T16\nClôture définitive de C3"]
+```
+
+Ce complément ne modifie aucune tâche C1/C2/C3-T01 à T10 déjà cochée ; il ajoute la suite manquante, désormais explicite plutôt qu'oubliée dans un report silencieux.

@@ -57,16 +57,16 @@ Le document d'origine répète les mêmes idées à cinq endroits (l'atelier d'�
 | **H3** | Après la soutenance : « DLearn Hub » (backend + portail web) | Nécessite un nouvel ADR superséant ADR-002, un protocole éthique refait, un hébergement et un plan de maintenance |
 | **Écarté** | Ne sera pas réalisé en l'état | Voir §6 |
 
-## 5. Classement des capacités
+## 5. Classement des capacities
 
 | Capacité | Horizon | Forme retenue | Écarté ou reporté | Dépendances |
 |---|---|---|---|---|
-| **C1** Bibliothèque et lecture guidée | H1 (existant) puis H2 (extension) | Lectures par niveau et thème ; extraits du domaine public et textes originaux ; résumés originaux | Livres sous droits, catalogues d'éditeurs, auteurs contemporains sans autorisation | A0, ADR-025, ADR-028 (à venir) |
+| **C1** Bibliothèque et lecture guidée | H1 (existant) puis H2 (extension) | Lectures par niveau et thème ; extraits du domaine public et textes originaux ; résumés originaux | Livres sous droits, catalogues d'éditeurs, auteurs contemporains sans autorisation | A0, ADR-025, ADR-028, Mission F1c |
 | **C2** Atelier d'écriture guidé | **H1** | Fiches-méthode (FR-35), structuration idée–argument–exemple (FR-36), défis courts chronométrés (FR-37), exercices de transformation, formes brèves (mini-conte, portrait, dialogue, lettre) calibrées A1–A2 | « Construire un roman » en allemand : hors niveau ; à reconsidérer au lycée | Gabarit `16-…` étendu (à produce), A0 |
-| **C3** Aides à l'écriture | **H2** | Niveau N0 d'ADR-024 : orthographe, synonymes, règles élémentaires, dictionnaire DE↔FR puis EN/ES (FR-42, FR-43) ; modèles embarqués en Cycle 2 (N1) | IA cloud pour élèves ; détection de textes générés par IA (voir §6) | ADR-024, ADR-025, ADR-028, Mission E1 |
-| **C4** Feedback, évaluation, portfolio | **H1** (fin de cycle) | Commentaires enseignants renvoyés à l'élève (FR-38), historique des versions (FR-39) | — | ADR-026, ADR-027 (à venir) |
+| **C3** Aides à l'écriture | **H2** | Niveau N0 d'ADR-024 : orthographe, synonymes, règles élémentaires, dictionnaire DE↔FR puis EN/ES (FR-42, FR-43) ; modèles embarqués en Cycle 2 (N1) | IA cloud pour élèves ; détection de textes générés par IA (voir §6) | ADR-024, ADR-025, ADR-028, Mission F1c, Mission E1 |
+| **C4** Feedback, évaluation, portfolio | **H1** (fin de cycle) | Commentaires enseignants renvoyés à l'élève (FR-38), historique des versions (FR-39) | — | ADR-026, ADR-027, Mission F1b |
 | **C5** Suivi et gamification | H1 (suivi, temps d'écriture) puis H2 (XP, badges, certificats) | Points et badges **dérivés** de l'activité réelle (ADR-023) ; classement de classe optionnel, désactivé par défaut | Classement public ou mondial ; objectifs chiffrés hors niveau (ex. 500 mots/jour) | ADR-023, ADR-019 |
-| **C6** Ressources enseignant | H2 | Import de packs préparés hors application (exercices, dictées, séquences) | Éditeur de cours intégré à l'application | ADR-028 (à venir), C3 (import) |
+| **C6** Ressources enseignant | H2 | Import de packs préparés hors application (exercices, dictées, séquences) | Éditeur de cours intégré à l'application | ADR-028, Mission F1c, C3 (import) |
 | **C7** Club de lecture et animation | H2 | Club **de classe** animé par l'enseignant : questions guidées, défis mensuels, quiz (FR-44) | Forum, discussions en ligne | A0, ADR-025 |
 | **C8** Concours | H2 (local) / H3 (ouvert) | Concours de classe ou d'établissement : dépôt par export, jury enseignant, résultats diffusés par fichier (FR-45) ; annonces via FR-08 | Concours nationaux/internationaux en ligne, prix publics | ADR-027 |
 | **C9** Publication et critique | H1 (fin) / H3 (en ligne) | **Publication de classe** : recueil PDF généré localement, avec consentement de l'élève (FR-40) | Publication publique, notes publiques, suivi d'auteurs | ADR-027, protocole éthique (`10-…`) |
@@ -115,7 +115,7 @@ stateDiagram-v2
     PUBLIE_CLASSE --> [*]
 ```
 
-Seuls `BROUILLON` et `SOUMIS` existent aujourd'hui (correctif B-21). Les autres statuts sont des **cibles conceptuelles**, à trancher à la conception de la Mission F3 (par exemple `PUBLIE_CLASSE` pourrait être un indicateur séparé plutôt qu'un statut).
+Seuls `BROUILLON` et `SOUMIS` existent aujourd'hui (correctif B-21). Par ADR-027, **le statut d'une production appartient à l'élève** ; les états `COMMENTE` et `PUBLIE_CLASSE` du diagramme sont **déduits** : « commenté » de l'existence d'un commentaire de l'enseignant portant sur la version courante, « publié en classe » d'un enregistrement de publication distinct, propriété de l'enseignant. Ils ne sont donc jamais écrits dans la ligne de l'élève.
 
 ## 9. Vue d'ensemble des horizons
 
@@ -155,7 +155,8 @@ flowchart LR
 - `01-exigences-fonctionnelles.md` — FR-35 à FR-46
 - `02-exigences-non-fonctionnelles.md` — NFR-30 à NFR-32
 - `04-missions-et-sprints.md` — Bloc F
-- `06-architecture-technique.md` — ADR-020 à ADR-025 ; ADR-026 à ADR-028 réservés (identité, synchronisation v2, packs de contenu)
+- `06-architecture-technique.md` — ADR-020 à ADR-028
+- `20-specification-formats-echange-et-packs.md`
 - `08-registre-des-risques.md` — R-22 à R-27
 - `19-registre-licences-contenus-tiers.md`
 

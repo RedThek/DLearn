@@ -116,3 +116,4 @@ Date :                    Signature (ou prénom) :
 - Le délai d'obtention de ces autorisations est le risque **R-11 (Critique)** du registre des risques — à engager dès maintenant, en parallèle du développement technique, pour ne pas compromettre le jalon du mois 6.
 - L'installation par APK partagé localement (ADR-010) est le risque **R-16** du registre — la procédure détaillée d'accompagnement est décrite dans `15-guide-enseignant-onboarding.md`.
 - La voix TTS allemande (ADR-007) doit être installée en contexte connecté (école) avant le déploiement terrain — cette étape est intégrée à la séance d'installation encadrée par l'enseignant.
+- Les fichiers d'échange (`20-…`) et l'identité par `uid` (ADR-026, ADR-027) doivent être décrits dans la note d'information aux parents avant le pilote (nature des données, absence de nom, adressage par destinataire).

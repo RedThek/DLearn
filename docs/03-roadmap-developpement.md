@@ -98,6 +98,7 @@ Cycle 2                      [Analyse/Conception|----Développement----|Évaluat
 - Hilt (Sprint 3) doit être en place avant tout ViewModel connecté à un cas d'usage.
 - La synchronisation locale (Sprint 9) dépend du choix technique arbitré en ADR (voir `06-architecture-technique.md`) — à trancher au plus tard avant le Sprint 8.
 - Le Cycle 2 (IA) ne démarre qu'après l'évaluation de fin de Cycle 1 : ne pas anticiper de dépendance IA dans le code du socle avant cette validation.
+- La Mission D0 dépend de F1a (comptes de démonstration exclus du build de release) ; la fin de la Mission C3 dépend de F1b (échange v2).
 
 ## 7. Horizons produit (ADR-020)
 
@@ -105,11 +106,13 @@ Les sprints des Cycles DBR 1 et 2 ci-dessus **ne sont pas modifiés**. Les capac
 
 | Horizon | Cycle | Contenu | Missions |
 |---|---|---|---|
+| **Préalables H1** | Cycle DBR 1 | Identité globale, échange v2, packs de contenu | F1a, F1b, F1c (à planifier ; F1a et F1b avant D0) |
 | **H1** | Cycle DBR 1 | Atelier d'écriture guidé, boucle de feedback, publication de classe | F2, F3 (après F1) |
 | **H2** | Cycle DBR 2 | Gamification locale, dictionnaire, aides à règles, club et concours de classe | F4, F5, F6, F7 |
 | **H3** | Après la soutenance | « DLearn Hub » : backend et portail web | F8 (hors périmètre de la thèse) |
 
 Points d'attention :
+- Le format d'échange v2 (ADR-027) est un préalable de la fin du Cycle 1 : sans lui, le canal enseignant → élève n'existe pas (R-27) et la Mission C3 ne peut pas être clôturée. L'identité globale (ADR-026) et l'exclusion des comptes de démonstration (R-28) conditionnent la distribution pilote (D0).
 - Le périmètre IA du Cycle 2 (Sprints 11 à 14) suit les niveaux d'ADR-024 : N0 (règles, dictionnaires) puis N1 (modèles embarqués) ; l'IA cloud pour élèves (N3) est exclue.
 - Les décisions d'identité, de synchronisation et de packs (F1) sont un préalable à F3 et à toute évolution de la synchronisation (Mission C3, Sprint 9).
 - La règle de capacité (ADR-020) s'apply : ne pas ouvrir une mission F de contenu sans capacité de validation humaine identifiée.

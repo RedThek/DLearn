@@ -19,7 +19,7 @@ Aucun SDK d'analytics, de publicité ou de suivi cloud n'est intégré à l'appl
 
 ## 3. Comment les données circulent-elles entre élève et enseignant ?
 
-Par transfert local direct entre appareils (Nearby Share, Bluetooth, ou carte SD — ADR-004), sans passer par un serveur externe. Aucune donnée élève ne transite par internet à cette occasion.
+Par transfert local direct entre appareils (Nearby Share, Bluetooth, ou carte SD — ADR-004), sans passer par un serveur externe. Aucune donnée élève ne transite par internet à cette occasion. Les fichiers échangés sont lisibles (texte JSON) et ne contiennent **jamais le nom de l'élève** : un identifiant technique aléatoire, sans lien avec l'identité, est utilisé. Les données individuelles (compte, commentaires) sont envoyées dans un fichier adressé à un seul élève. Un mot de passe n'est jamais écrit en clair dans un fichier. Chaque fichier est contrôlé avant d'être appliqué.
 
 ## 4. Combien de temps les données sont-elles conservées ?
 

@@ -58,3 +58,9 @@ Ce document précise, pour les besoins de la recherche DBR (mémoire de Master),
 - Ce plan s'applique uniquement dans le cadre du consentement obtenu via `10-protocole-ethique-consentement.md`.
 - Il est référencé par la Mission D3 (`04-missions-et-sprints.md`) comme prérequis à la collecte de données pilote.
 - Le risque associé à une mauvaise anonymisation est consigné sous R-14 dans `08-registre-des-risques.md`.
+
+## 9. Fichiers de synchronisation et données de recherche : deux flux distincts
+
+- Les **bundles de synchronisation** (`20-…`) servent au fonctionnement pédagogique (enseignant ↔ élève). Ils ne sont pas des exports de recherche.
+- L'**export de recherche** (section 2) est réalisé séparément, en fin de période pilote, avec remplacement du nom par le **code participant**.
+- Le `uid` technique reste sur les appareils et n'est **pas** le code participant : la table de correspondance code ↔ personne est détruite en fin d'analyse, sans effet sur le fonctionnement de l'application (ADR-026).

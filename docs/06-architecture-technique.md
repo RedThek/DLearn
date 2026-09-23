@@ -132,7 +132,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-015 | Stratégie de seed de développement (déblocage A4) | **Accepted** |
 | ADR-016 | Simplification du schéma de données — unification ProfilEleve/ProfilEnseignant | Accepted |
 | ADR-017 | Politique de migration Room pré-pilote | Accepted |
-| ADR-018 | Stratégie d'import et de résolution de conflits — synchronisation locale | Accepted |
+| ADR-018 | Stratégie d'import et de résolution de conflits — synchronisation locale | Accepted (remplacé par ADR-027 pour le format v2 ; reste valide pour v1) |
 | ADR-019 | Suivi de la durée de session d'étude | **Proposed** |
 | ADR-020 | Périmètre produit et horizons (H1/H2/H3) | Accepted |
 | ADR-021 | Rôles par capacités et navigation à 5 onglets | Accepted |
@@ -140,6 +140,9 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 | ADR-023 | Gamification dérivée et éthique du classement | Accepted |
 | ADR-024 | Niveaux d'IA (N0 à N3) | Accepted |
 | ADR-025 | Politique de licences des contenus et données tiers | Accepted |
+| ADR-026 | Identité globale des utilisateurs (`uid`) et identité d'installation | Accepted |
+| ADR-027 | Format d'échange v2 : bundles par propriétaire | Accepted |
+| ADR-028 | Packs de contenu et dictionnaire hors application | Accepted |
 
 ### ADR-001 : Adoption de Clean Architecture + MVVM
 **Statut :** Accepted
@@ -169,6 +172,7 @@ Format utilisé : voir gabarit en section 7. Chaque décision structurante est n
 - Pas de limite pratique de taille de transfert (contrairement au QR code) ; complexité d'implémentation raisonnable pour un développeur seul.
 - Dépendance résiduelle à Google Play Services pour Nearby Share sur certains appareils bas de gamme — un repli Bluetooth classique/fichier manuel doit être prévu et testé (voir risque R-15).
 - Nécessite un format de fichier d'échange versionné et documenté (voir Mission C3).
+- Mécanisme (partage natif de fichiers) inchangé ; le format transféré est redéfini par ADR-027 et par la spécification 20-specification-formats-echange-et-packs.md.
 
 ### ADR-005 : `minSdkVersion` cible
 **Statut :** Accepted
@@ -352,6 +356,7 @@ Formaliser rétroactivement cette simplification comme décision assumée pour l
   ADR-016" plutôt que de les supprimer (traçabilité DBR).
 - Risque à ajouter à `08-registre-des-risques.md` : absence de cloisonnement enseignant/classe en cas
   d'extension du pilote.
+- Complété par ADR-026 : UtilisateurEntity reçoit un uid global ; l'identifiant Long reste une clé locale.
 
 ### ADR-017 : Politique de migration Room pré-pilote
 **Statut :** Accepted
@@ -420,7 +425,7 @@ la Mission D0`) reste la seule trace de ce risque, sans politique explicite sur 
 | Intégration | Test bout en bout de la synchronisation locale | Test instrumenté sur deux instances/émulateurs |
 
 ### ADR-018 : Stratégie d'import et de résolution de conflits — synchronisation locale
-**Statut :** Accepted
+**Statut :** Accepted — remplacé par ADR-027 pour le format d'échange v2 (la règle de fusion par horodatage n'est plus utilisée en v2 ; elle reste décrite ici pour v1).
 **Date :** 2026-09-05
 
 #### Contexte
@@ -633,3 +638,118 @@ La proposition ajoute des bibliothèques de textes, un dictionnaire multilingue,
 - Ce registre n'est pas un avis juridique : la validation par l'encadrant reste requise pour les cas non triviaux.
 
 Cible de couverture indicative : ≥ 70 % sur `domain`, tests d'instrumentation obligatoires sur les écrans marqués **M** (Must have) dans les exigences fonctionnelles.
+
+### ADR-026 : Identité globale des utilisateurs (`uid`) et identité d'installation
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Les données échangées entre appareils (ADR-004) référencent aujourd'hui l'élève par `eleveId`, un `Long` auto-incrémenté propre à chaque base. Plusieurs faits relevés dans le code rendent cet usage dangereux :
+- `SeedCallback` crée un élève d'id 1 et un enseignant d'id 2 sur chaque installation ; tous les appareils ont donc un « élève 1 ».
+- L'export v1 écrit `eleveId` local sans nom ni identifiant ; l'import applique cet id tel quel sur la base de l'enseignant.
+- `EnseignantViewModel` écarte silencieusement les productions dont l'`eleveId` n'existe pas côté enseignant.
+- `identifiant` n'a pas d'index unique et `creerEleve` le construit avec un suffixe aléatoire à 9 000 valeurs, puis relit avec `trouverParIdentifiant` (première ligne trouvée).
+- Les `id` de `progression` changent à chaque mise à jour (`INSERT OR REPLACE` avec un nouvel UUID et index unique sur `(eleveId, uniteId)`).
+- Le code participant de la recherche (`13-…`) et sa table de correspondance sont détruits par conception : ils ne peuvent pas servir d'identité technique.
+
+#### Décision
+1. Chaque utilisateur reçoit un **`uid`** : UUID v4 généré à la création du compte, **immuable**, jamais dérivé de données personnelles. La migration renseigne les lignes existantes.
+2. Quatre notions distinctes : **`uid`** (identité technique globale, seule à traverser les appareils) ; **`id` Long** (clé de jointure locale, ne figure jamais dans un fichier échangé) ; **`identifiant`** (nom de connexion) ; **code participant** (pseudonyme de recherche, hors de l'application).
+3. Tout bundle (ADR-027) et tout pack (ADR-028) référence les utilisateurs par `uid`.
+4. Chaque installation possède un **`instanceId`** : UUID aléatoire stocké dans DataStore, jamais dérivé d'un identifiant matériel (`ANDROID_ID`, IMEI…). Il remplace `Build.MODEL` comme origine dans `sync_log` et dans les bundles.
+5. Pour une assignation de cible `ELEVE`, `cibleId` contient le **`uid`** de l'élève (colonne déjà de type texte) ; la migration convertit les lignes existantes.
+6. **Les comptes de démonstration** (`eleve.2451`, `enseignant.100`) ont des `uid` fixes reconnaissables et sont **exclus du build de pilote** (NFR-33). Leurs identifiants figurent dans le dépôt public : les livrer permettrait à tout élève de se connecter en enseignant.
+7. `identifiant` reçoit un **index unique** ; la création de compte réessaie en cas de collision.
+
+#### Options considérées
+- Rapprocher par `identifiant` à l'import (rejeté : pas unique, suffixe aléatoire).
+- Remplacer la clé primaire `Long` par un UUID (rejeté : SQLite ne modifie pas le type d'une clé par `ALTER` ; reconstruction de six tables ou plus, de tous les DAO, de `SessionManager`, des arguments de navigation et des tests, pour un gain identique).
+- Ajouter `uid` à côté du `Long` (retenu).
+- Dériver l'identité du nom et de la classe (rejeté : homonymes, fautes de frappe, donnée personnelle utilisée comme clé).
+- Utiliser le code participant de la recherche (rejeté : sa table est détruite en fin d'analyse).
+
+#### Conséquences
+- Ajout de `utilisateur.uid` (index unique) et d'un index unique sur `identifiant` ; migration explicite et testée (ADR-017), rattachée à la Mission F1a. Les tables qui référencent l'élève (`progression`, `production_ecrite`, `reponse_eleve`, `session_etude`) **ne sont pas modifiées**.
+- **Calendrier :** aucune urgence technique liée à la migration 5→6 (`session_etude` conserve son `eleveId` local). La décision doit être appliquée **avant le pilote et avant tout usage réel de l'import v2** ; elle peut être groupée avec la migration 5→6 si celle-ci n'est pas encore fusionnée, sinon faire l'objet d'une migration suivante.
+- Exigence de la Mission D0 : le build de release ne contient aucun compte de démonstration (NFR-33).
+- Limite acceptée : deux enseignants sur des appareils distincts peuvent créer un même `identifiant` (R-18).
+
+### ADR-027 : Format d'échange v2 — bundles par propriétaire
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Faits relevés :
+- Le canal est à sens unique : `SyncRepository` n'expose que l'export d'un élève et l'import d'un fichier d'élève ; les assignations, comptes, commentaires et annonces n'ont aucun chemin enseignant → élève (R-27).
+- ADR-018 arbitre les conflits par horodatage de l'export ; or les appareils sans réseau ont des horloges qui dérivent.
+- L'import boucle sur les DAO sans transaction : un arrêt en cours laisse un état partiel.
+- Les clés d'enregistrement sont instables (`id` de `progression` régénéré à chaque écriture).
+- Les canaux de partage (Nearby Share, Bluetooth, carte SD) peuvent tronquer ou corrompre un fichier.
+- Le hash des mots de passe est du SHA-256 sans sel (AN-B-02) ; les mots de passe générés (`ikii.` + 6 caractères) sont peu résistants à une attaque hors ligne.
+- Les données individuelles de mineurs ne doivent pas atteindre les appareils de leurs camarades (`12-…`, `13-…`).
+- Le format v1 n'a jamais servi sur le terrain (pas de pilote à ce jour).
+
+#### Décision
+1. **Partitionner par propriétaire.** L'élève possède `progression`, `production` (contenu et statut), `session` ; l'enseignant possède les comptes, `assignation`, `commentaire`, `annonce` et, plus tard, `publication`. `sync_log` n'est jamais transmis. Un récepteur n'émet jamais de modification d'un enregistrement dont il n'est pas propriétaire.
+2. **Arbitrage par `rev`.** Chaque enregistrement d'état porte un compteur `rev` incrémenté par son propriétaire ; le récepteur applique l'enregistrement entrant si `rev` entrant > `rev` local. Les enregistrements additifs (`session`, `assignation`, `commentaire`, `annonce`) fusionnent par union sur leur UUID. Les horodatages sont informatifs et ne servent jamais d'autorité. Cas résiduel d'un élève sur deux appareils : `rev` le plus élevé gagne, puis `updatedAt` le plus récent.
+3. **Quatre types de bundles** : `STUDENT_REPORT` (élève → enseignant), `PROVISION` (compte), `FEEDBACK` (commentaires) et `CLASS_PACKET` (assignations, annonces) côté enseignant → élève.
+4. **Adressage pour la confidentialité :** les données privées (compte, commentaires) sont envoyées dans un fichier **par destinataire** ; seul le paquet de classe est commun et ne contient aucune donnée individuelle. Les rapports d'élèves ne contiennent jamais de nom, seulement des `uid`.
+5. **Enveloppe** commune (`formatVersion`, `minReader`, `bundleId`, `type`, `origin`, `audience`, `createdAt`, `records`, `checksum`, `signature`), spécifiée dans `20-specification-formats-echange-et-packs.md`. Le `checksum` est le SHA-256 de la forme canonique de `records`.
+6. **Import atomique** : une seule transaction, refus si le `checksum` est invalide, détection du rejeu par `bundleId`, résumé complet (appliqués, ignorés, de type inconnu, **élèves inconnus signalés et non écartés en silence**).
+7. **Statuts :** le statut d'une production appartient à l'élève ; « commenté » se déduit de l'existence d'un commentaire portant sur la version courante ; la publication de classe est un enregistrement distinct de l'enseignant.
+8. **Comptes fournis par l'enseignant :** le bundle `PROVISION` transporte un **hash étiqueté** (`alg`, sel, itérations, empreinte), jamais un mot de passe en clair. Les hash SHA-256 existants sont marqués `SHA-256-LEGACY` et rehashés à la prochaine connexion réussie. Le passage à PBKDF2 (disponible dès l'API 26, itérations à calibrer sur les appareils de référence, ADR-012) est un prérequis d'implémentation de la fourniture de comptes.
+9. **Importation sécurisée :** somme de contrôle maintenant ; champ `signature` **réservé** et laissé à `null`, pour activer une signature sans rupture si un enjeu apparaît (concours, H3).
+10. **Rupture assumée avec v1** (`14-…` exige que les ruptures soient documentées) : les fichiers v1 sont refusés avec un message explicite, car v1 n'a jamais servi sur le terrain et ne porte pas d'identité globale. ADR-018 est remplacé pour v2.
+
+#### Options considérées
+- Dernier écrit gagne à l'horloge, ADR-018 (rejeté pour v2 : dépend d'horloges non fiables).
+- Refuser un import plus ancien (rejeté : bloque l'enseignant sans moyen de forcer).
+- CRDT ou vecteurs de version (rejeté : disproportionné, la propriété des données est déjà disjointe).
+- Compteur `rev` par enregistrement, par propriétaire (retenu).
+- Signer avec une clé de classe partagée (rejeté : clé extractible de l'appareil de l'élève, fausse sécurité).
+- Signer avec une clé asymétrique de l'enseignant (différé : n'empêche pas un élève de modifier ses propres données, coût de gestion de clés).
+- Somme de contrôle avec `signature` réservée (retenu).
+
+#### Conséquences
+- Ajout de colonnes `rev` (`progression`, `production_ecrite`), d'une table `commentaire`, de colonnes de hash étiqueté sur `utilisateur` et d'un `bundleId` dans `sync_log`, chacun par migration explicite et testée (ADR-017), rattachés à la Mission F1b puis F3.
+- L'enseignant transmet désormais un fichier par élève pour les données privées : charge opérationnelle à traiter dans le guide enseignant (`15-…`) et à mesurer au pilote.
+- La Mission C3 est complétée sur le format v2 ; C3-T10 et C3-T11 sont redirigées vers v2.
+- Risques traités : R-26, R-27, R-30 (décision prise ; implémentation à faire).
+
+### ADR-028 : Packs de contenu et dictionnaire hors application
+**Statut :** Accepted
+**Date :** 2026-09-21
+
+#### Contexte
+Faits relevés :
+- `ContentDataSource.peupler()` ne fait rien si des unités existent déjà et les DAO de contenu utilisent `OnConflictStrategy.IGNORE` : une correction de contenu (comme les corrections du bug B-09) n'atteint jamais un appareil déjà semé. La relecture native de la Mission A0 produira inévitablement des corrections (R-29). FR-31 devient donc nécessaire au pilote.
+- `seed_v1.json` a déjà la forme d'un pack (`version`, `unites`, `extraits`, `glossaire`, `exercices`, `options`) et `14-…` définit `CONTENU-vX.Y`.
+- Les progressions et réponses référencent les contenus par identifiant : supprimer un contenu les orphelinerait.
+- NFR-07 et le stockage des appareils d'entrée de gamme excluent les gros volumes dans l'APK.
+- ADR-007 interdit d'étendre l'exception réseau du TTS : un téléchargement de dictionnaire est exclu.
+- Les sources probables d'un dictionnaire (CC BY-SA) sont incompatibles avec le dépôt CC0 (ADR-025).
+
+#### Décision
+1. **Le seed devient le pack `core`** embarqué dans l'APK, installé par le **même importeur** que tout pack ultérieur : un seul chemin de code à tester, et les mises à jour de contenu l'empruntent.
+2. **Un pack est un ZIP `.ikiipack`** contenant un `manifest.json` et une charge utile : `content.json` (contenu pédagogique relationnel) ou `reference.db` (données de référence en lecture seule), plus une notice de licence si un élément tiers est inclus. Manifeste : `packId`, `packVersion` (SemVer), `schemaVersion`, `type`, `contentVersion`, `minAppVersion`, `dependsOn`, `checksum`, `license`, `attribution`, `registryId` (référence `LIC-xxx`), `normalization`, `signature` réservée. Détail : `20-…`.
+3. **Règles d'upsert :** identifiants **stables et immuables** ; une correction de forme conserve l'identifiant et incrémente `revision` ; un changement de sens reçoit un nouvel identifiant ; un contenu retiré est marqué `retire`, jamais supprimé ; aucune donnée d'élève n'est modifiée.
+4. **Suivi** des packs installés par une table `pack_installe`, ce qui rend l'installation idempotente.
+5. **Deux familles de données :** le contenu pédagogique relationnel vit dans la base Room principale par upsert transactionnel ; les données de référence volumineuses et immuables (dictionnaire) vivent dans une **base séparée en lecture seule**, jamais migrée avec la base principale.
+6. **Dictionnaire :** un pack par paire de langues, dans l'ordre DE↔FR, puis EN et ES, l'arabe en dernier selon les données du pilote. Clés de recherche normalisées (casse, ä/ae, ö/oe, ü/ue, ß/ss), version de l'algorithme inscrite dans le manifeste. Recherche par préfixe sur clé indexée ; le choix technique précis (Room avec FTS3/FTS4 ou SQLite en lecture seule) est fixé en Mission F5. Le petit lexique tiré des glossaires d'unités reste la base immédiate.
+7. **Distribution :** par transfert de fichier local uniquement (aucun téléchargement). Installation, désinstallation et bascule atomique ; l'écran « Crédits » est alimenté par les manifestes.
+8. **Fabrication hors application** par un outil de validation (niveau N2 d'ADR-024). Les packs sous licence à partage à l'identique restent **hors du dépôt**, avec leur propre notice (ADR-025).
+9. **Police arabe :** s'appuyer d'abord sur la police système, à tester sur les appareils de référence avant d'en embarquer une (registre `19-…`, LIC-009).
+10. **Authenticité :** somme de contrôle maintenant ; `signature` réservée (même logique qu'ADR-027).
+
+#### Options considérées
+- Dictionnaire embarqué dans l'APK (rejeté : taille, licence, inutile pour qui n'en veut pas).
+- Téléchargement au premier usage (rejeté : ADR-007).
+- Dictionnaire dans la base Room principale (rejeté : migrations, sauvegardes, importation longue, `fallbackToDestructiveMigration` encore actif).
+- Pack externe transféré par fichier, base séparée (retenu).
+- Signature des packs dès maintenant (différé, comme ADR-027).
+
+#### Conséquences
+- Ajout d'une table `pack_installe` et de colonnes `revision` et `retire` sur les fiches de contenu ; remplacement de l'`IGNORE` par un upsert transactionnel et suppression du court-circuit de `peupler()` : migrations explicites et testées (ADR-017), Mission F1c.
+- FR-31 passe de « Could » à « Should ».
+- Le pilote peut recevoir des corrections de contenu sans réinstallation ni perte de progression.
+- Un pack forgé reste possible tant que la signature n'est pas activée ; l'enjeu est limité au contenu affiché sur l'appareil qui l'importe.
