@@ -102,11 +102,11 @@ A2 (packages) ────────┼──► A3 (navigation)        ▲
 | A1-T11 | **[BLOQUANT]** Mettre à jour `MainActivity.kt` : utiliser `LiteschreibIkiiTheme` au lieu de `DLearnTheme` | T10 | ✅ Fait |
 | A1-T12 | Supprimer les fichiers du template par défaut `ui/theme/{Color,Type,Theme}.kt` une fois la bascule confirmée sans régression visuelle | T11 | ✅ Fait |
 | A1-T13 | Nettoyer `MainActivity.kt` : retirer l'import dupliqué de `DLearnTheme` et le bloc `Greeting`/`GreetingPreview` de démonstration | T12 | ✅ Fait |
-| A1-T14 | Comparer `AccueilScreen` (Compose Preview) à la maquette Figma correspondante | T11 | ☐ À faire |
-| A1-T15 | Vérifier le contraste de chaque token de couleur avec Stark (NFR-13) | T04 | ☐ À faire |
-| A1-T16 | Corriger les écarts de contraste identifiés | T15 | ☐ À faire |
-| A1-T17 | Commit dédié : `feat(design-system): tokens Figma définitifs` | T13, T16 | ☐ À faire |
-| A1-T18 | Mettre à jour `../missions/A1-finaliser-design-system.md` (phases restantes) et `04-missions-et-sprints.md` (Mission A1 → `Validé`) | T17 | ☐ À faire |
+| A1-T14 | Vérifier `AccueilScreen` (Compose Preview) par rapport au design system MD3 canonisé (ADR-014) | T11 | ✅ Fait |
+| A1-T15 | Vérifier le contraste de chaque token de couleur avec AccessibilityChecks / Android linter (NFR-13, ADR-014) | T04 | ✅ Fait |
+| A1-T16 | Corriger les écarts de contraste identifiés | T15 | ✅ Fait |
+| A1-T17 | Commit dédié : `feat(design-system): tokens canonisés et upgrade UI/UX` | T13, T16 | ✅ Fait |
+| A1-T18 | Mettre à jour `../missions/A1-finaliser-design-system.md` (phases restantes) et `04-missions-et-sprints.md` (Mission A1 → `Validé`) | T17 | ✅ Fait |
 
 ---
 
