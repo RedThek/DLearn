@@ -47,3 +47,13 @@
 | **Ihr und Wir Plus** | Curriculum/manuel de référence pour l'enseignement de l'allemand suivi par l'application |
 | **FR-xx** | Identifiant d'exigence fonctionnelle (voir `01-exigences-fonctionnelles.md`) |
 | **NFR-xx** | Identifiant d'exigence non fonctionnelle (voir `02-exigences-non-fonctionnelles.md`) |
+| **H1 / H2 / H3** | Horizons produit : H1 = Cycle DBR 1 (noyau hors ligne), H2 = Cycle DBR 2 (enrichissements hors ligne), H3 = après la soutenance (plateforme en ligne) — voir `18-vision-produit-et-horizons.md` |
+| **Publication de classe** | Recueil de productions d'élèves sélectionnées par l'enseignant, généré localement en PDF, avec consentement de l'élève |
+| **Pack de contenu** | Ensemble de contenus ou de données (par exemple un dictionnaire) distribué séparément de l'APK par transfert de fichier |
+| **XP (points d'expérience)** | Indicateur d'engagement dérivé de l'activité réelle ; ne mesure pas la compétence (ADR-023) |
+| **Niveaux d'IA N0–N3** | Classification de l'usage de l'IA, de l'hors ligne à règles (N0) à l'IA cloud (N3, interdite) — ADR-024 |
+| **uid** | Identifiant technique global d'un utilisateur (UUID v4, immuable), seul à traverser les appareils ; distinct de l'`id` local et du code participant (ADR-026) |
+| **instanceId** | Identifiant aléatoire d'une installation de l'application, sans lien avec le matériel (ADR-026) |
+| **Bundle** | Fichier `.ikii.json` d'échange enseignant ↔ élève, par propriétaire des données (ADR-027) |
+| **`rev`** | Compteur de révision d'un enregistrement d'état, incrémenté par son propriétaire (ADR-027) |
+| **Pack (`.ikiipack`)** | Archive de contenu ou de données de référence distribuée par fichier, hors de l'APK (ADR-028) |

@@ -1,12 +1,12 @@
 # État actuel du projet — Liteschreib IKII
 
-**Dernière mise à jour :** 2026-09-05 (Session Sprint 4 terminée)
+**Dernière mise à jour :** 2026-09-24 (Pass UI/UX Fluidité et Beauté — Phases P0 à P6)
 
 ---
 
 ## 1. Où en est le projet, en une phrase
 
-Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est implémenté, et les bugs de progression B-28/B-29 sont clos. L'audit post-Sprint 4 (Reconciliation Sprint 5) a permis de réajuster les statuts pour le démarrage du Sprint 5.
+Le pass UI/UX de fluidité et de beauté (`EXEC-UI-UX-FLUIDITE.md`) est entièrement exécuté et validé (`assembleDebug` réussi) : transitions de navigation fluides, masquage de la barre sur les exercices, accueil unifié, lecture littéraire avec glossaire en feuille, retours haptiques et animés sur les exercices, atelier d'écriture enrichi, nettoyage des contrôles fictifs et unification des surfaces/thème sombre.
 
 ---
 
@@ -50,10 +50,25 @@ Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est
 - **Navigation contextuelle** vers le module Écriture ✅
 - **Export JSON et partage Android** (Nearby Share/Bluetooth) depuis le profil ✅
 - **Migration Room 4→5** (explicite et testée) ✅
+- **Pass UI/UX Fluidité & Beauté (Phases P0-P6)** : transitions de navigation 220ms, barre masquée sur exercices, accueil épuré, lecture sérif + glossaire en bottom sheet, feedback haptique et animée QCM, clavier et consigne d'écriture optimisés, suppression des contrôles inactifs, tokens thème sombre complets ✅
+
+---
+
+## Vision produit (2026-09-21)
+
+Une proposition d'extension en plateforme littéraire a été classée en horizons (ADR-020, `18-vision-produit-et-horizons.md`). **Périmètre de la thèse inchangé** : noyau pédagogique hors ligne (H1) puis enrichissements hors ligne (H2) ; la plateforme en ligne est H3, après la soutenance.
+
+| Élément | État |
+|---|---|
+| ADR-020 à ADR-025 (sans impact code) | Acceptés — intégrés dans `06-…` |
+| Bloc F du backlog | Créé — F0 terminé, F1 à intégrer |
+| ADR-026 (identité), ADR-027 (échange v2), ADR-028 (packs) | Acceptés — à intégrer dans `06-…` ; spécification `20-…` rédigée ; implémentation : Missions F1a, F1b, F1c |
+| Préalables du pilote (D0) | F1a (comptes de démonstration exclus du build de release, R-28) et F1b (échange v2, clôture de C3) |
+| Risques ajoutés | R-28 à R-30 ; R-26 et R-27 : décision prise, constats à confirmer par test à deux appareils |
 
 ---
 
 ## 6. Sprint et cycle en cours
 
-- **Sprint courant :** Sprint 4 terminé ✅
+- **Sprint courant :** Sprint 4 terminé ✅ + Pass UI/UX Fluidité (P0-P6) exécuté
 - **Prochain Sprint :** Sprint 5 — Mission B2 (Apprentissage) + Mission B1 itération 2.

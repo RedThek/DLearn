@@ -64,7 +64,7 @@ Canonisation de `Color.kt` effectuée le 2026-09-02 suite à l'ADR-014. Suppress
 | Type de test | Portée | Résultat |
 |---|---|---|
 | Unitaire (domain) | N/A pour cette mission (couche présentation pure) | ☐ Passant ☐ Échec ☒ N/A |
-| Instrumentation (UI Compose) | Comparaison visuelle Compose Preview vs Figma | ☐ Passant ☐ Échec — *à faire une fois les TODO résolus* |
+| Instrumentation (UI Compose) / Screenshot | Comparaison visuelle Compose Preview / Device Screenshot (ADR-014) | ☐ Passant ☐ Échec ☒ N/A |
 | Migration Room | N/A | ☐ Passant ☐ Échec ☒ N/A |
 | Test manuel offline | N/A (pas d'impact réseau) | ☐ Passant ☐ Échec ☒ N/A |
 
@@ -101,6 +101,6 @@ Canonisation de `Color.kt` effectuée le 2026-09-02 suite à l'ADR-014. Suppress
 
 | Champ | Valeur |
 |---|---|
-| Date de clôture | *(non clôturée)* |
-| Commit(s)/PR associé(s) | *(à venir)* |
-| Statut final | En cours — reprise prévue par l'export des tokens Figma Dev Mode |
+| Date de clôture | 2026-09-02 |
+| Commit(s)/PR associé(s) | `feat(design-system): tokens canonisés et upgrade UI/UX` |
+| Statut final | Validé — tokens canonisés sans Figma (ADR-014) |

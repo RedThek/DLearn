@@ -36,6 +36,33 @@
       "objectifsApprentissage": "Raconter des vacances au Perfekt étendu. Exprimer un projet d'avenir avec 'möchten'. Niveau BEPC.",
       "ordreAffichage": 4,
       "isValidated": false
+    },
+    {
+      "id": "U-PLUS2-L1",
+      "niveauGer": "B1",
+      "chapitreCurriculum": "Ihr und Wir plus 2, Lektion 1 (thème adapté) — classe à confirmer (2nde ou 1ère)",
+      "titre": "Eine Reise nach Deutschland",
+      "objectifsApprentissage": "Relater des préparatifs de voyage, exprimer joie/curiosité, comparer (comparatif/superlatif), réviser le Perfekt.",
+      "ordreAffichage": 50,
+      "isValidated": false
+    },
+    {
+      "id": "U-PLUS2-L2",
+      "niveauGer": "B1",
+      "chapitreCurriculum": "Ihr und Wir plus 2, Lektion 2 (thème adapté) — classe à confirmer (2nde ou 1ère)",
+      "titre": "Eine E-Mail aus Freiburg",
+      "objectifsApprentissage": "Se renseigner, décrire le climat, Relativsätze, Futur I, Wechselpräpositionen (révision).",
+      "ordreAffichage": 51,
+      "isValidated": false
+    },
+    {
+      "id": "U-PLUS-EXT-L7",
+      "niveauGer": "B1",
+      "chapitreCurriculum": "Extrapolation post-Lektion 7, Ihr und Wir plus 2 — SPÉCULATIF, aucune source réelle au-delà",
+      "titre": "Meine Stadt im Wandel",
+      "objectifsApprentissage": "Décrire une évolution urbaine, Passiv (Präsens/Präteritum), Konjunktiv II / würde + Infinitiv.",
+      "ordreAffichage": 52,
+      "isValidated": false
     }
   ],
   "extraits": [
@@ -67,6 +94,30 @@
       "id": "EXT-3E-01-001",
       "uniteId": "U-3E-01",
       "texteAllemand": "Ich heiße Serge und ich bin vierzehn Jahre alt. Letzten Sommer bin ich mit meiner Familie nach Kribi gefahren. Das war meine erste große Reise ans Meer. Wir sind mit dem Auto gefahren, und die Fahrt hat ungefähr vier Stunden gedauert. In Kribi haben wir ein kleines Haus am Strand gemietet.\n\nJeden Tag sind wir früh aufgestanden und haben im Meer gebadet. Nachmittags haben wir frischen Fisch gegessen, und meine Mutter hat mit den Fischern gesprochen. Einmal haben wir auch die Wasserfälle von Kribi besucht – das Wasser fällt direkt ins Meer, das war wirklich beeindruckend!\n\nAm Abend haben wir oft am Strand gesessen und über unsere Zukunft gesprochen. Ich möchte später Arzt werden, weil ich anderen Menschen helfen möchte. Diese Ferien waren unvergesslich, und ich hoffe, dass wir nächstes Jahr wieder dorthin fahren.",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-PLUS2-L1-001",
+      "uniteId": "U-PLUS2-L1",
+      "texteAllemand": "Ich heiße Aïcha und bin jetzt sechzehn Jahre alt. Ich besuche jetzt die Oberstufe meines Gymnasiums in Yaoundé. Seit vier Jahren lerne ich Deutsch, und ich habe große Fortschritte gemacht. Letzte Woche hat meine Deutschlehrerin eine tolle Nachricht mitgeteilt: Unsere Schule hat eine Partnerschaft mit einem Gymnasium in Freiburg, und ich darf für drei Wochen nach Deutschland reisen!\n\nIch habe schon viel für die Reise vorbereitet. Ich habe meinen Koffer gepackt, ich habe meinen Reisepass beantragt, und ich habe auch ein Wörterbuch gekauft. Meine Mutter hat mir gesagt: „Nimm einen warmen Pullover mit, denn in Deutschland ist es im Herbst kälter als in Kamerun!“ Sie hat recht: Das Klima in Deutschland ist ganz anders als bei uns.\n\nMeine Austauschpartnerin heißt Lena. Sie ist genauso alt wie ich, aber sie ist ein bisschen größer. Wir haben schon oft geschrieben, und sie ist die freundlichste Person, die ich kenne. Lena hat mir Fotos von ihrer Familie und ihrem Haus geschickt. Ihr Haus ist kleiner als unser Haus in Yaoundé, aber ihr Garten ist viel größer.\n\nIch bin sehr neugierig und ein bisschen aufgeregt. Das wird meine erste Reise nach Europa sein! Ich freue mich riesig darauf, Deutschland kennenzulernen, neue Freunde zu treffen und meine Deutschkenntnisse zu verbessern. Meine beste Freundin Fatima hat gesagt: „Das ist die schönste Gelegenheit, die du je bekommen hast!“",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-PLUS2-L2-001",
+      "uniteId": "U-PLUS2-L2",
+      "texteAllemand": "Liebe Aïcha,\n\nich freue mich sehr, dass du bald zu uns nach Freiburg kommen wirst! Meine Familie und ich werden dich am Flughafen abholen. Freiburg ist eine Stadt, die im Südwesten von Deutschland liegt, ganz in der Nähe von Frankreich und der Schweiz. Es gibt hier viele alte Häuser und einen berühmten Dom, den fast alle Touristen besuchen.\n\nDu hast mich gefragt, wie das Wetter im Oktober bei uns ist. Also, im Herbst wird es hier ziemlich kühl, und es regnet oft. Manchmal scheint aber auch die Sonne, und dann werden die Blätter der Bäume rot und gelb – das ist wirklich schön! Nimm bitte eine Jacke mit, die dich warm hält.\n\nIch habe auch tolle Neuigkeiten: Wir werden zusammen mit meiner Klasse einen Ausflug in den Schwarzwald machen. Der Schwarzwald ist ein großer Wald, in dem es viele Wanderwege gibt. Meine Lehrerin, die diesen Ausflug organisiert, sagt, dass wir dort auch eine Kuckucksuhr-Fabrik besuchen werden. Ich bin schon sehr gespannt darauf!\n\nÜbrigens, was isst du gern? Meine Mutter, die sehr gern kocht, möchte für dich ein typisches Gericht aus unserer Region vorbereiten. Schreib mir bald zurück und erzähl mir mehr über dein Leben in Yaoundé.\n\nBis bald!\nDeine Lena",
+      "auteur": "Équipe Liteschreib IKII",
+      "source": "Contenu original",
+      "statutDroits": "texte_original"
+    },
+    {
+      "id": "EXT-PLUSEXT-L7-001",
+      "uniteId": "U-PLUS-EXT-L7",
+      "texteAllemand": "In den letzten Jahren hat sich Yaoundé stark verändert. Viele neue Straßen werden gebaut, und neue Wohnhäuser werden jedes Jahr errichtet. Als ich noch klein war, wurde die Hauptstraße meines Viertels noch nicht asphaltiert – sie wurde erst vor drei Jahren asphaltiert.\n\nMeine Großmutter erzählt oft: „Früher wurden die Häuser aus Lehm gebaut, heute werden sie aus Beton gebaut.“ Ich finde es spannend, wie sich unsere Stadt entwickelt. Wenn ich genug Geld hätte, würde ich ein Projekt für mehr Grünflächen in der Stadt starten. Viele Bäume wurden in den letzten Jahren leider gefällt, um Platz für neue Gebäude zu machen.\n\nMein Lehrer meint, dass eine Stadt nachhaltig geplant werden sollte. Wenn die Regierung mehr in öffentliche Verkehrsmittel investieren würde, gäbe es weniger Staus. Ich würde mir wünschen, dass mehr Fahrradwege gebaut werden.\n\nTrotzdem bin ich stolz auf meine Stadt. Sie wird von Jahr zu Jahr moderner, und ich bin gespannt, wie sie in zehn Jahren aussehen wird.",
       "auteur": "Équipe Liteschreib IKII",
       "source": "Contenu original",
       "statutDroits": "texte_original"
@@ -104,7 +155,28 @@
     {"id": "GL-3E-01-006", "extraitId": "EXT-3E-01-001", "motAllemand": "der Wasserfall",   "traductionFr": "la chute d'eau"},
     {"id": "GL-3E-01-007", "extraitId": "EXT-3E-01-001", "motAllemand": "beeindruckend",    "traductionFr": "impressionnant(e)"},
     {"id": "GL-3E-01-008", "extraitId": "EXT-3E-01-001", "motAllemand": "die Zukunft",      "traductionFr": "l'avenir"},
-    {"id": "GL-3E-01-009", "extraitId": "EXT-3E-01-001", "motAllemand": "unvergesslich",    "traductionFr": "inoubliable"}
+    {"id": "GL-3E-01-009", "extraitId": "EXT-3E-01-001", "motAllemand": "unvergesslich",    "traductionFr": "inoubliable"},
+
+    {"id": "GL-PLUS2-L1-001", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "die Partnerschaft", "traductionFr": "le partenariat"},
+    {"id": "GL-PLUS2-L1-002", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "die Austauschpartnerin", "traductionFr": "la correspondante d'échange"},
+    {"id": "GL-PLUS2-L1-003", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "beantragen", "traductionFr": "faire une demande de"},
+    {"id": "GL-PLUS2-L1-004", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "das Wörterbuch", "traductionFr": "le dictionnaire"},
+    {"id": "GL-PLUS2-L1-005", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "aufgeregt", "traductionFr": "excité(e), nerveux/se"},
+    {"id": "GL-PLUS2-L1-006", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "neugierig", "traductionFr": "curieux/curieuse"},
+    {"id": "GL-PLUS2-L1-007", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "die Gelegenheit", "traductionFr": "l'occasion"},
+    {"id": "GL-PLUS2-L1-008", "extraitId": "EXT-PLUS2-L1-001", "motAllemand": "riesig", "traductionFr": "énormément"},
+    {"id": "GL-PLUS2-L2-001", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "der Ausflug", "traductionFr": "l'excursion"},
+    {"id": "GL-PLUS2-L2-002", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "der Schwarzwald", "traductionFr": "la Forêt-Noire"},
+    {"id": "GL-PLUS2-L2-003", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "der Wanderweg", "traductionFr": "le chemin de randonnée"},
+    {"id": "GL-PLUS2-L2-004", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "gespannt", "traductionFr": "impatient(e) de savoir"},
+    {"id": "GL-PLUS2-L2-005", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "die Kuckucksuhr", "traductionFr": "l'horloge à coucou"},
+    {"id": "GL-PLUS2-L2-006", "extraitId": "EXT-PLUS2-L2-001", "motAllemand": "der Dom", "traductionFr": "la cathédrale"},
+    {"id": "GL-PLUSEXT-L7-001", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "sich verändern", "traductionFr": "changer, évoluer"},
+    {"id": "GL-PLUSEXT-L7-002", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "errichten", "traductionFr": "édifier, construire"},
+    {"id": "GL-PLUSEXT-L7-003", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "der Lehm", "traductionFr": "l'argile, le torchis"},
+    {"id": "GL-PLUSEXT-L7-004", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "nachhaltig", "traductionFr": "durable"},
+    {"id": "GL-PLUSEXT-L7-005", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "der Stau", "traductionFr": "l'embouteillage"},
+    {"id": "GL-PLUSEXT-L7-006", "extraitId": "EXT-PLUSEXT-L7-001", "motAllemand": "fällen", "traductionFr": "abattre (un arbre)"}
   ],
   "exercices": [
     {"id": "EX-6E-01-001", "uniteId": "U-6E-01", "type": "QCM",             "enonce": "Wie alt ist Aïcha?",                                                                                                                              "correctionAttendue": null},
@@ -123,7 +195,22 @@
     {"id": "EX-6E-01-003", "uniteId": "U-6E-01", "type": "VRAI_FAUX", "enonce": "Aïcha spielt gern Fußball mit ihren Freunden.", "correctionAttendue": "VRAI"},
     {"id": "EX-5E-01-004", "uniteId": "U-5E-01", "type": "TEXTE_A_TROUS", "enonce": "Am Wochenende ___ ich oft mit meiner Familie zur Kirche. (gehen)", "correctionAttendue": "gehe"},
     {"id": "EX-4E-01-003", "uniteId": "U-4E-01", "type": "QCM", "enonce": "Wo spielt Divine nach der Schule Fußball?", "correctionAttendue": null},
-    {"id": "EX-3E-01-004", "uniteId": "U-3E-01", "type": "VRAI_FAUX", "enonce": "Serge möchte später Arzt werden.", "correctionAttendue": "VRAI"}
+    {"id": "EX-3E-01-004", "uniteId": "U-3E-01", "type": "VRAI_FAUX", "enonce": "Serge möchte später Arzt werden.", "correctionAttendue": "VRAI"},
+
+    {"id": "EX-PLUS2-L1-001", "uniteId": "U-PLUS2-L1", "type": "QCM", "enonce": "Wie lange darf Aïcha nach Deutschland reisen?", "correctionAttendue": null},
+    {"id": "EX-PLUS2-L1-002", "uniteId": "U-PLUS2-L1", "type": "VRAI_FAUX", "enonce": "Lenas Haus ist größer als Aïchas Haus in Yaoundé.", "correctionAttendue": "FAUX"},
+    {"id": "EX-PLUS2-L1-003", "uniteId": "U-PLUS2-L1", "type": "TEXTE_A_TROUS", "enonce": "Lena ist die ___ Person, die Aïcha kennt. (freundlich)", "correctionAttendue": "freundlichste"},
+    {"id": "EX-PLUS2-L1-004", "uniteId": "U-PLUS2-L1", "type": "QCM", "enonce": "Was soll Aïcha laut ihrer Mutter mitnehmen?", "correctionAttendue": null},
+    {"id": "EX-PLUS2-L1-005", "uniteId": "U-PLUS2-L1", "type": "PRODUCTION_GUIDEE", "enonce": "Stell dir vor, du bekommst auch die Gelegenheit, ins Ausland zu reisen. Beschreibe deine Vorbereitungen und deine Gefühle. Vergleiche das Wetter oder die Kultur mit deinem Land. (Perfekt und Komparativ/Superlativ erwartet, 100-150 Wörter)", "correctionAttendue": null},
+    {"id": "EX-PLUS2-L2-001", "uniteId": "U-PLUS2-L2", "type": "QCM", "enonce": "Wo liegt Freiburg?", "correctionAttendue": null},
+    {"id": "EX-PLUS2-L2-002", "uniteId": "U-PLUS2-L2", "type": "VRAI_FAUX", "enonce": "Lenas Mutter kocht nicht gern.", "correctionAttendue": "FAUX"},
+    {"id": "EX-PLUS2-L2-003", "uniteId": "U-PLUS2-L2", "type": "TEXTE_A_TROUS", "enonce": "Wir ___ zusammen mit meiner Klasse einen Ausflug ___. (machen, Futur I)", "correctionAttendue": "werden|machen"},
+    {"id": "EX-PLUS2-L2-004", "uniteId": "U-PLUS2-L2", "type": "QCM", "enonce": "Was werden Aïcha und Lena im Schwarzwald besuchen?", "correctionAttendue": null},
+    {"id": "EX-PLUS2-L2-005", "uniteId": "U-PLUS2-L2", "type": "PRODUCTION_GUIDEE", "enonce": "Schreib eine E-Mail an eine Austauschpartnerin/einen Austauschpartner. Beschreibe deine Stadt und stelle Fragen über ihr/sein Land. Benutze mindestens zwei Relativsätze und das Futur I. (120-180 Wörter)", "correctionAttendue": null},
+    {"id": "EX-PLUSEXT-L7-001", "uniteId": "U-PLUS-EXT-L7", "type": "QCM", "enonce": "Wann wurde die Hauptstraße asphaltiert?", "correctionAttendue": null},
+    {"id": "EX-PLUSEXT-L7-002", "uniteId": "U-PLUS-EXT-L7", "type": "VRAI_FAUX", "enonce": "Der Autor/Die Autorin findet, dass zu viele Bäume gefällt wurden.", "correctionAttendue": "VRAI"},
+    {"id": "EX-PLUSEXT-L7-003", "uniteId": "U-PLUS-EXT-L7", "type": "TEXTE_A_TROUS", "enonce": "Wenn ich genug Geld ___, ___ ich ein Projekt starten. (haben)", "correctionAttendue": "hätte|würde"},
+    {"id": "EX-PLUSEXT-L7-004", "uniteId": "U-PLUS-EXT-L7", "type": "PRODUCTION_GUIDEE", "enonce": "Was würdest du in deiner Stadt verändern, wenn du Bürgermeister/Bürgermeisterin wärest? Benutze den Konjunktiv II und mindestens zwei Passivsätze. (150-200 Wörter)", "correctionAttendue": null}
   ],
   "options": [
     {"id": "OPT-6E-01-001-A", "exerciceId": "EX-6E-01-001", "texteOption": "zehn Jahre alt",     "estCorrecte": false},
@@ -139,6 +226,22 @@
     {"id": "OPT-3E-01-001-C", "exerciceId": "EX-3E-01-001", "texteOption": "Limbé",              "estCorrecte": false},
     {"id": "OPT-4E-01-003-A", "exerciceId": "EX-4E-01-003", "texteOption": "zu Hause", "estCorrecte": false},
     {"id": "OPT-4E-01-003-B", "exerciceId": "EX-4E-01-003", "texteOption": "auf dem Marktplatz", "estCorrecte": true},
-    {"id": "OPT-4E-01-003-C", "exerciceId": "EX-4E-01-003", "texteOption": "in der Schule", "estCorrecte": false}
+    {"id": "OPT-4E-01-003-C", "exerciceId": "EX-4E-01-003", "texteOption": "in der Schule", "estCorrecte": false},
+
+    {"id": "OPT-PLUS2-L1-001-A", "exerciceId": "EX-PLUS2-L1-001", "texteOption": "eine Woche", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L1-001-B", "exerciceId": "EX-PLUS2-L1-001", "texteOption": "drei Wochen", "estCorrecte": true},
+    {"id": "OPT-PLUS2-L1-001-C", "exerciceId": "EX-PLUS2-L1-001", "texteOption": "drei Monate", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L1-004-A", "exerciceId": "EX-PLUS2-L1-004", "texteOption": "einen Regenschirm", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L1-004-B", "exerciceId": "EX-PLUS2-L1-004", "texteOption": "einen warmen Pullover", "estCorrecte": true},
+    {"id": "OPT-PLUS2-L1-004-C", "exerciceId": "EX-PLUS2-L1-004", "texteOption": "eine Sonnenbrille", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L2-001-A", "exerciceId": "EX-PLUS2-L2-001", "texteOption": "im Nordosten Deutschlands", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L2-001-B", "exerciceId": "EX-PLUS2-L2-001", "texteOption": "im Südwesten Deutschlands", "estCorrecte": true},
+    {"id": "OPT-PLUS2-L2-001-C", "exerciceId": "EX-PLUS2-L2-001", "texteOption": "in der Schweiz", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L2-004-A", "exerciceId": "EX-PLUS2-L2-004", "texteOption": "eine Kuckucksuhr-Fabrik", "estCorrecte": true},
+    {"id": "OPT-PLUS2-L2-004-B", "exerciceId": "EX-PLUS2-L2-004", "texteOption": "ein Museum", "estCorrecte": false},
+    {"id": "OPT-PLUS2-L2-004-C", "exerciceId": "EX-PLUS2-L2-004", "texteOption": "einen Zoo", "estCorrecte": false},
+    {"id": "OPT-PLUSEXT-L7-001-A", "exerciceId": "EX-PLUSEXT-L7-001", "texteOption": "vor drei Jahren", "estCorrecte": true},
+    {"id": "OPT-PLUSEXT-L7-001-B", "exerciceId": "EX-PLUSEXT-L7-001", "texteOption": "letztes Jahr", "estCorrecte": false},
+    {"id": "OPT-PLUSEXT-L7-001-C", "exerciceId": "EX-PLUSEXT-L7-001", "texteOption": "vor zehn Jahren", "estCorrecte": false}
   ]
 }

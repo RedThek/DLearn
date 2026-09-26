@@ -165,6 +165,16 @@ Ces deux unités avaient été rédigées avant le resserrement du MVP au collè
 | U-2NDE-01 | 2nde | B1 | Rédigé (brouillon) — hors MVP | Texte original |
 | U-TLE-01 | Terminale | B1+/B2 | Rédigé (brouillon) — hors MVP | Texte original |
 
+### 3.4 Lot 1 — Contenu Lycée (*Ihr und Wir plus 2*)
+
+Suite à l'analyse de la source primaire *Ihr und Wir plus 2* (Goethe-Institut / Hueber Verlag), trois unités supplémentaires ont été intégrées (lot 1, niveau lycée / B1 découverte à consolidation) :
+
+| ID Unité | Niveau scolaire (hypothèse) | Niveau GeR | Chapitre *Ihr und Wir plus 2* | Statut contenu | Statut des droits |
+|---|---|---|---|---|---|
+| **U-PLUS2-L1** | 2nde ou 1ère *(à confirmer)* | B1 découverte | Lektion 1 — Einladung nach Deutschland | Rédigé (brouillon), aligné sur source réelle | Texte original |
+| **U-PLUS2-L2** | 2nde ou 1ère *(à confirmer)* | B1 découverte | Lektion 2 — Willkommen in Deutschland! | Rédigé (brouillon), aligné sur source réelle | Texte original |
+| **U-PLUS-EXT-L7** | 1ère ou Terminale *(spéculatif)* | B1 consolidation | Extrapolation post-Lektion 7 | Rédigé (brouillon), spéculatif | Texte original |
+
 <details>
 <summary>U-2NDE-01 — « Warum ist die Natur wichtig? » (2nde, B1) — contenu complet</summary>
 
@@ -232,6 +242,21 @@ unser eigenes Verhalten nachzudenken.
 - **Type d'exercices** : QCM / texte à trous / vrai-faux / production écrite guidée / libre
 - **Statut du contenu** : `À rédiger` / `Rédigé (brouillon)` / `Relu` / `Validé`
 - **Statut des droits** : `À vérifier` / `Domaine public` / `Autorisation obtenue` / `Texte original` — conformément à l'approche hybride tranchée en **ADR-006**
+
+### 3.5 Types de contenu à prévoir (ADR-020, horizons H1/H2)
+
+La cartographie couvre aujourd'hui un seul type de contenu : l'**unité de lecture** (extrait, glossaire, exercices). La vision produit (`18-…`) en prévoit d'autres. Chacun suit les mêmes règles : statut des droits (ADR-006, ADR-025), relecture humaine, entrée dans le registre `19-…` s'il comporte un élément tiers.
+
+| Type de contenu | Horizon | Gabarit | Validation | Droits |
+|---|---|---|---|---|
+| Unité de lecture | H1 (existant) | `16-gabarit-auteur-exercice.md` | Relecture native (A0) | Texte original / domaine public |
+| Fiche-méthode de rédaction | H1 | À créer (extension de `16-…`) | Relecture native + encadrant | Texte original |
+| Défi d'écriture | H1 | À créer (extension de `16-…`) | Relecture native | Texte original |
+| Entrée de bibliothèque / inspiration | H2 | À créer | Relecture native + vérification des droits | Domaine public à vérifier par édition |
+| Questionnaire de club de lecture | H2 | À créer | Relecture native | Texte original |
+| Pack de dictionnaire | H2 | Voir ADR-028 (à venir) | Contrôle de licence | Registre `19-…` |
+
+> **Règle de capacité** (ADR-020) : le seuil de 5 unités validées par niveau (section 5) reste inchangé et prioritaire. Un nouveau type de contenu n'est produit qu'avec sa capacité de validation humaine identifiée, afin de ne pas aggraver R-07.
 
 ## 4. Processus de validation d'une unité
 

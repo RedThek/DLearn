@@ -38,6 +38,7 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 | FR-03 | Un élève peut consulter et modifier ses informations de profil (avatar, préférences d'affichage) | S | Modifications persistées en base Room |
 | FR-04 | Plusieurs profils élève peuvent coexister sur un même appareil partagé (contexte BYOD limité) | C | Sélecteur de profil au lancement si > 1 profil |
 | FR-33 *(ADR-009)* | L'application est unique (un seul APK) et propose un sélecteur de rôle/profil (Élève / Enseignant) au lancement, avec bascule possible entre profils sur un même appareil | M | Écran de sélection de rôle affiché si plusieurs profils existent ; navigation racine distincte selon le rôle choisi |
+| FR-47 *(ADR-026, ADR-027)* | L'enseignant peut transmettre à un élève son compte (identifiant et mot de passe initial) par un fichier adressé à cet élève ; l'élève se connecte ensuite hors ligne sur son propre appareil | S | Bundle `PROVISION` importé sur l'appareil de l'élève ; connexion réussie sans réseau ; aucun mot de passe en clair dans le fichier |
 
 ## 6. Module — Accueil
 
@@ -94,9 +95,28 @@ L'enseignant dispose d'un dashboard distinct (device séparé ou profil séparé
 
 | ID | Exigence | Priorité | Critère d'acceptation |
 |---|---|---|---|
-| FR-29 *(ADR-004)* | Les données élève/enseignant peuvent être synchronisées sans internet, via export/import de fichier utilisant les mécanismes de partage natifs de l'appareil (Nearby Share, Bluetooth, câble, ou carte SD en repli) | S | Transfert réussi entre deux appareils sans réseau mobile/Wi-Fi internet, avec repli fonctionnel si Nearby Share indisponible |
+| FR-29 *(ADR-004, révisé par ADR-027)* | Les données élève/enseignant peuvent être synchronisées **dans les deux sens** sans internet, via des fichiers (bundles) transmis par les mécanismes de partage natifs de l'appareil (Nearby Share, Bluetooth, câble, ou carte SD en repli) | S | Transfert réussi entre deux appareils sans réseau ; import atomique avec résumé ; un fichier corrompu ou déjà importé est refusé avec un message explicite ; format conforme à `20-…` |
 | FR-30 | Le contenu pédagogique (textes, exercices) est pré-chargé à l'installation, sans téléchargement obligatoire | M | L'app fonctionne dès le premier lancement, sans connexion |
-| FR-31 | Les mises à jour de contenu peuvent être appliquées via un fichier local (ex. package de contenu versionné) | C | Import d'un package met à jour le contenu sans écraser la progression élève |
+| FR-31 *(révisé par ADR-028)* | Les mises à jour de contenu et les données de référence (dictionnaire) sont installées via des **packs `.ikiipack`** transférés par fichier, sans écraser la progression de l'élève | **S** | Installation, mise à jour et retrait d'un pack sans perte de progression ; installation idempotente ; contenus retirés masqués et non supprimés |
+
+## 11-bis. Module — Extension littéraire (Bloc F, horizons H1/H2 — voir `18-vision-produit-et-horizons.md`)
+
+Ces exigences sont des **entrées de backlog à spécifier** : leurs critères d'acceptation seront affinés à l'ouverture de chaque mission du Bloc F.
+
+| ID | Exigence | Priorité | Horizon | Critère d'acceptation |
+|---|---|---|---|---|
+| FR-35 | L'élève peut consulter des fiches-méthode de rédaction par type de production (dialogue, description, lettre, e-mail, publicité, discours, argumentation), calibrées A1–A2 | S | H1 | Fiches consultables hors ligne, rattachées à un niveau GeR |
+| FR-36 | L'élève dispose d'un outil de structuration « idée – argument – exemple » avant de rédiger | S | H1 | Trois champs guidés ; le contenu est réutilisable dans l'éditeur d'écriture |
+| FR-37 | L'élève peut relever des défis d'écriture courts (thème, longueur indicative, minuteur optionnel) | C | H1 | Production rattachée au défi ; longueur non bloquante, adaptée au niveau (`16-…`, section 5) |
+| FR-38 | L'enseignant peut commenter une production, et le commentaire revient à l'élève après synchronisation | S | H1 (fin) | Commentaire visible côté élève après import ; dépend d'ADR-027 |
+| FR-39 | L'élève et l'enseignant peuvent consulter l'historique des versions d'une production (brouillon, soumis, révisé) | C | H1 (fin) | Versions horodatées, non modifiables |
+| FR-40 | L'enseignant peut générer un recueil PDF de classe à partir de productions sélectionnées, avec le consentement de l'élève | C | H1 (fin) | PDF généré localement ; pseudonyme possible ; aucune donnée transmise |
+| FR-41 | Le système affiche des points, niveaux et badges **dérivés** de l'activité réelle, et peut produire un certificat de participation PDF | C | H2 | Aucun compteur persisté ; classement de classe optionnel et désactivé par défaut (ADR-023) |
+| FR-42 | L'élève dispose d'un dictionnaire hors ligne allemand ↔ français, puis anglais et espagnol | C | H2 | Pack optionnel ; recherche hors ligne ; licences conformes à ADR-025 |
+| FR-43 | L'élève dispose d'aides à l'écriture à règles hors ligne (orthographe, synonymes, règles grammaticales élémentaires du niveau) | C | H2 | Niveau N0 d'ADR-024 ; aucune donnée transmise |
+| FR-44 | L'enseignant peut animer un club de lecture de classe (questions guidées, défis de lecture mensuels, quiz) | C | H2 | Contenus distribués par l'enseignant ; aucun forum |
+| FR-45 | L'enseignant peut organiser un concours de classe ou d'établissement (ouverture, dépôt par export, jury, résultats diffusés par fichier) | C | H2 | Fonctionne sans connexion ; annonces via FR-08 |
+| FR-46 | Publication en ligne, forum, commentaires publics, échanges internationaux, portail éditeurs, soumission de manuscrits, classes virtuelles, IA cloud pour élèves | W | H3 | Hors périmètre de la thèse (ADR-020) |
 
 ## 12. Exigences explicitement hors périmètre (Phase 3 — IA/NLP, différées)
 

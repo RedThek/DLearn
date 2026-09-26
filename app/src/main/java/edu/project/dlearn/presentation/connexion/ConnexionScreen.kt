@@ -1,32 +1,13 @@
 package edu.project.dlearn.presentation.connexion
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CloudDone
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,8 +30,6 @@ import edu.project.dlearn.domain.model.Role
 fun ConnexionScreen(
     onConnexionReussie: (Role) -> Unit,
     onNaviguerVersSelectionProfil: () -> Unit,
-    onDemanderCompte: () -> Unit = {},
-    onMotDePasseOublie: () -> Unit = {},
     viewModel: ConnexionViewModel = hiltViewModel()
 ) {
     val etat by viewModel.uiState.collectAsState()
@@ -124,7 +103,7 @@ fun ConnexionScreen(
 
                 Spacer(Modifier.height(28.dp))
 
-                // --- Section profils existants (visible si > 0 profils sur l'appareil) ---
+                // --- Section profils existants ---
                 if (etat.profilsExistants.isNotEmpty()) {
                     HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                     Text(
@@ -135,7 +114,6 @@ fun ConnexionScreen(
                     Spacer(Modifier.height(8.dp))
                     etat.profilsExistants.take(3).forEach { profil ->
                         OutlinedButton(
-                            // CORRECTION B-13 : naviguer vers SelectionProfilScreen
                             onClick = viewModel::onVoirProfilsExistants,
                             modifier = Modifier.fillMaxWidth().height(48.dp)
                         ) {
@@ -194,13 +172,13 @@ fun ConnexionScreen(
                     modifier = Modifier.testTag("champ_mot_de_passe")
                 )
 
-                TextButton(
-                    onClick = onMotDePasseOublie,
-                    modifier = Modifier.align(Alignment.End),
-                    enabled = !etat.enChargement
-                ) {
-                    Text("Mot de passe oublié ?")
-                }
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = "Demande un nouveau mot de passe à ton enseignant.",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.align(Alignment.End)
+                )
 
                 if (etat.messageErreur != null) {
                     Text(

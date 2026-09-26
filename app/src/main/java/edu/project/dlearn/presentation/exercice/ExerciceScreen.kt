@@ -1,5 +1,13 @@
 package edu.project.dlearn.presentation.exercice
 
+import android.os.Build
+import android.view.HapticFeedbackConstants
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,6 +20,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -57,7 +66,25 @@ private fun ContenuExercice(
     onValider: () -> Unit,
     onSuivant: () -> Unit
 ) {
-    val exercice = etat.exerciceActuel
+    val view = LocalView.current
+    LaunchedEffect(etat.resultat) {
+        val res = etat.resultat
+        if (res != null) {
+            if (res) {
+                if (Build.VERSION.SDK_INT >= 30) {
+                    view.performHapticFeedback(HapticFeedbackConstants.CONFIRM)
+                } else {
+                    view.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= 30) {
+                    view.performHapticFeedback(HapticFeedbackConstants.REJECT)
+                } else {
+                    view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
+                }
+            }
+        }
+    }
 
     Column(Modifier.fillMaxSize().padding(16.dp)) {
         Text(
@@ -68,21 +95,29 @@ private fun ContenuExercice(
         LinearProgressIndicator(progress = { etat.progression }, modifier = Modifier.fillMaxWidth())
         Spacer(Modifier.height(24.dp))
 
-        Text(exercice.enonce, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
-        Spacer(Modifier.height(20.dp))
+        AnimatedContent(
+            targetState = etat.indexActuel,
+            transitionSpec = { fadeIn(tween(220)) togetherWith fadeOut(tween(220)) },
+            modifier = Modifier.weight(1f),
+            label = "questionAnimation"
+        ) { targetIndex ->
+            val exercice = etat.exercices.getOrNull(targetIndex) ?: etat.exerciceActuel
+            Column(Modifier.fillMaxWidth()) {
+                Text(exercice.enonce, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+                Spacer(Modifier.height(20.dp))
 
-        when (exercice.type) {
-            TypeExercice.QCM -> QcmOptions(exercice, etat.reponseSelectionnee, etat.resultat, onSelectionner)
-            TypeExercice.VRAI_FAUX -> VraiFauxOptions(etat.reponseSelectionnee, etat.resultat, onSelectionner)
-            TypeExercice.TEXTE_A_TROUS -> TexteATrousChamp(etat.reponseSelectionnee, etat.resultat, onSelectionner)
-            TypeExercice.PRODUCTION_GUIDEE -> ProductionGuideeConsigne()
+                when (exercice.type) {
+                    TypeExercice.QCM -> QcmOptions(exercice, etat.reponseSelectionnee, etat.resultat, onSelectionner)
+                    TypeExercice.VRAI_FAUX -> VraiFauxOptions(etat.reponseSelectionnee, etat.resultat, onSelectionner)
+                    TypeExercice.TEXTE_A_TROUS -> TexteATrousChamp(etat.reponseSelectionnee, etat.resultat, onSelectionner)
+                    TypeExercice.PRODUCTION_GUIDEE -> ProductionGuideeConsigne()
+                }
+            }
         }
-
-        Spacer(Modifier.weight(1f))
 
         if (etat.resultat != null) {
             Text(
-                text = if (etat.resultat) "✓ Bonne réponse !" else "✗ Pas tout à fait — continue !",
+                text = if (etat.resultat) "Bonne réponse !" else "Pas tout à fait — continue !",
                 color = if (etat.resultat) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
@@ -110,26 +145,35 @@ private fun QcmOptions(
     resultat: Boolean?,
     onSelectionner: (String) -> Unit
 ) {
-    Column {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         exercice.options.forEach { option ->
             val estSelectionnee = selection == option.id
-            val couleur = when {
+            val borderColor = when {
                 resultat != null && option.estCorrecte -> MaterialTheme.colorScheme.secondary
                 resultat != null && estSelectionnee && !option.estCorrecte -> MaterialTheme.colorScheme.error
                 estSelectionnee -> MaterialTheme.colorScheme.primary
-                else -> MaterialTheme.colorScheme.outline
+                else -> MaterialTheme.colorScheme.outlineVariant
             }
+            val backgroundColor = when {
+                resultat != null && option.estCorrecte -> MaterialTheme.colorScheme.secondary.copy(alpha = 0.12f)
+                resultat != null && estSelectionnee && !option.estCorrecte -> MaterialTheme.colorScheme.error.copy(alpha = 0.12f)
+                estSelectionnee -> MaterialTheme.colorScheme.primary.copy(alpha = 0.08f)
+                else -> Color.Transparent
+            }
+            val borderWidth = if (estSelectionnee || (resultat != null && (option.estCorrecte || estSelectionnee))) 2.dp else 1.dp
+
+            val animatedBorderColor by animateColorAsState(targetValue = borderColor, animationSpec = tween(180), label = "border")
+            val animatedBgColor by animateColorAsState(targetValue = backgroundColor, animationSpec = tween(180), label = "bg")
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-                    .border(1.dp, couleur, RoundedCornerShape(12.dp))
-                    .background(
-                        if (estSelectionnee) couleur.copy(alpha = 0.1f) else Color.Transparent,
-                        RoundedCornerShape(12.dp)
-                    )
+                    .heightIn(min = 52.dp)
+                    .border(borderWidth, animatedBorderColor, RoundedCornerShape(12.dp))
+                    .background(animatedBgColor, RoundedCornerShape(12.dp))
                     .clickable(enabled = resultat == null) { onSelectionner(option.id) }
-                    .padding(16.dp)
+                    .padding(horizontal = 16.dp, vertical = 14.dp),
+                contentAlignment = Alignment.CenterStart
             ) {
                 Text(option.texte, style = MaterialTheme.typography.bodyLarge)
             }
@@ -142,16 +186,24 @@ private fun VraiFauxOptions(selection: String?, resultat: Boolean?, onSelectionn
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         listOf("VRAI" to "Vrai", "FAUX" to "Faux").forEach { (valeur, libelle) ->
             val estSelectionnee = selection == valeur
-            OutlinedButton(
-                onClick = { onSelectionner(valeur) },
-                enabled = resultat == null,
-                modifier = Modifier.weight(1f).height(52.dp),
-                colors = if (estSelectionnee) {
-                    ButtonDefaults.outlinedButtonColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                } else ButtonDefaults.outlinedButtonColors()
-            ) { Text(libelle) }
+            val borderColor = if (estSelectionnee) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
+            val backgroundColor = if (estSelectionnee) MaterialTheme.colorScheme.primary.copy(alpha = 0.08f) else Color.Transparent
+            val borderWidth = if (estSelectionnee) 2.dp else 1.dp
+
+            val animatedBorderColor by animateColorAsState(targetValue = borderColor, animationSpec = tween(180), label = "vfBorder")
+            val animatedBgColor by animateColorAsState(targetValue = backgroundColor, animationSpec = tween(180), label = "vfBg")
+
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(52.dp)
+                    .border(borderWidth, animatedBorderColor, RoundedCornerShape(12.dp))
+                    .background(animatedBgColor, RoundedCornerShape(12.dp))
+                    .clickable(enabled = resultat == null) { onSelectionner(valeur) },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(libelle, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
+            }
         }
     }
 }

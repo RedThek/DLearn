@@ -174,3 +174,25 @@ Prévue pour le Sprint 7 (ADR-003).
 ## 5. Points ouverts restants
 
 - Format exact de sérialisation de `etatAlgorithme` (Répétition espacée, Sprint 7).
+
+## 6. Évolutions de schéma décidées, non encore implémentées (ADR-026 à ADR-028)
+
+Chaque évolution fait l'objet d'une migration explicite et testée (ADR-017). Les numéros de version Room sont attribués à l'implémentation.
+
+| Élément | Changement | ADR | Mission |
+|---|---|---|---|
+| `utilisateur.uid` | Colonne texte non nulle (UUID v4), index unique ; renseignée par la migration pour les lignes existantes | 026 | F1a |
+| `utilisateur.identifiant` | Index unique | 026 | F1a |
+| `assignation.cibleId` (cible `ELEVE`) | Contient le `uid` de l'élève ; conversion des lignes existantes | 026 | F1a |
+| DataStore : `instanceId` | UUID aléatoire d'installation (hors Room) | 026 | F1a |
+| `progression.rev`, `production_ecrite.rev` | Entier non nul, défaut 1, incrémenté à chaque écriture par le propriétaire | 027 | F1b |
+| `utilisateur` : hash étiqueté | Colonnes `hashAlg`, `hashSalt`, `hashIterations` ; `motDePasseHash` conservé ; `SHA-256-LEGACY` rehashé à la connexion | 027 | F1b |
+| `sync_log.bundleId` | Colonne texte facultative, indexée, pour détecter un rejeu | 027 | F1b |
+| `commentaire` | Nouvelle table (`id`, `enseignantUid`, `studentUid`, `uniteId`, `productionRev`, `texte`, `dateCommentaire`) | 027 | F3 |
+| `unite_apprentissage`, `extrait_litteraire`, `glossaire_entree`, `exercice`, `option_exercice` | Colonnes `revision` (défaut 1) et `retire` (défaut 0) | 028 | F1c |
+| `pack_installe` | Nouvelle table (`packId`, `packVersion`, `checksum`, `dateInstallation`) | 028 | F1c |
+| `reference.db` (dictionnaire) | Base SQLite séparée, en lecture seule, par pack de type `reference` ; **jamais migrée avec la base principale** | 028 | F5 |
+
+Points de vigilance :
+- `progression` : l'`id` n'est plus une clé d'échange ; la clé naturelle est (`uid` de l'élève, `uniteId`).
+- `sync_log` reste local ; il n'est jamais transmis.

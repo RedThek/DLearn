@@ -31,13 +31,27 @@ private val LightColors = lightColorScheme(
     onSurface = OnSurface,
     surfaceVariant = SurfaceVariant,
     onSurfaceVariant = OnSurfaceVariant,
-    outline = Outline
+    outline = Outline,
+    outlineVariant = OutlineVariant
 )
 
 private val DarkColors = darkColorScheme(
     primary = Primary80,
     onPrimary = OnPrimaryContainer,
+    primaryContainer = Primary40,
+    onPrimaryContainer = OnPrimary,
     secondary = Secondary80,
+    onSecondary = OnSecondaryContainer,
+    secondaryContainer = Secondary40,
+    onSecondaryContainer = OnSecondary,
+    tertiary = Tertiary80,
+    onTertiary = OnTertiaryContainer,
+    tertiaryContainer = Tertiary40,
+    onTertiaryContainer = OnTertiary,
+    error = ErrorRed,
+    onError = Color.White,
+    errorContainer = Error40,
+    onErrorContainer = Color.White,
     background = BackgroundDark,
     onBackground = OnSurfaceDark,
     surface = SurfaceDark,
@@ -45,15 +59,13 @@ private val DarkColors = darkColorScheme(
     surfaceVariant = SurfaceVariantDark,
     onSurfaceVariant = OnSurfaceVariantDark,
     outline = BorderDark,
-    error = ErrorRed,
-    onError = Color.White
+    outlineVariant = BorderDark
 )
 
 @Composable
 fun LiteschreibTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Désactivé par défaut pour garder une identité visuelle fidèle aux maquettes Figma
-    // plutôt que la palette dynamique Material You d'Android 12+.
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {

@@ -1,14 +1,15 @@
 package edu.project.dlearn.presentation.ecriture
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -58,19 +59,31 @@ fun EcritureScreen(
 
         // Consigne
         val consigne = etat.unite?.objectifsApprentissage ?: "Rédigez un texte en allemand."
+        var consigneExpanded by remember { mutableStateOf(false) }
         Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .clickable { consigneExpanded = !consigneExpanded },
             color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
             shape = RoundedCornerShape(8.dp)
         ) {
-            Text(
-                text     = "✏ $consigne",
-                style    = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(12.dp),
-                color    = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            Column(Modifier.padding(12.dp)) {
+                Text(
+                    text = "Consigne",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    text = consigne,
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = if (consigneExpanded) Int.MAX_VALUE else 2,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
 
         Spacer(Modifier.height(12.dp))
@@ -99,11 +112,11 @@ fun EcritureScreen(
                 .padding(end = 16.dp, top = 4.dp)
         )
 
-        // Clavier allemand (ADR-011 / FR-34)
+        // Clavier allemand
         ClavierAllemand(onCaractereTap = viewModel::onInserterCaractere)
 
-        // Auto-évaluation expandable (FR-17)
-        if (etat.afficherAutoEvaluation) {
+        // Auto-évaluation expandable
+        AnimatedVisibility(visible = etat.afficherAutoEvaluation) {
             GrilleAutoEvaluation(
                 ae       = etat.autoEvaluation,
                 onChange = viewModel::onAutoEvaluationChange
@@ -135,8 +148,10 @@ fun EcritureScreen(
 
         if (etat.soumis) {
             Text(
-                text     = "✓ Soumis à l'enseignant",
+                text     = "Soumis à l'enseignant",
                 color    = MaterialTheme.colorScheme.secondary,
+                style    = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
                     .padding(bottom = 8.dp)

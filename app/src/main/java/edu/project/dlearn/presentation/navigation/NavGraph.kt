@@ -56,7 +56,11 @@ fun LiteschreibApp() {
 
     NavHost(
         navController    = navController,
-        startDestination = destinationInitiale!!
+        startDestination = destinationInitiale!!,
+        enterTransition = { LiteschreibTransitions.enterFade },
+        exitTransition = { LiteschreibTransitions.exitFade },
+        popEnterTransition = { LiteschreibTransitions.enterFade },
+        popExitTransition = { LiteschreibTransitions.exitFade }
     ) {
         composable(Route.CONNEXION) {
             ConnexionScreen(
