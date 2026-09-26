@@ -1,24 +1,23 @@
 package edu.project.dlearn.presentation.suivi
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.filled.TrendingUp
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SuiviScreen(
     onCommencerApprentissage: () -> Unit = {},
@@ -26,23 +25,28 @@ fun SuiviScreen(
 ) {
     val stats by viewModel.stats.collectAsState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        "Mon suivi",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+        ) {
+            Text(
+                "Mon suivi",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold
             )
         }
-    ) { padding ->
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .weight(1f),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
@@ -85,30 +89,6 @@ fun SuiviScreen(
                             icon = Icons.Default.TrendingUp,
                             modifier = Modifier.weight(1f)
                         )
-                        // TODO Sprint 4 (FR-23) : nécessite un suivi de durée de session, non implémenté — voir anomalie AN-F3-01
-                        StatItem(
-                            value = "—",
-                            label = "Temps",
-                            icon = Icons.Default.Timeline,
-                            modifier = Modifier.weight(1f)
-                        )
-                    }
-                }
-
-                // Filtre temporel
-                item {
-                    val options = listOf("7 jours", "30 jours", "Tout")
-                    SingleChoiceSegmentedButtonRow(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        options.forEachIndexed { index, label ->
-                            SegmentedButton(
-                                shape = SegmentedButtonDefaults.itemShape(index = index, count = options.size),
-                                onClick = { /* TODO: Filtrer dans le ViewModel */ },
-                                selected = index == 0,
-                                label = { Text(label, style = MaterialTheme.typography.labelMedium) }
-                            )
-                        }
                     }
                 }
 
@@ -137,16 +117,6 @@ fun SuiviScreen(
                     EmptyStateCard(
                         title = "Historique bientôt disponible",
                         message = "Le détail de tes dernières activités sera affiché ici dans une prochaine mise à jour."
-                    )
-                }
-
-                // Message d'encouragement
-                item {
-                    EmptyStateCard(
-                        title = "Continue comme ça !",
-                        message = "Chaque exercice terminé te rapproche de ton objectif de niveau.",
-                        actionLabel = "Lancer un défi",
-                        onActionClick = { }
                     )
                 }
             }

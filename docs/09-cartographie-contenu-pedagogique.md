@@ -165,6 +165,16 @@ Ces deux unités avaient été rédigées avant le resserrement du MVP au collè
 | U-2NDE-01 | 2nde | B1 | Rédigé (brouillon) — hors MVP | Texte original |
 | U-TLE-01 | Terminale | B1+/B2 | Rédigé (brouillon) — hors MVP | Texte original |
 
+### 3.4 Lot 1 — Contenu Lycée (*Ihr und Wir plus 2*)
+
+Suite à l'analyse de la source primaire *Ihr und Wir plus 2* (Goethe-Institut / Hueber Verlag), trois unités supplémentaires ont été intégrées (lot 1, niveau lycée / B1 découverte à consolidation) :
+
+| ID Unité | Niveau scolaire (hypothèse) | Niveau GeR | Chapitre *Ihr und Wir plus 2* | Statut contenu | Statut des droits |
+|---|---|---|---|---|---|
+| **U-PLUS2-L1** | 2nde ou 1ère *(à confirmer)* | B1 découverte | Lektion 1 — Einladung nach Deutschland | Rédigé (brouillon), aligné sur source réelle | Texte original |
+| **U-PLUS2-L2** | 2nde ou 1ère *(à confirmer)* | B1 découverte | Lektion 2 — Willkommen in Deutschland! | Rédigé (brouillon), aligné sur source réelle | Texte original |
+| **U-PLUS-EXT-L7** | 1ère ou Terminale *(spéculatif)* | B1 consolidation | Extrapolation post-Lektion 7 | Rédigé (brouillon), spéculatif | Texte original |
+
 <details>
 <summary>U-2NDE-01 — « Warum ist die Natur wichtig? » (2nde, B1) — contenu complet</summary>
 

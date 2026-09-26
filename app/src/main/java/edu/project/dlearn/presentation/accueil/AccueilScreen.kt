@@ -1,7 +1,9 @@
 package edu.project.dlearn.presentation.accueil
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.MenuBook
 import androidx.compose.material.icons.filled.AutoAwesome
@@ -15,13 +17,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.core.components.*
 
-import androidx.compose.foundation.lazy.items
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccueilScreen(
     onOuvrirLecture: () -> Unit = {},
@@ -29,47 +29,39 @@ fun AccueilScreen(
 ) {
     val etat by viewModel.uiState.collectAsState()
 
-    Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(12.dp),
-                        modifier = Modifier.padding(horizontal = 16.dp)
-                    ) {
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = "Guten Tag,",
-                                style = MaterialTheme.typography.labelMedium,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
-                            Text(
-                                text = etat.prenom,
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        InitialsAvatar(etat.prenom, taille = 40.dp)
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = etat.prenom,
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
                 )
-            )
+            }
+            InitialsAvatar(etat.prenom, taille = 40.dp)
         }
-    ) { padding ->
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .weight(1f),
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
             // Hero Card
             item {
                 HeroCard(
-                    prenom = etat.prenom,
+                    lectureEnCours = etat.lectureEnCours,
                     progression = etat.progressionGlobale,
                     onContinuerClick = onOuvrirLecture
                 )
@@ -125,14 +117,14 @@ fun AccueilScreen(
                 item {
                     EmptyStateCard(
                         title = "Aucune activité",
-                        message = "Ton parcours commence ici. Lance ta première activité.",
+                        message = "Ton parcours commence ici. Lance ta première leçon.",
                         actionLabel = "Commencer",
                         onActionClick = onOuvrirLecture
                     )
                 }
             }
 
-            // Assigné par l'enseignant (Mission B1, correctif AN-B3-01)
+            // Assigné par l'enseignant
             if (etat.assignations.isNotEmpty()) {
                 item {
                     DlearnSectionHeader(
@@ -189,10 +181,14 @@ fun AccueilScreen(
 
 @Composable
 private fun HeroCard(
-    prenom: String,
+    lectureEnCours: LectureEnCours?,
     progression: Float,
     onContinuerClick: () -> Unit
 ) {
+    val titreLecture = lectureEnCours?.titre
+    val subtitleText = titreLecture ?: "Lance ta première leçon."
+    val buttonText = if (titreLecture != null) "Continuer · $titreLecture" else "Commencer"
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -206,15 +202,17 @@ private fun HeroCard(
         ) {
             Column {
                 Text(
-                    text = "Bonjour, $prenom !",
+                    text = "Prêt pour 10 minutes d'allemand ?",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Text(
-                    text = "Prêt pour 10 minutes d'allemand ?",
+                    text = subtitleText,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
             }
 
@@ -245,7 +243,11 @@ private fun HeroCard(
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text("Continuer")
+                Text(
+                    text = buttonText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
         }
     }

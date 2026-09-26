@@ -7,9 +7,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 // Police système (ADR-014) : FontFamily.Default retenu pour le MVP.
-// Une police personnalisée (ex: "Noto Sans") peut être ajoutée dans res/font/
-// lors d'un sprint dédié si le retour terrain l'exige.
 val LiteschreibFontFamily = FontFamily.Default
+
+val LiteschreibLiteraryText = TextStyle(
+    fontFamily = FontFamily.Serif,
+    fontWeight = FontWeight.Normal,
+    fontSize = 20.sp,
+    lineHeight = 32.sp
+)
 
 val LiteschreibTypography = Typography(
     headlineLarge = TextStyle(

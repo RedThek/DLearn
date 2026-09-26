@@ -1,29 +1,32 @@
 package edu.project.dlearn.presentation.apprentissage
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.*
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import edu.project.dlearn.domain.model.EntreeGlossaire
 import edu.project.dlearn.domain.model.ExtraitAvecGlossaire
 import edu.project.dlearn.domain.model.UniteApprentissage
+import edu.project.dlearn.presentation.theme.LiteschreibLiteraryText
 
 @Composable
 fun ApprentissageScreen(
@@ -84,9 +87,10 @@ private fun BibliothequeLectures(
 
 @Composable
 private fun CarteUnite(unite: UniteApprentissage, onClick: () -> Unit) {
-    Card(
+    OutlinedCard(
         modifier  = Modifier.fillMaxWidth().clickable(onClick = onClick),
-        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
+        shape = MaterialTheme.shapes.medium,
+        border = CardDefaults.outlinedCardBorder()
     ) {
         Row(
             Modifier.padding(16.dp),
@@ -125,6 +129,7 @@ private fun LectureUniteScreen(
     onCommencerEcriture: (uniteId: String) -> Unit
 ) {
     var motGlossaireSelectionne by remember { mutableStateOf<EntreeGlossaire?>(null) }
+    var objectifsExpanded by remember { mutableStateOf(false) }
 
     Column(Modifier.fillMaxSize()) {
         // AppBar
@@ -160,15 +165,42 @@ private fun LectureUniteScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
-            // Objectifs
-            Text(
-                text  = etat.unite.objectifsApprentissage,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            // Objectifs (collapsible)
+            Surface(
+                onClick = { objectifsExpanded = !objectifsExpanded },
+                shape = MaterialTheme.shapes.small,
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Objectifs pédagogiques",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.weight(1f),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Icon(
+                        imageVector = if (objectifsExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            AnimatedVisibility(visible = objectifsExpanded) {
+                Column(modifier = Modifier.padding(top = 8.dp, bottom = 8.dp)) {
+                    Text(
+                        text  = etat.unite.objectifsApprentissage,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
 
-            Spacer(Modifier.height(16.dp))
-            HorizontalDivider()
             Spacer(Modifier.height(16.dp))
 
             // Extrait littéraire avec glossaire interactif
@@ -188,7 +220,7 @@ private fun LectureUniteScreen(
             Spacer(Modifier.height(24.dp))
         }
 
-        // Barre d'actions bas de page (remplace le Button unique existant)
+        // Barre d'actions bas de page
         Row(
             Modifier
                 .fillMaxWidth()
@@ -210,16 +242,36 @@ private fun LectureUniteScreen(
         }
     }
 
-    // Dialog glossaire
+    // Modal Bottom Sheet Glossaire
     motGlossaireSelectionne?.let { entree ->
-        AlertDialog(
-            onDismissRequest  = { motGlossaireSelectionne = null },
-            title = { Text(entree.motAllemand, fontWeight = FontWeight.Bold) },
-            text  = { Text(entree.traductionFr) },
-            confirmButton = {
-                TextButton(onClick = { motGlossaireSelectionne = null }) { Text("Fermer") }
+        ModalBottomSheet(
+            onDismissRequest = { motGlossaireSelectionne = null }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp)
+                    .navigationBarsPadding(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = entree.motAllemand,
+                    style = MaterialTheme.typography.headlineSmall.copy(fontFamily = FontFamily.Serif),
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = entree.traductionFr,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+                Spacer(Modifier.height(8.dp))
+                Button(
+                    onClick = { motGlossaireSelectionne = null },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Fermer")
+                }
             }
-        )
+        }
     }
 }
 
@@ -228,19 +280,24 @@ private fun TexteAvecGlossaire(
     extrait: ExtraitAvecGlossaire,
     onMotTap: (EntreeGlossaire) -> Unit
 ) {
-    // Construction du texte annoté : mots du glossaire soulignés en bleu primaire
     val motsDuGlossaire = extrait.glossaire.associateBy { it.motAllemand.lowercase() }
     val texte = extrait.texteAllemand
 
     val annotatedString = buildAnnotatedString {
-        var curseur = 0
-        // Recherche simple mot par mot (split sur espaces + ponctuations)
         val mots = texte.split(Regex("(?<=\\s)|(?=\\s)|(?=[.,!?;:\"()–])"))
         for (fragment in mots) {
             val cle = fragment.trim().lowercase().trimEnd('.', ',', '!', '?', ';', ':')
             val entree = motsDuGlossaire[cle]
             if (entree != null) {
-                pushStringAnnotation(tag = "GLOSSAIRE", annotation = cle)
+                pushLink(
+                    LinkAnnotation.Clickable(
+                        tag = cle,
+                        linkInteractionListener = {
+                            val targetEntree = extrait.glossaire.find { g -> g.motAllemand.lowercase() == cle }
+                            targetEntree?.let { onMotTap(it) }
+                        }
+                    )
+                )
                 withStyle(
                     SpanStyle(
                         color          = MaterialTheme.colorScheme.primary,
@@ -256,34 +313,27 @@ private fun TexteAvecGlossaire(
     }
 
     Surface(
-        color  = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-        shape  = RoundedCornerShape(12.dp),
+        color  = MaterialTheme.colorScheme.surface,
+        shape  = MaterialTheme.shapes.large,
+        tonalElevation = 1.dp,
         modifier = Modifier.fillMaxWidth()
     ) {
-        ClickableText(
-            text     = annotatedString,
-            style    = MaterialTheme.typography.bodyLarge.copy(lineHeight = 28.sp),
-            modifier = Modifier.padding(16.dp),
-            onClick  = { offset ->
-                annotatedString.getStringAnnotations("GLOSSAIRE", offset, offset)
-                    .firstOrNull()?.let { annotation ->
-                        val entree = extrait.glossaire.find {
-                            it.motAllemand.lowercase() == annotation.item
-                        }
-                        entree?.let { onMotTap(it) }
-                    }
-            }
-        )
-    }
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(
+                text     = annotatedString,
+                style    = LiteschreibLiteraryText.copy(color = MaterialTheme.colorScheme.onSurface)
+            )
 
-    // Crédit auteur
-    extrait.auteur?.let {
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text  = "— $it",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+            // Crédit auteur
+            extrait.auteur?.let {
+                Spacer(Modifier.height(16.dp))
+                Text(
+                    text  = "— $it",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
     }
 }
 

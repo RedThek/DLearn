@@ -1,5 +1,11 @@
 package edu.project.dlearn.presentation.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -29,7 +35,7 @@ import edu.project.dlearn.presentation.suivi.SuiviScreen
 
 /**
  * App principale (post-connexion / post-positionnement) : Scaffold + navigation par onglets,
- * inchangée depuis la première livraison. Nichée sous la route "main" du [RootNavGraph].
+ * avec transitions fluides et masquage de la barre sur les sessions d'exercices.
  */
 @Composable
 fun MainScreen(
@@ -39,19 +45,33 @@ fun MainScreen(
 ) {
     if (role == Role.ENSEIGNANT) {
         EnseignantDashboardScreen(onCreerEleve = onNaviguerVersCreationEleve)
-        // TODO Sprint 4+ : le dashboard enseignant aura sa propre BottomBar (Classe/Contenus/Corrections)
         return
     }
 
     val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route ?: ""
+    val showBottomBar = !currentRoute.startsWith("exercices")
 
     Scaffold(
-        bottomBar = { LiteschreibBottomBar(navController) }
+        bottomBar = {
+            AnimatedVisibility(
+                visible = showBottomBar,
+                enter = fadeIn(tween(LiteschreibTransitions.DUREE_MS)) + slideInVertically(tween(LiteschreibTransitions.DUREE_MS)) { it },
+                exit = fadeOut(tween(LiteschreibTransitions.DUREE_MS)) + slideOutVertically(tween(LiteschreibTransitions.DUREE_MS)) { it }
+            ) {
+                LiteschreibBottomBar(navController)
+            }
+        }
     ) { innerPadding ->
         NavHost(
             navController = navController,
             startDestination = BottomNavItem.Accueil.route,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            enterTransition = { LiteschreibTransitions.enterFade },
+            exitTransition = { LiteschreibTransitions.exitFade },
+            popEnterTransition = { LiteschreibTransitions.enterFade },
+            popExitTransition = { LiteschreibTransitions.exitFade }
         ) {
             composable(BottomNavItem.Accueil.route) { 
                 AccueilScreen(onOuvrirLecture = { navController.navigate(BottomNavItem.Apprentissage.route) }) 
@@ -68,7 +88,11 @@ fun MainScreen(
             }
             composable(
                 route = "exercices/{uniteId}",
-                arguments = listOf(navArgument("uniteId") { type = NavType.StringType })
+                arguments = listOf(navArgument("uniteId") { type = NavType.StringType }),
+                enterTransition = { LiteschreibTransitions.enterSlide },
+                exitTransition = { LiteschreibTransitions.exitSlide },
+                popEnterTransition = { LiteschreibTransitions.enterFade },
+                popExitTransition = { LiteschreibTransitions.exitSlide }
             ) {
                 ExerciceScreen(onTermine = { navController.popBackStack() })
             }

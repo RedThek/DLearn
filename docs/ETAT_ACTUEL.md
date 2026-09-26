@@ -1,12 +1,12 @@
 # État actuel du projet — Liteschreib IKII
 
-**Dernière mise à jour :** 2026-09-05 (Session Sprint 4 terminée)
+**Dernière mise à jour :** 2026-09-24 (Pass UI/UX Fluidité et Beauté — Phases P0 à P6)
 
 ---
 
 ## 1. Où en est le projet, en une phrase
 
-Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est implémenté, et les bugs de progression B-28/B-29 sont clos. L'audit post-Sprint 4 (Reconciliation Sprint 5) a permis de réajuster les statuts pour le démarrage du Sprint 5.
+Le pass UI/UX de fluidité et de beauté (`EXEC-UI-UX-FLUIDITE.md`) est entièrement exécuté et validé (`assembleDebug` réussi) : transitions de navigation fluides, masquage de la barre sur les exercices, accueil unifié, lecture littéraire avec glossaire en feuille, retours haptiques et animés sur les exercices, atelier d'écriture enrichi, nettoyage des contrôles fictifs et unification des surfaces/thème sombre.
 
 ---
 
@@ -50,6 +50,7 @@ Le Sprint 4 est terminé ✅ : la base technique est saine, l'import ADR-018 est
 - **Navigation contextuelle** vers le module Écriture ✅
 - **Export JSON et partage Android** (Nearby Share/Bluetooth) depuis le profil ✅
 - **Migration Room 4→5** (explicite et testée) ✅
+- **Pass UI/UX Fluidité & Beauté (Phases P0-P6)** : transitions de navigation 220ms, barre masquée sur exercices, accueil épuré, lecture sérif + glossaire en bottom sheet, feedback haptique et animée QCM, clavier et consigne d'écriture optimisés, suppression des contrôles inactifs, tokens thème sombre complets ✅
 
 ---
 
@@ -69,5 +70,5 @@ Une proposition d'extension en plateforme littéraire a été classée en horizo
 
 ## 6. Sprint et cycle en cours
 
-- **Sprint courant :** Sprint 4 terminé ✅
+- **Sprint courant :** Sprint 4 terminé ✅ + Pass UI/UX Fluidité (P0-P6) exécuté
 - **Prochain Sprint :** Sprint 5 — Mission B2 (Apprentissage) + Mission B1 itération 2.
