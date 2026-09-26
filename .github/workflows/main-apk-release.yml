@@ -36,7 +36,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: latest
-          name: "Build automatique (dernier merge sur main)"
+          name: "DLearn apk build"
           body: |
             APK généré automatiquement depuis le dernier commit fusionné sur `main`
             (commit ${{ github.sha }}). Build de développement, non signé pour la
