@@ -1,0 +1,47 @@
+name: Build APK on main merge
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write   # nécessaire pour créer/mettre à jour une Release
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Rename APK for clarity
+        run: |
+          mkdir -p dist
+          cp app/build/outputs/apk/debug/app-debug.apk dist/DLearn-latest.apk
+
+      - name: Publish / update "latest" release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: "Build automatique (dernier merge sur main)"
+          body: |
+            APK généré automatiquement depuis le dernier commit fusionné sur `main`
+            (commit ${{ github.sha }}). Build de développement, non signé pour la
+            production — voir la Release taguée `vX.Y.Z` pour la version pilote.
+          make_latest: false
+          files: dist/DLearn-latest.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
